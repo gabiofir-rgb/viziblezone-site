@@ -3,12 +3,12 @@
 ## דחוף (בלתי תלוי באתר החדש)
 - [ ] Webflow הישן: להסיר באנרי קורונה ולתקן את כפתור CONTACT US. רבע שעה.
 
-## שלב 1 (קלוד קוד, לפי SETUP_PROMPT.md)
-- [ ] גבי: להעתיק את תיקיית הלוגו אל assets/brand/ לפני ה-push הראשון
-- [ ] repo פרטי + push
-- [ ] Pages ממקור GitHub Actions + ריצת deploy ראשונה ירוקה
-- [ ] fine-grained token
-- [ ] בדיקת CMS מקצה לקצה: טעינה → עריכה → פרסום → האתר התעדכן
+## שלב 1 (קלוד קוד)
+- [x] תיקיית הלוגו הועתקה אל assets/brand/ (במאגר רק קובצי לוגו/אייקון נקיים; מצגות PDF כבדות, נייר-מכתבים, ייצוא Gmail וזבל OS הוחרגו)
+- [x] repo ציבורי + push — https://github.com/gabiofir-rgb/viziblezone-site
+- [x] Pages ממקור GitHub Actions + ריצת deploy ירוקה — https://gabiofir-rgb.github.io/viziblezone-site/ (9 עמודים 200, CSS נטען, ניווט תקין)
+- [ ] fine-grained token (גבי מייצר; נכנס ישירות ל-admin/editor.html, נשמר ב-localStorage בלבד)
+- [ ] בדיקת CMS מקצה לקצה: טעינה → עריכה → פרסום → האתר התעדכן (עם גבי)
 
 ## תוכן, דורש קלט מגבי (שלב 2)
 - [ ] קישורי עיתונות אמיתיים (TechCrunch, Fast Company, Geektime, Calcalist, NoCamels)
