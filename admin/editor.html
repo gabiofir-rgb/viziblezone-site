@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viziblezone · ניהול האתר</title>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Viziblezone · Site Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
 <style>
 :root{--ink:#0B0B0C;--panel:#141416;--panel2:#1B1B1E;--line:#2A2A2E;--mustard:#E0A526;--paper:#FCFBF7;--muted:#9A9AA0;--ok:#4CAF7D;--err:#E05B4B}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Heebo',sans-serif;background:var(--ink);color:var(--paper);font-size:15px;line-height:1.55}
+body{font-family:'Archivo',sans-serif;background:var(--ink);color:var(--paper);font-size:15px;line-height:1.55}
 .top{position:sticky;top:0;z-index:20;background:rgba(11,11,12,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .brand{font-weight:900;font-size:18px}
 .brand b{color:var(--mustard)}
 .top .sp{flex:1}
-button{font-family:'Heebo',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;border:2px solid var(--mustard);background:transparent;color:var(--mustard);padding:8px 16px;transition:.15s}
+button{font-family:'Archivo',sans-serif;font-size:13.5px;font-weight:700;cursor:pointer;border:2px solid var(--mustard);background:transparent;color:var(--mustard);padding:8px 16px;transition:.15s}
 button:hover{background:var(--mustard);color:var(--ink)}
 button.primary{background:var(--mustard);color:var(--ink)}
 button.primary:hover{background:transparent;color:var(--mustard)}
@@ -27,19 +27,19 @@ button:disabled{opacity:.35;cursor:not-allowed}
 .layout{display:grid;grid-template-columns:230px 500px 1fr;min-height:calc(100vh - 59px)}
 @media(max-width:1180px){.layout{grid-template-columns:230px 1fr}.pv{display:none}}
 @media(max-width:760px){.layout{grid-template-columns:1fr}.tree{border:0;border-bottom:1px solid var(--line);max-height:none}}
-.tree{border-left:1px solid var(--line);padding:16px 0;background:var(--panel)}
+.tree{border-right:1px solid var(--line);padding:16px 0;background:var(--panel)}
 .tree h5{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;color:var(--muted);padding:12px 18px 6px}
-.tree a{display:block;padding:9px 18px;color:var(--paper);text-decoration:none;font-size:14px;border-right:3px solid transparent}
+.tree a{display:block;padding:9px 18px;color:var(--paper);text-decoration:none;font-size:14px;border-left:3px solid transparent}
 .tree a:hover{background:var(--panel2)}
-.tree a.on{border-right-color:var(--mustard);background:var(--panel2);color:var(--mustard)}
+.tree a.on{border-left-color:var(--mustard);background:var(--panel2);color:var(--mustard)}
 .tree a .dot{color:var(--mustard);font-weight:900;margin-right:6px;display:none}
 .tree a.changed .dot{display:inline}
-.form{border-left:1px solid var(--line);overflow-y:auto;max-height:calc(100vh - 59px);padding:20px 22px 80px}
+.form{border-right:1px solid var(--line);overflow-y:auto;max-height:calc(100vh - 59px);padding:20px 22px 80px}
 .card{background:var(--panel);border:1px solid var(--line);padding:16px;margin-bottom:16px}
 .card h3{font-size:14.5px;font-weight:700;color:var(--mustard);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .card h3::before{content:"";width:14px;height:3px;background:var(--mustard)}
 label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 5px}
-input[type=text],input[type=password],textarea{width:100%;font-family:'Heebo',sans-serif;font-size:14px;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:9px 11px;direction:ltr;text-align:left}
+input[type=text],input[type=password],textarea{width:100%;font-family:'Archivo',sans-serif;font-size:14px;background:var(--ink);border:1px solid var(--line);color:var(--paper);padding:9px 11px;direction:ltr;text-align:left}
 textarea{min-height:60px;resize:vertical;line-height:1.5}
 input:focus,textarea:focus{outline:none;border-color:var(--mustard)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -61,12 +61,12 @@ iframe{flex:1;border:0;width:100%;background:#fff}
 <body>
 
 <div class="top">
-  <span class="brand">Vizible<b>zone</b> · ניהול האתר</span>
-  <span class="badge" id="dirtyBadge">אין שינויים</span>
+  <span class="brand">Vizible<b>zone</b> · Site Admin</span>
+  <span class="badge" id="dirtyBadge">No changes</span>
   <span class="sp"></span>
-  <button id="btnLoad">טען מ-GitHub</button>
-  <button id="btnBackup">הורד גיבוי תוכן</button>
-  <button class="primary" id="btnPublish" disabled>פרסם שינויים</button>
+  <button id="btnLoad">Load from GitHub</button>
+  <button id="btnBackup">Download backup</button>
+  <button class="primary" id="btnPublish" disabled>Publish changes</button>
 </div>
 
 <div class="layout">
@@ -74,27 +74,27 @@ iframe{flex:1;border:0;width:100%;background:#fff}
 
   <main class="form" id="form">
     <div class="card">
-      <h3>חיבור ל-GitHub</h3>
+      <h3>GitHub connection</h3>
       <div class="row2">
-        <div><label>בעלים (owner)</label><input type="text" id="cfgOwner" placeholder="github-username"></div>
-        <div><label>מאגר (repo)</label><input type="text" id="cfgRepo" value="viziblezone-site"></div>
+        <div><label>Owner</label><input type="text" id="cfgOwner" placeholder="github-username"></div>
+        <div><label>Repository</label><input type="text" id="cfgRepo" value="viziblezone-site"></div>
       </div>
       <div class="row2">
-        <div><label>ענף (branch)</label><input type="text" id="cfgBranch" value="main"></div>
-        <div><label>טוקן (fine-grained, Contents בלבד)</label><input type="password" id="cfgToken" placeholder="github_pat_..."></div>
+        <div><label>Branch</label><input type="text" id="cfgBranch" value="main"></div>
+        <div><label>Token (fine-grained, Contents only)</label><input type="password" id="cfgToken" placeholder="github_pat_..."></div>
       </div>
-      <p class="hint">נשמר בדפדפן זה בלבד (localStorage). הטוקן לעולם לא נכנס לקוד או למאגר.</p>
+      <p class="hint">Stored in this browser only (localStorage). The token never enters the code or the repository.</p>
     </div>
-    <div class="empty">לחץ "טען מ-GitHub" כדי להתחיל.</div>
+    <div class="empty">Click "Load from GitHub" to begin.</div>
   </main>
 
   <aside class="pv">
-    <div class="pv-bar"><span>תצוגה מקדימה</span><button class="small ghost" id="btnRefreshPv">רענן</button><button class="small ghost" id="btnPvTab">פתח בלשונית</button></div>
-    <iframe id="preview" title="תצוגה מקדימה"></iframe>
+    <div class="pv-bar"><span>Preview</span><button class="small ghost" id="btnRefreshPv">Refresh</button><button class="small ghost" id="btnPvTab">Open in tab</button></div>
+    <iframe id="preview" title="Preview"></iframe>
   </aside>
 </div>
 
-<div class="status" id="status">מוכן. הפרסום מפעיל בנייה אוטומטית ב-GitHub Actions, האתר מתעדכן תוך 1-2 דקות.</div>
+<div class="status" id="status">Ready. Publishing triggers an automatic build on GitHub Actions; the site updates within 1-2 minutes.</div>
 <input type="file" id="imgPick" accept="image/*" style="display:none">
 
 <script src="schema.js"></script>
@@ -130,7 +130,7 @@ function setPath(obj,path,val){const ks=path.split(".");let o=obj;for(let i=0;i<
 /* ---- dirty tracking ---- */
 function anyDirty(){return FILES.some(f=>store[f]&&store[f].dirty);}
 function refreshBadges(){
-  $("dirtyBadge").textContent=anyDirty()?"יש שינויים שלא פורסמו":"אין שינויים";
+  $("dirtyBadge").textContent=anyDirty()?"Unpublished changes":"No changes";
   $("dirtyBadge").className="badge"+(anyDirty()?" dirty":"");
   $("btnPublish").disabled=!anyDirty();
   document.querySelectorAll("#tree a[data-f]").forEach(a=>a.classList.toggle("changed",!!(store[a.dataset.f]&&store[a.dataset.f].dirty)));
@@ -147,8 +147,8 @@ function saveDraft(){
 function offerDraft(){
   const raw=localStorage.getItem("vzcms_draft");
   if(!raw)return;
-  if(confirm("נמצאה טיוטה שלא פורסמה מהפעם הקודמת. לשחזר אותה?")){
-    try{const d=JSON.parse(raw);Object.keys(d).forEach(f=>{if(store[f]){store[f].data=d[f];store[f].dirty=true;}});status("הטיוטה שוחזרה. זכור לפרסם.","ok");}
+  if(confirm("An unpublished draft from a previous session was found. Restore it?")){
+    try{const d=JSON.parse(raw);Object.keys(d).forEach(f=>{if(store[f]){store[f].data=d[f];store[f].dirty=true;}});status("Draft restored. Remember to publish.","ok");}
     catch(e){}
   }else localStorage.removeItem("vzcms_draft");
   refreshBadges();
@@ -156,7 +156,7 @@ function offerDraft(){
 
 /* ---- sidebar ---- */
 function buildTree(){
-  const t=$("tree");t.innerHTML="<h5>עמודי האתר</h5>";
+  const t=$("tree");t.innerHTML="<h5>SITE PAGES</h5>";
   FILES.forEach(f=>{
     const a=document.createElement("a");
     a.href="#";a.dataset.f=f;a.innerHTML='<span class="dot">●</span>'+CMS_SCHEMA[f].label;
@@ -186,7 +186,7 @@ function renderField(holder,f,basePath,data){
       const mk=(txt,fn,dis)=>{const b=document.createElement("button");b.className="small ghost";b.textContent=txt;b.disabled=!!dis;b.onclick=fn;bar.appendChild(b);};
       mk("▲",()=>{[arr[idx-1],arr[idx]]=[arr[idx],arr[idx-1]];markDirty();openFile(current,window.scrollTarget);},idx===0);
       mk("▼",()=>{[arr[idx+1],arr[idx]]=[arr[idx],arr[idx+1]];markDirty();openFile(current);},idx===arr.length-1);
-      mk("מחק",()=>{if(confirm("למחוק את הפריט?")){arr.splice(idx,1);markDirty();openFile(current);}});
+      mk("Delete",()=>{if(confirm("Delete this item?")){arr.splice(idx,1);markDirty();openFile(current);}});
       li.appendChild(bar);
       f.item.forEach(sf=>{
         if(sf.key===""){ /* array of strings */
@@ -200,7 +200,7 @@ function renderField(holder,f,basePath,data){
       });
       card.appendChild(li);
     });
-    const add=document.createElement("button");add.className="small";add.style.marginTop="12px";add.textContent="+ הוסף פריט";
+    const add=document.createElement("button");add.className="small";add.style.marginTop="12px";add.textContent="+ Add item";
     add.onclick=()=>{
       const blank=f.item.length===1&&f.item[0].key===""?"":Object.fromEntries(f.item.map(sf=>[sf.key,""]));
       arr.push(blank);
@@ -221,10 +221,10 @@ function renderScalar(holder,f,obj,setter,topLevel){
     const img=document.createElement("img");
     const val=topLevel?getPath(obj,f.key):obj[f.key];
     img.src=val?rawUrl(val):"";img.style.display=val?"block":"none";
-    const btn=document.createElement("button");btn.className="small";btn.textContent=val?"החלף תמונה":"העלה תמונה";
-    const rm=document.createElement("button");rm.className="small ghost";rm.textContent="הסר";rm.style.display=val?"inline-block":"none";
+    const btn=document.createElement("button");btn.className="small";btn.textContent=val?"Replace image":"Upload image";
+    const rm=document.createElement("button");rm.className="small ghost";rm.textContent="Remove";rm.style.display=val?"inline-block":"none";
     btn.onclick=()=>{pendingImgField={setter,img,btn,rm};$("imgPick").click();};
-    rm.onclick=()=>{setter("");img.style.display="none";rm.style.display="none";btn.textContent="העלה תמונה";markDirty();};
+    rm.onclick=()=>{setter("");img.style.display="none";rm.style.display="none";btn.textContent="Upload image";markDirty();};
     box.appendChild(img);box.appendChild(btn);box.appendChild(rm);holder.appendChild(box);
     return;
   }
@@ -234,7 +234,7 @@ function renderScalar(holder,f,obj,setter,topLevel){
   holder.appendChild(inp);
   if(f.type==="html"){
     const h=document.createElement("div");h.className="hint warn";
-    h.textContent='שדה עיצובי: <br> יורד שורה, <span class="hl">טקסט</span> צובע בחרדל. אל תמחק תגיות בטעות.';
+    h.textContent='Formatting field: <br> is a line break, <span class="hl">text</span> paints it mustard. Do not delete the tags by mistake.';
     holder.appendChild(h);
   }
 }
@@ -261,8 +261,8 @@ async function ghGet(path){
 }
 async function loadAll(){
   const c=cfg();
-  if(!c.owner||!c.repo||!c.token){status("מלא בעלים, מאגר וטוקן.","err");return;}
-  status("טוען תוכן ותבניות מ-GitHub...");
+  if(!c.owner||!c.repo||!c.token){status("Fill in owner, repository and token.","err");return;}
+  status("Loading content and templates from GitHub...");
   try{
     for(const f of FILES){
       const j=await ghGet(f);
@@ -277,8 +277,8 @@ async function loadAll(){
     buildTree();
     offerDraft();
     openFile(FILES[1]); /* home */
-    status("נטען. בחר עמוד לעריכה.","ok");
-  }catch(e){status("שגיאת טעינה: "+e.message,"err");}
+    status("Loaded. Select a page to edit.","ok");
+  }catch(e){status("Load error: "+e.message,"err");}
 }
 
 /* ---- image upload ---- */
@@ -286,7 +286,7 @@ $("imgPick").addEventListener("change",async e=>{
   const file=e.target.files[0];e.target.value="";
   if(!file||!pendingImgField)return;
   const name="assets/img/"+Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9.\-_]/g,"");
-  status("מעלה תמונה...");
+  status("Uploading image...");
   try{
     const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(",")[1]);r.onerror=rej;r.readAsDataURL(file);});
     const r=await fetch(gh(name),{method:"PUT",headers:{...hdr(),"Content-Type":"application/json"},
@@ -294,9 +294,9 @@ $("imgPick").addEventListener("change",async e=>{
     if(!r.ok)throw new Error("upload "+r.status);
     pendingImgField.setter(name);
     pendingImgField.img.src=rawUrl(name);pendingImgField.img.style.display="block";
-    pendingImgField.rm.style.display="inline-block";pendingImgField.btn.textContent="החלף תמונה";
-    markDirty();status("התמונה הועלתה: "+name,"ok");
-  }catch(err){status("שגיאת העלאה: "+err.message,"err");}
+    pendingImgField.rm.style.display="inline-block";pendingImgField.btn.textContent="Replace image";
+    markDirty();status("Image uploaded: "+name,"ok");
+  }catch(err){status("Upload error: "+err.message,"err");}
   pendingImgField=null;
 });
 function rawUrl(path){const c=cfg();return "https://raw.githubusercontent.com/"+c.owner+"/"+c.repo+"/"+c.branch+"/"+path;}
@@ -325,11 +325,11 @@ $("btnPvTab").onclick=()=>{const w=window.open("about:blank");w.document.write(p
 async function publish(){
   const dirtyFiles=FILES.filter(f=>store[f]&&store[f].dirty);
   if(!dirtyFiles.length)return;
-  if(!confirm("לפרסם "+dirtyFiles.length+" קבצים? האתר יתעדכן תוך 1-2 דקות."))return;
+  if(!confirm("Publish "+dirtyFiles.length+" files? The site will update within 1-2 minutes."))return;
   $("btnPublish").disabled=true;
   try{
     for(const f of dirtyFiles){
-      status("מפרסם "+f+"...");
+      status("Publishing "+f+"...");
       const body={message:"Content update via CMS: "+f,content:b64e(JSON.stringify(store[f].data,null,2)+"\n"),branch:cfg().branch,sha:store[f].sha};
       const r=await fetch(gh(f),{method:"PUT",headers:{...hdr(),"Content-Type":"application/json"},body:JSON.stringify(body)});
       if(!r.ok){
@@ -342,8 +342,8 @@ async function publish(){
     }
     localStorage.removeItem("vzcms_draft");
     refreshBadges();
-    status("פורסם. GitHub Actions בונה את האתר, יעלה תוך 1-2 דקות.","ok");
-  }catch(e){status("שגיאת פרסום: "+e.message,"err");refreshBadges();}
+    status("Published. GitHub Actions is building the site; it will go live within 1-2 minutes.","ok");
+  }catch(e){status("Publish error: "+e.message,"err");refreshBadges();}
 }
 
 /* ---- backup ---- */
@@ -353,7 +353,7 @@ function backup(){
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);
   a.download="viziblezone-content-"+new Date().toISOString().slice(0,10)+".json";a.click();
   URL.revokeObjectURL(a.href);
-  status("גיבוי תוכן ירד למחשב.","ok");
+  status("Content backup downloaded.","ok");
 }
 
 $("btnLoad").onclick=loadAll;
