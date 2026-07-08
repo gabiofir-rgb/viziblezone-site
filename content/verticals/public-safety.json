@@ -24,7 +24,7 @@
     "title": "For agencies and<br>resilience planners",
     "items": [
       { "tag": "Resilience", "title": "Zero-infrastructure operation", "text": "Designed to keep working through total network collapse — the failure mode that breaks every cloud-based solution." },
-      { "tag": "Heritage", "title": "DMO in its DNA", "text": "The architecture follows Direct Mode Operation principles from professional mission-critical communications, adapted to the devices everyone carries." },
+      { "tag": "Heritage", "title": "DMO in its DNA", "text": "The architecture follows DMO principles from professional mission-critical communications, adapted to the devices everyone carries." },
       { "tag": "Reach", "title": "Civilians included", "text": "Protection extends beyond equipped teams to the public — the phones already in every pocket become part of the picture." },
       { "tag": "Speed", "title": "Standing capability", "text": "Nothing to deploy on the day of the event. The capability is already resident on the devices, waiting." }
     ]

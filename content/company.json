@@ -12,17 +12,17 @@
     "eyebrow": "Our story",
     "title": "From control rooms<br>to city streets",
     "paragraphs": [
-      "Our founding team comes from the world of professional mission-critical communications — the systems that must keep working when everything else fails. That world has a discipline called Direct Mode Operation: devices talking straight to each other, no infrastructure in between.",
+      "Our founding team comes from the world of professional mission-critical communications — the systems that must keep working when everything else fails. That world has a discipline known as DMO: devices talking straight to each other, with no infrastructure in between.",
       "We watched pedestrian casualty statistics refuse to fall despite ever-smarter vehicles, and recognized the pattern: every sensor on a vehicle shares the same blind spot — line of sight. The technology philosophy that protects soldiers and firefighters could close exactly that gap for everyone else.",
       "Viziblezone is the result: a situational awareness platform that turns the smartphone in every pocket into a safety beacon, built on the direct, infrastructure-free principles our team has implemented for decades, and protected by multiple granted patents."
     ]
   },
   "heritage": {
     "quote": "Decades of <span class=\"hl\">DMO</span> engineering, in every pocket",
-    "lede": "The team's background spans system architecture for global mission-critical vendors, standards work, and field deployments for demanding military and public-safety customers.",
+    "lede": "The team's background spans system architecture for global mission-critical vendors and field deployments for demanding military and public-safety customers.",
     "bullets": [
       "System architecture for global mission-critical communication vendors",
-      "Standards-body representation in professional communications standardization",
+      "Architecture of resilient, infrastructure-free communication",
       "Field-proven DMO implementations for military and public-safety forces",
       "Multiple granted patents in direct device-to-device safety"
     ]
@@ -33,7 +33,7 @@
     "lede": "Engineers and operators with deep roots in communications, automotive and safety."
   },
   "team": [
-    { "name": "Gabi Ofir", "role": "CEO & Founder", "bio": "Former system architect at a global mission-critical communications leader, standards-body delegate and DMO expert. Multiple patents. Commercial pilot.", "photo": "" },
+    { "name": "Gabi Ofir", "role": "CEO & Founder", "bio": "Former system architect at a global mission-critical communications leader and DMO expert. Multiple patents. Commercial pilot.", "photo": "" },
     { "name": "Team Member", "role": "Role — placeholder", "bio": "Replace via the site editor: name, role, bio and photo.", "photo": "" },
     { "name": "Team Member", "role": "Role — placeholder", "bio": "Replace via the site editor: name, role, bio and photo.", "photo": "" }
   ],

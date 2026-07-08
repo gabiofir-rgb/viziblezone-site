@@ -40,7 +40,7 @@
   },
   "resilience": {
     "quote": "Built for the moment <span class=\"hl\">networks fail</span>",
-    "lede": "Viziblezone's architecture is inspired by DMO — Direct Mode Operation, the discipline behind mission-critical communications used by emergency and defense forces worldwide. Our team spent decades building it.",
+    "lede": "Viziblezone's architecture is DMO-inspired — the discipline behind mission-critical communications that emergency and defense forces rely on worldwide. Our team spent decades building it.",
     "bullets": [
       "Direct device-to-device communication, no cellular dependency",
       "Keeps working in dead zones, disasters and network collapse",
