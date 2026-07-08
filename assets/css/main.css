@@ -52,7 +52,7 @@ nav.top{position:fixed;inset:0 0 auto;z-index:50;background:rgba(11,11,12,.9);ba
 /* videos */
 .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;margin-top:44px}
 .video-frame{position:relative;width:100%;padding-top:56.25%;background:#000;border:1px solid var(--line-dark)}
-.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-frame iframe,.video-frame img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 .video figcaption h3{font-size:20px;font-weight:700;margin:18px 0 6px}
 .video figcaption p{color:var(--muted);font-size:15px;line-height:1.5}
 .nav-links{display:flex;gap:30px;list-style:none;align-items:center}
@@ -98,11 +98,9 @@ nav.top{position:fixed;inset:0 0 auto;z-index:50;background:rgba(11,11,12,.9);ba
 .pulse.p2{animation-delay:1s}
 .pulse.p3{animation-delay:2s}
 @keyframes pulse{0%{opacity:.9;transform:scale(.12)}80%{opacity:0}100%{opacity:0;transform:scale(1)}}
-.sig{stroke-dasharray:7 9;animation:flow 1.4s linear infinite}
-@keyframes flow{to{stroke-dashoffset:-32}}
 .alert-badge{animation:blink 1.6s infinite}
 @media(prefers-reduced-motion:reduce){
-  .pulse,.sig,.alert-badge,.scene-label i{animation:none}
+  .pulse,.alert-badge,.scene-label i{animation:none}
   .pulse{opacity:.25;transform:scale(.75)}
   html{scroll-behavior:auto}
 }

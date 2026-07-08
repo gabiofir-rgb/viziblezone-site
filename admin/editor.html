@@ -302,13 +302,25 @@ $("imgPick").addEventListener("change",async e=>{
 function rawUrl(path){const c=cfg();return "https://raw.githubusercontent.com/"+c.owner+"/"+c.repo+"/"+c.branch+"/"+path;}
 
 /* ---- preview (client-side render, mirrors build.js) ---- */
+/* Mirror of build.js ytId(): the videos section shows a YouTube embed when an
+   id is present, otherwise the uploaded gif/image. This either/or logic lives
+   in BOTH build.js and here — keep them in sync (see docs/NOTES.md). */
+function ytId(u){
+  const s=String(u||"").trim();
+  const m=s.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  if(m)return m[1];
+  return /^[A-Za-z0-9_-]{11}$/.test(s)?s:"";
+}
 function previewHtml(){
   if(!current||!templates.base)return "";
   const meta=CMS_SCHEMA[current];
   const tplName=meta.template||"home";
   const site=store["content/site.json"].data;
   const verticals=site.verticalSlugs.map(s=>({slug:s,...store["content/verticals/"+s+".json"].data}));
-  const page=meta.template?store[current].data:store["content/home.json"].data;
+  let page=meta.template?store[current].data:store["content/home.json"].data;
+  if(page&&page.videos&&Array.isArray(page.videos.items)){
+    page={...page,videos:{...page.videos,items:page.videos.items.map(it=>({...it,videoId:ytId(it.youtubeUrl)}))}};
+  }
   const view={site,depth:"",verticals,year:new Date().getFullYear(),page,active:""};
   ["platform","verticals","company","news","contact"].forEach(k=>view["is"+k[0].toUpperCase()+k.slice(1)]=false);
   let html=Mustache.render(templates.base,view,{content:templates[tplName]});

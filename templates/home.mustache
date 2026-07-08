@@ -19,11 +19,10 @@
         <line x1="20" y1="330" x2="540" y2="330" stroke="#2A2A2E" stroke-width="2"/>
         <line x1="20" y1="330" x2="540" y2="330" stroke="#E0A526" stroke-width="2" stroke-dasharray="2 14" opacity=".5"/>
         <g>
-          <circle class="pulse" cx="452" cy="258" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
-          <circle class="pulse p2" cx="452" cy="258" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
-          <circle class="pulse p3" cx="452" cy="258" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
+          <circle class="pulse" cx="471" cy="216" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
+          <circle class="pulse p2" cx="471" cy="216" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
+          <circle class="pulse p3" cx="471" cy="216" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
         </g>
-        <path class="sig" d="M446 252 C 380 150, 220 150, 132 236" fill="none" stroke="#E0A526" stroke-width="2.5" opacity=".9"/>
         <g>
           <rect x="238" y="212" width="150" height="86" fill="#1B1B1E" stroke="#3A3A40" stroke-width="2"/>
           <rect x="382" y="240" width="46" height="58" fill="#1B1B1E" stroke="#3A3A40" stroke-width="2"/>
@@ -45,9 +44,12 @@
           <text x="70" y="202" font-family="IBM Plex Mono, monospace" font-size="14" font-weight="600" fill="#0B0B0C" letter-spacing="1">⚠ PEDESTRIAN</text>
         </g>
         <g>
-          <circle cx="452" cy="212" r="13" fill="none" stroke="#E0A526" stroke-width="3"/>
-          <path d="M452 225 L452 268 M452 236 L432 254 M452 236 L470 250 M452 268 L436 304 M452 268 L468 304" stroke="#E0A526" stroke-width="4" stroke-linecap="round" fill="none"/>
-          <rect x="466" y="244" width="10" height="17" rx="2" fill="#E0A526"/>
+          <circle cx="452" cy="210" r="13" fill="none" stroke="#E0A526" stroke-width="3"/>
+          <path d="M452 223 L452 268 M452 236 L434 254 M452 234 L466 224 M452 268 L436 304 M452 268 L468 304" stroke="#E0A526" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <rect x="465" y="206" width="11" height="18" rx="2" fill="#E0A526"/>
+          <path d="M459.7 204.7 A16 16 0 0 0 459.7 227.3" fill="none" stroke="#E0A526" stroke-width="2" opacity=".85"/>
+          <path d="M452.6 197.6 A26 26 0 0 0 452.6 234.4" fill="none" stroke="#E0A526" stroke-width="2" opacity=".55"/>
+          <path d="M445.5 190.5 A36 36 0 0 0 445.5 241.5" fill="none" stroke="#E0A526" stroke-width="2" opacity=".3"/>
           <text x="416" y="356" font-family="IBM Plex Mono, monospace" font-size="11" fill="#E0A526" letter-spacing="2">NOT VISIBLE</text>
         </g>
         <text x="52" y="356" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6E6E74" letter-spacing="2">ALERTED EARLY</text>
@@ -113,7 +115,12 @@
       {{#page.videos.items}}
       <figure class="video">
         <div class="video-frame">
+          {{#videoId}}
           <iframe src="https://www.youtube-nocookie.com/embed/{{videoId}}" title="{{title}}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          {{/videoId}}
+          {{^videoId}}{{#gif}}
+          <img src="{{{depth}}}{{{gif}}}" alt="{{title}}" loading="lazy">
+          {{/gif}}{{/videoId}}
         </div>
         <figcaption>
           <h3>{{title}}</h3>

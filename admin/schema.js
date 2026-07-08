@@ -68,7 +68,8 @@ const CMS_SCHEMA = {
     { key: "videos.items", type: "list", label: "Videos: items", item: [
       { key: "title", type: "text", label: "Title" },
       { key: "caption", type: "textarea", label: "Caption" },
-      { key: "youtubeUrl", type: "url", label: "YouTube URL" }
+      { key: "youtubeUrl", type: "url", label: "YouTube URL (or upload a GIF/image below)" },
+      { key: "gif", type: "image", label: "GIF / image (used when no YouTube URL)" }
     ]},
     { key: "resilience.quote", type: "html", label: "Resilience: large quote" },
     { key: "resilience.lede", type: "textarea", label: "Resilience: paragraph" },

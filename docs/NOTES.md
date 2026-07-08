@@ -28,6 +28,10 @@
   6. **סקשן וידאו:** נוסף "See it in action" ל-home (בין verticals ל-resilience) — רשת רספונסיבית 16:9, iframes עצלים מ-youtube-nocookie.com/embed. חילוץ מזהה ה-YouTube מכל צורת URL נעשה ב-build.js (ytId), לא ב-JS צד-לקוח. admin/schema.js עודכן עם שדות videos באותו commit (עריך מה-CMS). הערה: תצוגת ה-preview ב-CMS לא מריצה את build.js ולכן לא תטמיע את הווידאו — האתר הבנוי כן.
   - נסגר: פריט "LOGO NEW SHMULIK" מ-2026-07-08 טופל (שוּנה ל-master).
 
+- 2026-07-09 (תיקונים ויזואליים, Home, Claude Code):
+  1. **Hero scene:** עוצב מחדש ב-templates/home.mustache — הוסר ה-<path class="sig"> (וה-CSS שלו + @keyframes flow ב-main.css). הדמות עכשיו מרימה יד עם טלפון מעל הראש, והפולסים (3 מעגלי .pulse) ממורכזים על הטלפון (cx=471 cy=216). נבדק בעין (rasterize ל-PNG): היד/הטלפון/קשתות האות מעל גובה הכתפיים, שום דבר לא חותך את פלג הגוף התחתון.
+  2. **GIF בסקשן הווידאו:** כל פריט ב-videos יכול להיות YouTube (youtubeUrl) *או* GIF/תמונה (gif, נתיב תחת assets/img/ שמועלה דרך ה-CMS). לוגיקת ה-either/or: אם יש videoId → iframe עצל; אחרת אם יש gif → <img loading="lazy"> באותה מסגרת 16:9 (object-fit:cover). חילוץ videoId (ytId) חי בשני מקומות: build.js (לבנייה) ו-admin/editor.html (ל-preview) — יש לתחזק אותם מסונכרנים. schema.js קיבל שדה gif (type image) על פריטי videos באותו commit.
+
 ## ידוע ופתוח
 - placeholder-ים שחייבים תוכן אמיתי לפני דומיין: נתוני סטטיסטיקה בעמוד הבית (50%+, <2s ללא מקור), קישורי עיתונות (#), אנשי צוות 2-3 בעמוד Company, פריטי News, form.action של Formspree, אימות info@vizible.zone.
 - עמוד Company מכיל תיאור רקע כללי של הצוות (mission-critical, standards, patents) בלי שמות חברות. לאשר מול גבי אם לנקוב בשם המעסיק הקודם במפורש.
