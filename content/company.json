@@ -14,7 +14,7 @@
     "paragraphs": [
       "Our founding team comes from the world of professional mission-critical communications — the systems that must keep working when everything else fails. That world has a discipline known as DMO: devices talking straight to each other, with no infrastructure in between.",
       "We watched pedestrian casualty statistics refuse to fall despite ever-smarter vehicles, and recognized the pattern: every sensor on a vehicle shares the same blind spot — line of sight. The technology philosophy that protects soldiers and firefighters could close exactly that gap for everyone else.",
-      "Viziblezone is the result: a situational awareness platform that turns the smartphone in every pocket into a safety beacon, built on the direct, infrastructure-free principles our team has implemented for decades, and protected by multiple granted patents."
+      "Viziblezone is the result: a situational awareness platform that turns the smartphone in every pocket into a safety beacon, built on the direct, infrastructure-free principles our team has implemented for decades, and led by founders credited with more than 60 career patents."
     ]
   },
   "heritage": {
@@ -24,7 +24,7 @@
       "System architecture for global mission-critical communication vendors",
       "Architecture of resilient, infrastructure-free communication",
       "Field-proven DMO implementations for military and public-safety forces",
-      "Multiple granted patents in direct device-to-device safety"
+      "Founders credited with 60+ career patents in communications"
     ]
   },
   "teamIntro": {
@@ -33,9 +33,10 @@
     "lede": "Engineers and operators with deep roots in communications, automotive and safety."
   },
   "team": [
-    { "name": "Gabi Ofir", "role": "CEO & Founder", "bio": "Former system architect at a global mission-critical communications leader and DMO expert. Multiple patents. Commercial pilot.", "photo": "" },
-    { "name": "Team Member", "role": "Role — placeholder", "bio": "Replace via the site editor: name, role, bio and photo.", "photo": "" },
-    { "name": "Team Member", "role": "Role — placeholder", "bio": "Replace via the site editor: name, role, bio and photo.", "photo": "" }
+    { "name": "Gabi Ofir", "role": "CEO & Founder", "bio": "Founder with decades in mission-critical communications engineering. Credited with 35 career patents. Specialist in direct communication protocols. Commercial pilot.", "photo": "" },
+    { "name": "Dr. Baruh Hason", "role": "CTO", "bio": "Leads the company's technology. Credited with 26 career patents across communications and signal processing.", "photo": "" },
+    { "name": "Roy Ben-Sasson", "role": "Chief Architect", "bio": "Architect of the platform's device-to-device awareness stack.", "photo": "" },
+    { "name": "Ariel Michaeli", "role": "Board Member", "bio": "Brings deep operational and business leadership to the company's strategy.", "photo": "" }
   ],
   "cta": {
     "title": "Work<br>with <span class=\"hl\">us</span>",

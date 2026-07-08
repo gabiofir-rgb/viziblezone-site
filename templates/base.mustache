@@ -9,12 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{{depth}}}assets/css/main.css">
+<link rel="icon" href="{{{depth}}}assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="{{{depth}}}assets/apple-touch-icon.png">
 </head>
 <body>
 
 <nav class="top">
   <div class="wrap nav-in">
-    <a class="logo" href="{{{depth}}}index.html">Vizible<b>zone</b></a>
+    <a class="logo" href="{{{depth}}}index.html"><img class="logo-img" src="{{{depth}}}assets/logo.svg" alt="Viziblezone" width="30" height="30"></a>
     <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('nl').classList.toggle('open')">≡</button>
     <ul class="nav-links" id="nl">
       <li><a href="{{{depth}}}platform.html" {{#isPlatform}}class="active"{{/isPlatform}}>Platform</a></li>
@@ -39,7 +41,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="logo" href="{{{depth}}}index.html">Vizible<b>zone</b></a>
+        <a class="logo" href="{{{depth}}}index.html"><img class="logo-img" src="{{{depth}}}assets/logo.svg" alt="Viziblezone" width="34" height="34"></a>
         <p>{{site.footerBlurb}}</p>
       </div>
       <div>

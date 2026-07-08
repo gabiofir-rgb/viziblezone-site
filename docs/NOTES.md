@@ -19,6 +19,15 @@
 
 - 2026-07-09 (שלב 1, המשך): הרצה חוזרת גילתה ששלב 1 כבר בוצע קודם — repo ציבורי, Pages ממקור GitHub Actions, ו-deploy ירוק. אומץ המאגר הקיים כמקור אמת (במקום push חדש שידרוס אותו). בבדיקה נמצא ששרידי ניסוח לא-מותר עדיין היו חיים באתר: ניסוח מפורש של מונח מקצועי (home/company/public-safety) והפניות לגופי תקינה (company). תוקנו והוחלפו בניסוח הפומבי המותר (DMO-inspired / DMO principles / direct device-to-device); לפי כלל הסודיות המונחים שהוסרו אינם מצוטטים כאן. .gitignore חוזק כדי שעותקים מקומיים שנותרו של המצגות הכבדות וייצוא ה-Gmail לא ייכנסו לעולם למאגר. deploy חוזר ירוק, והאתר החי אומת נקי (9 עמודים 200). פתוח לשלב 2/3: ניסוחי DMO "עירומים" (engineering/expert/DNA), "V2X" בהשוואת חלופות, ותיקיית "LOGO NEW SHMULIK" — לא חריגות מוגדרות.
 
+- 2026-07-09 (שלב 2 — תוכן ומיתוג, Claude Code):
+  1. **CMS לאנגלית:** admin/editor.html ו-admin/schema.js הומרו לאנגלית (RTL→LTR, פונט Archivo). אומת: 0 תווי עברית (֐-׿). כבר בוצע ב-commit נפרד ("CMS interface converted to English").
+  2. **תיקיית מותג:** assets/brand/Logo → assets/brand/logo (אותיות קטנות). תיקיית "LOGO NEW SHMULIK" (שם פרטי) → logo/master. נמחקו כל שאריות ה-junk שלא במעקב (ייצוא Gmail אישי, מצגות PDF כבדות, .picasa, __MACOSX, .DS_Store, zip/docx/lnk) — גיבוי קיים ב-viziblezone-brand-source-PRIVATE. אין יותר שמות אישיים בנתיבים הפומביים.
+  3. **לוגו באתר:** נבחר Logo_White+Yellow-01.svg (SVG וקטורי, white+yellow — מתאים לרקע הכהה) והועתק ל-assets/logo.svg. הוחלף הלוגו הטקסטואלי בניווט (30px) ובפוטר (34px) ב-base.mustache. נוצרו assets/favicon.ico (16/32/48) ו-assets/apple-touch-icon.png (180x180) מסמל הלוגו על רקע חרדל, מקושרים ב-<head>. build.js מעתיק את assets/ ולכן הם עולים לאתר.
+  4. **צוות:** מערך team ב-company.json הוחלף ב-4 חברי הנהלה (photo ריק — גבי יעלה תמונות דרך ה-CMS).
+  5. **פטנטים (תיקון דיוק, כל האתר):** לחברה אין פטנטים; הקרדיטים אישיים למייסדים. story.paragraphs ו-heritage.bullets נוסחו מחדש ל"founders credited with 60+ career patents". סריקה בכל קובצי content: אין עוד טענת פטנט ברמת החברה.
+  6. **סקשן וידאו:** נוסף "See it in action" ל-home (בין verticals ל-resilience) — רשת רספונסיבית 16:9, iframes עצלים מ-youtube-nocookie.com/embed. חילוץ מזהה ה-YouTube מכל צורת URL נעשה ב-build.js (ytId), לא ב-JS צד-לקוח. admin/schema.js עודכן עם שדות videos באותו commit (עריך מה-CMS). הערה: תצוגת ה-preview ב-CMS לא מריצה את build.js ולכן לא תטמיע את הווידאו — האתר הבנוי כן.
+  - נסגר: פריט "LOGO NEW SHMULIK" מ-2026-07-08 טופל (שוּנה ל-master).
+
 ## ידוע ופתוח
 - placeholder-ים שחייבים תוכן אמיתי לפני דומיין: נתוני סטטיסטיקה בעמוד הבית (50%+, <2s ללא מקור), קישורי עיתונות (#), אנשי צוות 2-3 בעמוד Company, פריטי News, form.action של Formspree, אימות info@vizible.zone.
 - עמוד Company מכיל תיאור רקע כללי של הצוות (mission-critical, standards, patents) בלי שמות חברות. לאשר מול גבי אם לנקוב בשם המעסיק הקודם במפורש.

@@ -12,7 +12,9 @@
 
 ## תוכן, דורש קלט מגבי (שלב 2)
 - [ ] קישורי עיתונות אמיתיים (TechCrunch, Fast Company, Geektime, Calcalist, NoCamels)
-- [ ] אנשי צוות: שמות, תפקידים, ביו, תמונות
+- [~] אנשי צוות: 4 חברי הנהלה (Gabi Ofir, Dr. Baruh Hason, Roy Ben-Sasson, Ariel Michaeli) — שמות/תפקידים/ביו עודכנו; תמונות ממתינות להעלאה דרך ה-CMS
+- [x] תיקון ניסוח פטנטים באתר: לחברה אין פטנטים — הקרדיטים הם אישיים של המייסדים (35+26 = 60+ פטנטים בקריירה). תוקן ב-company.json (story + heritage + ביו)
+- [x] סקשן וידאו "See it in action" בעמוד הבית — 2 סרטוני YouTube (embed מ-youtube-nocookie), נערך דרך ה-CMS
 - [ ] פריטי News ראשונים (כולל Smart Mobility IL אם רלוונטי לפרסום)
 - [ ] אימות info@vizible.zone
 - [ ] נתוני סטטיסטיקה עם מקור, או ניסוח בלי מספרים
@@ -20,8 +22,8 @@
 - [ ] החלטה: לציין בעמוד Company את שם המעסיק הקודם של המייסד במפורש או להשאיר ניסוח כללי
 
 ## שלב 3 טכני
-- [ ] שילוב הלוגו הרשמי מ-assets/brand בניווט ובפוטר (כיום לוגו טקסטואלי)
-- [ ] favicon מקובץ הלוגו + apple-touch-icon
+- [x] שילוב הלוגו (assets/logo.svg — white+yellow SVG) בניווט ובפוטר; הוחלף הלוגו הטקסטואלי
+- [x] favicon.ico (16/32/48) + apple-touch-icon 180x180 מסמל הלוגו, ב-assets/, מקושרים ב-base.mustache, מועתקים ל-dist
 - [ ] Open Graph + תמונת שיתוף 1200x630
 - [ ] sitemap.xml + robots.txt (להוסיף ל-build.js)
 - [ ] 404.html ממותג

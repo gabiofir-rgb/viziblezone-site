@@ -38,6 +38,14 @@
     "title": "One platform,<br>four battlefields",
     "lede": "The same awareness layer protects streets, cities, industrial sites and emergency operations. Explore how it deploys in each world."
   },
+  "videos": {
+    "eyebrow": "Video",
+    "title": "See it<br>in <span class=\"hl\">action</span>",
+    "items": [
+      { "title": "Seeing pedestrians behind obstacles", "caption": "Real-time detection of people hidden behind obstacles on the road.", "youtubeUrl": "https://youtu.be/oxeovBGn8NA" },
+      { "title": "On-device human-behavior sensing", "caption": "Real behavioral data captured by our in-house sensor-sampling app.", "youtubeUrl": "https://youtu.be/1Mk9WiLA3NU" }
+    ]
+  },
   "resilience": {
     "quote": "Built for the moment <span class=\"hl\">networks fail</span>",
     "lede": "Viziblezone's architecture is DMO-inspired — the discipline behind mission-critical communications that emergency and defense forces rely on worldwide. Our team spent decades building it.",

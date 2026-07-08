@@ -6,6 +6,15 @@ const Mustache = require('mustache');
 const read = p => fs.readFileSync(p, 'utf8');
 const json = p => JSON.parse(read(p));
 
+/* Extract an 11-char YouTube video ID from any URL form (youtu.be/ID,
+   watch?v=ID, embed/ID, shorts/ID) or a bare ID. Returns "" if none. */
+const ytId = u => {
+  const s = String(u || '').trim();
+  const m = s.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  if (m) return m[1];
+  return /^[A-Za-z0-9_-]{11}$/.test(s) ? s : '';
+};
+
 const OUT = 'dist';
 const site = json('content/site.json');
 const base = read('templates/base.mustache');
@@ -19,6 +28,9 @@ const verticals = site.verticalSlugs.map(slug => ({ slug, ...json(`content/verti
 function build(tpl, data, outFile, depth) {
   const partials = { content: read(`templates/${tpl}.mustache`) };
   const view = { site, depth, verticals, year: new Date().getFullYear(), ...data };
+  if (view.page && view.page.videos && Array.isArray(view.page.videos.items)) {
+    view.page.videos.items = view.page.videos.items.map(it => ({ ...it, videoId: ytId(it.youtubeUrl) }));
+  }
   ['platform','verticals','company','news','contact'].forEach(k => {
     view['is' + k[0].toUpperCase() + k.slice(1)] = data.active === k;
   });

@@ -20,6 +20,6 @@ SETUP_PROMPT.md
 
 # Stale local copies of excluded brand originals (backups kept outside the repo).
 # Heavy PDFs (one is 460MB > GitHub's 100MB limit) and the personal Gmail export.
-assets/brand/Logo/presentation_BIG.pdf
-assets/brand/Logo/presentation_icon.pdf
+assets/brand/logo/presentation_BIG.pdf
+assets/brand/logo/presentation_icon.pdf
 assets/brand/**/*Mail_files/

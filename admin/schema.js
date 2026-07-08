@@ -63,6 +63,13 @@ const CMS_SCHEMA = {
     { key: "verticalsIntro.eyebrow", type: "text", label: "Verticals: eyebrow" },
     { key: "verticalsIntro.title", type: "html", label: "Verticals: title" },
     { key: "verticalsIntro.lede", type: "textarea", label: "Verticals: paragraph" },
+    { key: "videos.eyebrow", type: "text", label: "Videos: eyebrow" },
+    { key: "videos.title", type: "html", label: "Videos: title" },
+    { key: "videos.items", type: "list", label: "Videos: items", item: [
+      { key: "title", type: "text", label: "Title" },
+      { key: "caption", type: "textarea", label: "Caption" },
+      { key: "youtubeUrl", type: "url", label: "YouTube URL" }
+    ]},
     { key: "resilience.quote", type: "html", label: "Resilience: large quote" },
     { key: "resilience.lede", type: "textarea", label: "Resilience: paragraph" },
     { key: "resilience.bullets", type: "list", label: "Resilience: bullets", item: [{ key: "", type: "textarea", label: "Bullet" }] },

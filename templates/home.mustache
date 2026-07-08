@@ -105,6 +105,26 @@
   </div>
 </section>
 
+<section id="videos">
+  <div class="wrap">
+    <p class="eyebrow">{{page.videos.eyebrow}}</p>
+    <h2>{{{page.videos.title}}}</h2>
+    <div class="video-grid">
+      {{#page.videos.items}}
+      <figure class="video">
+        <div class="video-frame">
+          <iframe src="https://www.youtube-nocookie.com/embed/{{videoId}}" title="{{title}}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <figcaption>
+          <h3>{{title}}</h3>
+          <p>{{caption}}</p>
+        </figcaption>
+      </figure>
+      {{/page.videos.items}}
+    </div>
+  </div>
+</section>
+
 <section class="resil" id="resilience">
   <div class="wrap resil-grid">
     <blockquote>{{{page.resilience.quote}}}</blockquote>
