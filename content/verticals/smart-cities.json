@@ -1,0 +1,49 @@
+{
+  "name": "Smart Cities",
+  "cardTitle": "Safer crossings & zones",
+  "cardText": "Blanket school zones, crossings and shared streets with awareness that needs no cameras, poles or connectivity rollout.",
+  "meta": {
+    "title": "Smart Cities",
+    "description": "Viziblezone for smart cities: protect school zones, crossings and shared streets without cameras, poles or connectivity projects."
+  },
+  "hero": {
+    "eyebrow": "Verticals / Smart Cities",
+    "title": "City-scale safety,<br><span class=\"hl\">zero</span> construction",
+    "lede": "Every smart-city safety project starts with a budget line for infrastructure. Viziblezone starts with the phones your residents already carry."
+  },
+  "scenario": {
+    "eyebrow": "The scenario",
+    "title": "The school zone<br>at 7:45 AM",
+    "paragraphs": [
+      "Children cross between parked cars, buses block sightlines, and drivers are mid-commute. Cameras cover fixed angles; speed bumps slow everyone all day. Neither sees the specific child about to step into the specific gap.",
+      "With Viziblezone, protected phones in the zone announce themselves to approaching vehicles directly. Drivers get an alert about the actual hidden pedestrian, at the actual moment of risk — no poles, no cameras, no control room."
+    ]
+  },
+  "value": {
+    "eyebrow": "What it delivers",
+    "title": "For municipalities<br>and planners",
+    "items": [
+      { "tag": "Cost", "title": "No capital project", "text": "Deployment is distribution of software, not installation of hardware. Coverage follows adoption, not trenching schedules." },
+      { "tag": "Privacy", "title": "No surveillance", "text": "Unlike camera networks, the system is anonymous by design. It knows someone is there — never who." },
+      { "tag": "Focus", "title": "Protect who matters most", "text": "Prioritize children, the elderly and mobility-impaired residents through schools, community programs and city apps." },
+      { "tag": "Data", "title": "Risk heatmaps", "text": "Aggregated, anonymized near-miss data shows the city where danger concentrates — before the accident statistics do." }
+    ]
+  },
+  "deployment": {
+    "eyebrow": "Deployment",
+    "title": "From one zone<br>to the whole city",
+    "paragraphs": [
+      "Cities start with a bounded pilot — a school zone, a campus, a high-risk corridor — distributed through schools and community channels, with participating drivers or fleets receiving alerts. Results are measured in detected encounters and driver response."
+    ],
+    "bullets": [
+      "Pilot zone with defined perimeter and measurable KPIs",
+      "Distribution via city apps, schools and community programs",
+      "Expansion path: municipal fleets, public transport, delivery fleets"
+    ]
+  },
+  "cta": {
+    "title": "Start with<br>one <span class=\"hl\">zone</span>",
+    "lede": "We work with municipalities on scoped pilots with clear safety metrics.",
+    "button": "Talk to us"
+  }
+}

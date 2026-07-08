@@ -1,0 +1,49 @@
+{
+  "name": "Industrial",
+  "cardTitle": "Worker proximity safety",
+  "cardText": "Ports, logistics yards and heavy sites where people and machines share space with poor visibility.",
+  "meta": {
+    "title": "Industrial",
+    "description": "Viziblezone for industrial safety: protect workers around heavy machinery in ports, logistics yards and construction sites, beyond line of sight."
+  },
+  "hero": {
+    "eyebrow": "Verticals / Industrial",
+    "title": "Man and machine,<br>mutually <span class=\"hl\">aware</span>",
+    "lede": "Containers, stacks and structures make industrial sites a maze of blind corners. Viziblezone makes every worker visible to every machine operator — through the obstacles."
+  },
+  "scenario": {
+    "eyebrow": "The scenario",
+    "title": "Behind the<br>container stack",
+    "paragraphs": [
+      "A reach stacker swings around a corner as a worker steps out from behind a container row. Mirrors, cameras and spotters all failed at the same moment, because they all depend on the same thing: a clear line of sight.",
+      "With Viziblezone, the worker's device and the machine are directly aware of each other. The operator receives a proximity alert with direction and closing speed while the worker is still hidden — and the worker's device can warn them symmetrically."
+    ]
+  },
+  "value": {
+    "eyebrow": "What it delivers",
+    "title": "For site operators<br>and HSE leaders",
+    "items": [
+      { "tag": "Prevention", "title": "Proximity alerts through obstacles", "text": "Operators are warned about hidden workers with direction and urgency — not a generic beep, a specific risk." },
+      { "tag": "Symmetry", "title": "Both sides warned", "text": "Workers are alerted about approaching machinery they cannot see or hear, especially with hearing protection on." },
+      { "tag": "Compliance", "title": "Auditable safety layer", "text": "Anonymized encounter logs give HSE teams hard data on near misses, hotspots and shift patterns." },
+      { "tag": "Rollout", "title": "Days, not months", "text": "Devices carried by workers and mounted in cabins — no site-wide infrastructure installation." }
+    ]
+  },
+  "deployment": {
+    "eyebrow": "Deployment",
+    "title": "Fits the site<br>you already run",
+    "paragraphs": [
+      "Deployment uses ruggedized or standard smartphones carried by workers and devices mounted in machine cabins. Zones, roles and alert thresholds are configured per site, and the system operates fully inside the perimeter — including areas with no coverage at all."
+    ],
+    "bullets": [
+      "Worker devices: carried smartphones or wearable-mounted units",
+      "Machinery: cabin-mounted device or integration with onboard systems",
+      "Works in coverage dead zones: warehouses, holds, underground levels"
+    ]
+  },
+  "cta": {
+    "title": "Make your site<br><span class=\"hl\">aware</span>",
+    "lede": "We run scoped industrial pilots with defined safety KPIs.",
+    "button": "Talk to us"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Public Safety",
+  "cardTitle": "Awareness when it matters",
+  "cardText": "Teams and civilians stay mutually aware in emergencies and mass events — even when networks are overloaded or down.",
+  "meta": {
+    "title": "Public Safety",
+    "description": "Viziblezone for public safety: situational awareness for teams and civilians that keeps working when cellular networks are overloaded or down."
+  },
+  "hero": {
+    "eyebrow": "Verticals / Public Safety",
+    "title": "When the network dies,<br>awareness <span class=\"hl\">survives</span>",
+    "lede": "Disasters, mass events and emergencies are exactly when cellular networks fail. Viziblezone's direct device-to-device architecture was born from the same DMO discipline behind professional mission-critical communications."
+  },
+  "scenario": {
+    "eyebrow": "The scenario",
+    "title": "Hour one of<br>the emergency",
+    "paragraphs": [
+      "An earthquake, a mass-casualty event, a large-scale outage. Cell networks are saturated or dark precisely when responders need to know where people are — and when civilians need to be findable.",
+      "Because Viziblezone communicates directly between devices, presence and location awareness keep flowing with no towers at all. Responders see who is near them; trapped or endangered civilians remain announcible to anyone in range."
+    ]
+  },
+  "value": {
+    "eyebrow": "What it delivers",
+    "title": "For agencies and<br>resilience planners",
+    "items": [
+      { "tag": "Resilience", "title": "Zero-infrastructure operation", "text": "Designed to keep working through total network collapse — the failure mode that breaks every cloud-based solution." },
+      { "tag": "Heritage", "title": "DMO in its DNA", "text": "The architecture follows Direct Mode Operation principles from professional mission-critical communications, adapted to the devices everyone carries." },
+      { "tag": "Reach", "title": "Civilians included", "text": "Protection extends beyond equipped teams to the public — the phones already in every pocket become part of the picture." },
+      { "tag": "Speed", "title": "Standing capability", "text": "Nothing to deploy on the day of the event. The capability is already resident on the devices, waiting." }
+    ]
+  },
+  "deployment": {
+    "eyebrow": "Deployment",
+    "title": "A resilience layer,<br>not a gadget",
+    "paragraphs": [
+      "For agencies, Viziblezone integrates into responder devices and command applications. For population-scale resilience, it ships with partner devices or national preparedness apps — dormant in normal times, decisive in the first hour of a crisis."
+    ],
+    "bullets": [
+      "Responder mode: team awareness on standard smartphones",
+      "Population mode: embedded in partner devices or preparedness apps",
+      "Exercises: measurable performance in network-denied drills"
+    ]
+  },
+  "cta": {
+    "title": "Plan for the<br><span class=\"hl\">worst hour</span>",
+    "lede": "We work with agencies and partners on network-denied awareness capabilities.",
+    "button": "Talk to us"
+  }
+}

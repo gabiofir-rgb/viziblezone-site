@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "Situational Awareness Platform",
+    "description": "Viziblezone turns every smartphone into a safety beacon. Direct device-to-device awareness that detects people beyond line of sight, with zero reliance on cellular infrastructure."
+  },
+  "hero": {
+    "eyebrow": "Situational awareness platform",
+    "title": "See what<br>can't be <span class=\"hl\">seen</span>",
+    "lede": "Viziblezone turns every smartphone into a safety beacon. Direct device-to-device awareness detects people beyond line of sight — behind vehicles, walls and blind corners — with zero reliance on cellular infrastructure.",
+    "cta1": "Request a demo",
+    "cta2": "Explore the platform",
+    "tags": ["Smartphone-native", "No cellular dependency", "DMO-inspired"],
+    "sceneLabel": "Live detection · beyond line of sight"
+  },
+  "problem": {
+    "eyebrow": "The problem",
+    "title": "The most dangerous<br>person is the one<br>you can't see",
+    "lede": "Cameras, radar and lidar all share one hard limit: line of sight. A child behind a parked van, a worker behind a container, a rider past a blind corner — by the time sensors can see them, it is often too late to react.",
+    "stats": [
+      { "num": "<span class=\"hl\">50%+</span>", "text": "of pedestrian collisions involve a victim who was obstructed or emerged suddenly" },
+      { "num": "&lt;2<span class=\"hl\">s</span>", "text": "typical reaction window once a hidden pedestrian becomes visible to the driver" },
+      { "num": "<span class=\"hl\">0</span>", "text": "infrastructure required — Viziblezone runs on the smartphones people already carry" }
+    ]
+  },
+  "platform": {
+    "eyebrow": "The platform",
+    "title": "Every phone,<br>a beacon",
+    "lede": "Viziblezone is a software platform that lets ordinary smartphones announce presence, motion and risk directly to nearby vehicles and systems — device to device, in real time, before visual contact is possible.",
+    "steps": [
+      { "k": "01 / BROADCAST", "title": "Announce presence", "text": "A protected phone continuously broadcasts a compact signature: presence, motion and trajectory. Fully anonymous, battery-friendly, no app interaction needed." },
+      { "k": "02 / DIRECT RECEPTION", "title": "Device to device", "text": "Nearby vehicles, phones and systems receive the signal directly — no cell tower, no cloud, no network in between. Signals travel through and around obstructions." },
+      { "k": "03 / EARLY WARNING", "title": "Alert before sight", "text": "An on-device risk engine fuses trajectories and issues a targeted alert seconds before line of sight — enough time to brake, slow down or reroute." }
+    ],
+    "cta": "Dive into the platform"
+  },
+  "verticalsIntro": {
+    "eyebrow": "Verticals",
+    "title": "One platform,<br>four battlefields",
+    "lede": "The same awareness layer protects streets, cities, industrial sites and emergency operations. Explore how it deploys in each world."
+  },
+  "resilience": {
+    "quote": "Built for the moment <span class=\"hl\">networks fail</span>",
+    "lede": "Viziblezone's architecture is inspired by DMO — Direct Mode Operation, the discipline behind mission-critical communications used by emergency and defense forces worldwide. Our team spent decades building it.",
+    "bullets": [
+      "Direct device-to-device communication, no cellular dependency",
+      "Keeps working in dead zones, disasters and network collapse",
+      "Decentralized by design — no single point of failure",
+      "Engineered by veterans of mission-critical communications"
+    ]
+  },
+  "press": {
+    "eyebrow": "In the press",
+    "title": "They noticed",
+    "items": [
+      { "name": "TechCrunch", "url": "#" },
+      { "name": "Fast Company", "url": "#" },
+      { "name": "Geektime", "url": "#" },
+      { "name": "Calcalist", "url": "#" },
+      { "name": "NoCamels", "url": "#" }
+    ],
+    "cta": "All news & press"
+  },
+  "cta": {
+    "eyebrow": "Contact",
+    "title": "Let's make the<br>invisible visible",
+    "lede": "Partnerships, pilots, OEM integrations and investment — we'd love to talk.",
+    "button": "Get in touch"
+  }
+}

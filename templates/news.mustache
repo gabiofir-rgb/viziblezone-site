@@ -1,0 +1,33 @@
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="{{{depth}}}index.html">Home</a> / News</p>
+    <p class="eyebrow" style="margin-top:26px">{{page.hero.eyebrow}}</p>
+    <h1>{{{page.hero.title}}}</h1>
+    <p class="lede">{{page.hero.lede}}</p>
+  </div>
+</header>
+
+<section class="light">
+  <div class="wrap">
+    <div class="news-list">
+      {{#page.items}}
+      <article class="news-item">
+        <span class="date">{{date}}</span>
+        <div>
+          <h3>{{#url}}<a href="{{url}}" target="_blank" rel="noopener">{{title}}</a>{{/url}}{{^url}}{{title}}{{/url}}</h3>
+          <p>{{summary}}</p>
+        </div>
+        <span class="src">{{source}}</span>
+      </article>
+      {{/page.items}}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>{{{page.cta.title}}}</h2>
+    <p class="lede">{{page.cta.lede}}</p>
+    <a class="btn btn-solid" href="{{{depth}}}contact.html">{{page.cta.button}}</a>
+  </div>
+</section>

@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "title": "News & Press",
+    "description": "News, announcements and press coverage of Viziblezone."
+  },
+  "hero": {
+    "eyebrow": "News & press",
+    "title": "What's<br><span class=\"hl\">moving</span>",
+    "lede": "Announcements, milestones and coverage. For press inquiries, reach us through the contact page."
+  },
+  "items": [
+    { "date": "2026", "title": "Placeholder: add real news items via the site editor", "source": "Viziblezone", "url": "", "summary": "Each item has a date, title, source, optional link and summary. Add, edit and remove items from the editor's News section." },
+    { "date": "2020", "title": "Press coverage placeholder — TechCrunch", "source": "TechCrunch", "url": "#", "summary": "Replace with the real article link and a one-line summary." },
+    { "date": "2019", "title": "Press coverage placeholder — Fast Company", "source": "Fast Company", "url": "#", "summary": "Replace with the real article link and a one-line summary." }
+  ],
+  "cta": {
+    "title": "Writing<br>about <span class=\"hl\">us</span>?",
+    "lede": "We're happy to provide materials, interviews and demos for press.",
+    "button": "Press contact"
+  }
+}

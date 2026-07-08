@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.DS_Store
+Thumbs.db
+*.log
+
+# OS / tooling junk (defensive — keep the public repo clean)
+__MACOSX/
+.picasa.ini
+.picasaoriginals/
+*.lnk
+
+# Never commit office docs / archives / saved web pages into brand assets
+assets/brand/**/*.docx
+assets/brand/**/*.zip
+assets/brand/**/*.html
+
+# Internal handoff prompt — kept out of the public repo
+SETUP_PROMPT.md

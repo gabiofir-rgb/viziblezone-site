@@ -1,0 +1,59 @@
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="{{{depth}}}index.html">Home</a> / Company</p>
+    <p class="eyebrow" style="margin-top:26px">{{page.hero.eyebrow}}</p>
+    <h1>{{{page.hero.title}}}</h1>
+    <p class="lede">{{page.hero.lede}}</p>
+  </div>
+</header>
+
+<section class="light">
+  <div class="wrap">
+    <p class="eyebrow">{{page.story.eyebrow}}</p>
+    <h2>{{{page.story.title}}}</h2>
+    <div class="prose">
+      {{#page.story.paragraphs}}<p>{{.}}</p>{{/page.story.paragraphs}}
+    </div>
+  </div>
+</section>
+
+<section class="resil">
+  <div class="wrap resil-grid">
+    <blockquote>{{{page.heritage.quote}}}</blockquote>
+    <div>
+      <p class="lede" style="margin-bottom:10px">{{page.heritage.lede}}</p>
+      <ul class="dashlist">
+        {{#page.heritage.bullets}}<li>{{.}}</li>{{/page.heritage.bullets}}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="team">
+  <div class="wrap">
+    <p class="eyebrow">{{page.teamIntro.eyebrow}}</p>
+    <h2>{{{page.teamIntro.title}}}</h2>
+    <p class="lede">{{page.teamIntro.lede}}</p>
+    <div class="team">
+      {{#page.team}}
+      <div class="member">
+        <div class="ph">
+          {{#photo}}<img src="{{{depth}}}{{photo}}" alt="{{name}}">{{/photo}}
+          {{^photo}}<svg viewBox="0 0 24 24" fill="none" stroke="#6E6B60" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>{{/photo}}
+        </div>
+        <h3>{{name}}</h3>
+        <span class="role">{{role}}</span>
+        <p>{{bio}}</p>
+      </div>
+      {{/page.team}}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>{{{page.cta.title}}}</h2>
+    <p class="lede">{{page.cta.lede}}</p>
+    <a class="btn btn-solid" href="{{{depth}}}contact.html">{{page.cta.button}}</a>
+  </div>
+</section>

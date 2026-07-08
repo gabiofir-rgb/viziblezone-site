@@ -1,0 +1,81 @@
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="{{{depth}}}index.html">Home</a> / Platform</p>
+    <p class="eyebrow" style="margin-top:26px">{{page.hero.eyebrow}}</p>
+    <h1>{{{page.hero.title}}}</h1>
+    <p class="lede">{{page.hero.lede}}</p>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">{{page.how.eyebrow}}</p>
+    <h2>{{{page.how.title}}}</h2>
+    <p class="lede">{{page.how.lede}}</p>
+    <div class="steps">
+      {{#page.how.steps}}
+      <div class="step">
+        <span class="k">{{k}}</span>
+        <h3>{{title}}</h3>
+        <p>{{text}}</p>
+      </div>
+      {{/page.how.steps}}
+    </div>
+  </div>
+</section>
+
+<section class="light" id="principles">
+  <div class="wrap">
+    <p class="eyebrow">{{page.principles.eyebrow}}</p>
+    <h2>{{{page.principles.title}}}</h2>
+    <div class="cards">
+      {{#page.principles.items}}
+      <div class="card">
+        <span class="tag">{{tag}}</span>
+        <h3>{{title}}</h3>
+        <p>{{text}}</p>
+      </div>
+      {{/page.principles.items}}
+    </div>
+  </div>
+</section>
+
+<section id="integration">
+  <div class="wrap">
+    <p class="eyebrow">{{page.integration.eyebrow}}</p>
+    <h2>{{{page.integration.title}}}</h2>
+    <p class="lede">{{page.integration.lede}}</p>
+    <div class="cards c3 dark">
+      {{#page.integration.paths}}
+      <div class="card">
+        <span class="tag">{{tag}}</span>
+        <h3>{{title}}</h3>
+        <p>{{text}}</p>
+      </div>
+      {{/page.integration.paths}}
+    </div>
+  </div>
+</section>
+
+<section class="light" id="faq">
+  <div class="wrap">
+    <p class="eyebrow">{{page.faq.eyebrow}}</p>
+    <h2>{{{page.faq.title}}}</h2>
+    <div class="faq">
+      {{#page.faq.items}}
+      <details>
+        <summary>{{q}}</summary>
+        <div class="a">{{a}}</div>
+      </details>
+      {{/page.faq.items}}
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>{{{page.cta.title}}}</h2>
+    <p class="lede">{{page.cta.lede}}</p>
+    <a class="btn btn-solid" href="{{{depth}}}contact.html">{{page.cta.button}}</a>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+{
+  "name": "Automotive",
+  "cardTitle": "Hidden VRU alerts",
+  "cardText": "Warn drivers and ADAS stacks about pedestrians, cyclists and riders concealed behind vehicles and structures.",
+  "meta": {
+    "title": "Automotive",
+    "description": "Viziblezone for automotive: alert drivers and ADAS systems about vulnerable road users hidden behind obstacles, before line of sight."
+  },
+  "hero": {
+    "eyebrow": "Verticals / Automotive",
+    "title": "Perception beyond<br>the <span class=\"hl\">sensor suite</span>",
+    "lede": "Cameras, radar and lidar end where line of sight ends. Viziblezone extends the vehicle's awareness to the pedestrian behind the parked van and the cyclist past the blind corner."
+  },
+  "scenario": {
+    "eyebrow": "The scenario",
+    "title": "The dart-out<br>problem",
+    "paragraphs": [
+      "A child steps out from between parked cars. A delivery rider crosses behind a truck. In these scenarios the driver and the vehicle's own sensors see the person only when they emerge — leaving a reaction window that is often shorter than braking distance.",
+      "Viziblezone closes that gap. The pedestrian's phone announces presence and trajectory directly to the approaching vehicle, which raises a targeted alert seconds before visual contact. The driver slows down before the situation becomes an emergency."
+    ]
+  },
+  "value": {
+    "eyebrow": "What it delivers",
+    "title": "For OEMs and<br>fleet operators",
+    "items": [
+      { "tag": "Safety", "title": "Earlier warnings", "text": "Alerts arrive before line of sight, adding seconds where onboard sensors add fractions of a second." },
+      { "tag": "Coverage", "title": "No blind spots", "text": "Occlusions, darkness, glare and weather degrade optical sensors. Direct device-to-device awareness is indifferent to all of them." },
+      { "tag": "Integration", "title": "ADAS & HMI ready", "text": "Risk events are delivered as clean, prioritized inputs to ADAS logic, instrument cluster or infotainment." },
+      { "tag": "Economics", "title": "Software, not hardware", "text": "No additional sensors on the vehicle and no roadside units. Value scales with the installed base of protected phones." }
+    ]
+  },
+  "deployment": {
+    "eyebrow": "Deployment",
+    "title": "How it lands<br>in a vehicle",
+    "paragraphs": [
+      "Integration targets the vehicle's existing software stack: alerts can surface through the infotainment platform, the ADAS domain, or a fleet application. On the pedestrian side, protection ships as an SDK inside partner apps or natively in the device."
+    ],
+    "bullets": [
+      "In-vehicle: infotainment app, ADAS input, or fleet telematics integration",
+      "Pedestrian side: SDK embedded in partner apps or native device integration",
+      "Pilot format: instrumented vehicles in a defined urban zone with measurable KPIs"
+    ]
+  },
+  "cta": {
+    "title": "Put it in<br>a <span class=\"hl\">vehicle</span>",
+    "lede": "We work with OEMs, Tier-1s and fleets on integrations and pilots.",
+    "button": "Talk to us"
+  }
+}

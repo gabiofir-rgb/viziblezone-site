@@ -1,0 +1,55 @@
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="{{{depth}}}index.html">Home</a> / Verticals / {{page.name}}</p>
+    <p class="eyebrow" style="margin-top:26px">{{page.hero.eyebrow}}</p>
+    <h1>{{{page.hero.title}}}</h1>
+    <p class="lede">{{page.hero.lede}}</p>
+  </div>
+</header>
+
+<section class="light">
+  <div class="wrap">
+    <p class="eyebrow">{{page.scenario.eyebrow}}</p>
+    <h2>{{{page.scenario.title}}}</h2>
+    <div class="prose">
+      {{#page.scenario.paragraphs}}<p>{{.}}</p>{{/page.scenario.paragraphs}}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">{{page.value.eyebrow}}</p>
+    <h2>{{{page.value.title}}}</h2>
+    <div class="cards dark">
+      {{#page.value.items}}
+      <div class="card">
+        <span class="tag">{{tag}}</span>
+        <h3>{{title}}</h3>
+        <p>{{text}}</p>
+      </div>
+      {{/page.value.items}}
+    </div>
+  </div>
+</section>
+
+<section class="light">
+  <div class="wrap">
+    <p class="eyebrow">{{page.deployment.eyebrow}}</p>
+    <h2>{{{page.deployment.title}}}</h2>
+    <div class="prose">
+      {{#page.deployment.paragraphs}}<p>{{.}}</p>{{/page.deployment.paragraphs}}
+    </div>
+    <ul class="dashlist" style="max-width:720px">
+      {{#page.deployment.bullets}}<li>{{.}}</li>{{/page.deployment.bullets}}
+    </ul>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <h2>{{{page.cta.title}}}</h2>
+    <p class="lede">{{page.cta.lede}}</p>
+    <a class="btn btn-solid" href="{{{depth}}}contact.html">{{page.cta.button}}</a>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "title": "Platform",
+    "description": "How the Viziblezone situational awareness platform works: direct device-to-device presence broadcasting, on-device risk analysis, and integration paths for OEMs, cities and industry."
+  },
+  "hero": {
+    "eyebrow": "Platform",
+    "title": "Awareness without<br><span class=\"hl\">infrastructure</span>",
+    "lede": "Viziblezone is a software layer that runs on the devices people already carry. No towers, no cameras, no rollout projects — presence and risk flow directly between phones, vehicles and systems."
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "Three moves,<br>seconds earlier",
+    "lede": "The platform closes the perception gap that every line-of-sight sensor shares, by letting endangered and endangering parties announce themselves to each other directly.",
+    "steps": [
+      { "k": "01 / BROADCAST", "title": "Announce presence", "text": "A protected phone continuously broadcasts a compact signature: presence, motion and trajectory. Fully anonymous, battery-friendly, no app interaction needed." },
+      { "k": "02 / DIRECT RECEPTION", "title": "Device to device", "text": "Nearby vehicles, phones and systems receive the signal directly — no cell tower, no cloud, no network in between. Signals travel through and around obstructions." },
+      { "k": "03 / EARLY WARNING", "title": "Alert before sight", "text": "An on-device risk engine fuses trajectories and issues a targeted alert seconds before line of sight — enough time to brake, slow down or reroute." }
+    ]
+  },
+  "principles": {
+    "eyebrow": "Design principles",
+    "title": "What the platform<br>refuses to depend on",
+    "items": [
+      { "tag": "Privacy", "title": "Anonymous by design", "text": "Broadcast signatures carry motion and risk context, not identity. No accounts, no tracking, no personal data leaving the device." },
+      { "tag": "Resilience", "title": "No single point of failure", "text": "Every interaction is peer to peer. There is no server whose outage silences the system and no coverage map that limits where it works." },
+      { "tag": "Reach", "title": "Beyond line of sight", "text": "Signals propagate where optics cannot — through and around vehicles, structures and terrain — giving seconds of warning that no camera can." },
+      { "tag": "Practicality", "title": "Devices people already carry", "text": "Deployment is a software update, not a construction project. Coverage grows with adoption, starting from day one." }
+    ]
+  },
+  "integration": {
+    "eyebrow": "Integration",
+    "title": "Three ways in",
+    "lede": "The platform is built to meet partners where they are — from a pilot in a defined zone to deep OEM integration.",
+    "paths": [
+      { "tag": "Mobile", "title": "Device & OS partners", "text": "Native integration with smartphone platforms and OEM software stacks, bringing protection to entire device fleets at once." },
+      { "tag": "Automotive", "title": "Vehicle & ADAS", "text": "Alerts delivered into infotainment, ADAS and fleet systems, extending the vehicle's perception envelope beyond its own sensors." },
+      { "tag": "Pilot", "title": "Site & city pilots", "text": "A scoped deployment in a port, campus, work site or urban zone — measurable safety outcomes within a defined perimeter." }
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions we hear",
+    "items": [
+      { "q": "Does it need cellular coverage or internet?", "a": "No. Communication is direct, device to device. The platform is designed to keep working in dead zones, underground facilities, and full network outages — that is a core design requirement, not an edge case." },
+      { "q": "Does it track people?", "a": "No. The broadcast is anonymous and carries no identity. It announces that someone is there and how they are moving — not who they are. Nothing is uploaded to a cloud." },
+      { "q": "What about battery drain?", "a": "The broadcast is engineered for continuous background operation with negligible battery impact, using the low-power capabilities of modern smartphone hardware." },
+      { "q": "How is this different from cameras, radar or V2X infrastructure?", "a": "Those approaches either require line of sight or require infrastructure to be built and maintained. Viziblezone requires neither: it sees around obstacles and rides on devices that are already in everyone's pocket." },
+      { "q": "What does deployment involve?", "a": "For a pilot: an app or SDK on participating devices in a defined zone. For partners: integration into the device or vehicle software stack. There is no hardware to install in the field." }
+    ]
+  },
+  "cta": {
+    "title": "See it working<br><span class=\"hl\">live</span>",
+    "lede": "The fastest way to understand the platform is to watch a hidden pedestrian appear on screen before you can see them.",
+    "button": "Request a demo"
+  }
+}

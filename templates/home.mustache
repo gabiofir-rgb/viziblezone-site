@@ -1,0 +1,140 @@
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">{{page.hero.eyebrow}}</p>
+      <h1>{{{page.hero.title}}}</h1>
+      <p class="lede">{{page.hero.lede}}</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="{{{depth}}}contact.html">{{page.hero.cta1}}</a>
+        <a class="btn btn-ghost" href="{{{depth}}}platform.html">{{page.hero.cta2}}</a>
+      </div>
+      <div class="hero-tags">
+        {{#page.hero.tags}}<span>{{.}}</span>{{/page.hero.tags}}
+      </div>
+    </div>
+
+    <figure class="scene" aria-label="Illustration: a pedestrian hidden behind a parked truck is detected by an approaching car through direct device-to-device signals">
+      <div class="scene-label"><i></i>{{page.hero.sceneLabel}}</div>
+      <svg viewBox="0 0 560 420" width="100%" role="img" aria-hidden="true">
+        <line x1="20" y1="330" x2="540" y2="330" stroke="#2A2A2E" stroke-width="2"/>
+        <line x1="20" y1="330" x2="540" y2="330" stroke="#E0A526" stroke-width="2" stroke-dasharray="2 14" opacity=".5"/>
+        <g>
+          <circle class="pulse" cx="452" cy="258" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
+          <circle class="pulse p2" cx="452" cy="258" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
+          <circle class="pulse p3" cx="452" cy="258" r="190" fill="none" stroke="#E0A526" stroke-width="2"/>
+        </g>
+        <path class="sig" d="M446 252 C 380 150, 220 150, 132 236" fill="none" stroke="#E0A526" stroke-width="2.5" opacity=".9"/>
+        <g>
+          <rect x="238" y="212" width="150" height="86" fill="#1B1B1E" stroke="#3A3A40" stroke-width="2"/>
+          <rect x="382" y="240" width="46" height="58" fill="#1B1B1E" stroke="#3A3A40" stroke-width="2"/>
+          <rect x="392" y="250" width="26" height="20" fill="#0B0B0C" stroke="#3A3A40" stroke-width="1.5"/>
+          <circle cx="272" cy="304" r="17" fill="#0B0B0C" stroke="#3A3A40" stroke-width="3"/>
+          <circle cx="352" cy="304" r="17" fill="#0B0B0C" stroke="#3A3A40" stroke-width="3"/>
+          <circle cx="408" cy="304" r="17" fill="#0B0B0C" stroke="#3A3A40" stroke-width="3"/>
+          <text x="252" y="200" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6E6E74" letter-spacing="2">OBSTRUCTION</text>
+        </g>
+        <g>
+          <path d="M60 296 L60 268 L84 250 L142 250 L166 270 L182 274 L182 296 Z" fill="#151517" stroke="#4A4A50" stroke-width="2.5"/>
+          <path d="M90 254 L136 254 L152 268 L96 268 Z" fill="#0B0B0C" stroke="#4A4A50" stroke-width="1.5"/>
+          <circle cx="92" cy="300" r="15" fill="#0B0B0C" stroke="#4A4A50" stroke-width="3"/>
+          <circle cx="154" cy="300" r="15" fill="#0B0B0C" stroke="#4A4A50" stroke-width="3"/>
+        </g>
+        <g class="alert-badge">
+          <rect x="52" y="176" width="164" height="40" fill="#E0A526"/>
+          <path d="M52 216 L72 216 L60 232 Z" fill="#E0A526"/>
+          <text x="70" y="202" font-family="IBM Plex Mono, monospace" font-size="14" font-weight="600" fill="#0B0B0C" letter-spacing="1">⚠ PEDESTRIAN</text>
+        </g>
+        <g>
+          <circle cx="452" cy="212" r="13" fill="none" stroke="#E0A526" stroke-width="3"/>
+          <path d="M452 225 L452 268 M452 236 L432 254 M452 236 L470 250 M452 268 L436 304 M452 268 L468 304" stroke="#E0A526" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <rect x="466" y="244" width="10" height="17" rx="2" fill="#E0A526"/>
+          <text x="416" y="356" font-family="IBM Plex Mono, monospace" font-size="11" fill="#E0A526" letter-spacing="2">NOT VISIBLE</text>
+        </g>
+        <text x="52" y="356" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6E6E74" letter-spacing="2">ALERTED EARLY</text>
+      </svg>
+    </figure>
+  </div>
+</header>
+
+<section class="light" id="problem">
+  <div class="wrap">
+    <p class="eyebrow">{{page.problem.eyebrow}}</p>
+    <h2>{{{page.problem.title}}}</h2>
+    <p class="lede">{{page.problem.lede}}</p>
+    <div class="stats">
+      {{#page.problem.stats}}
+      <div class="stat"><b>{{{num}}}</b><span>{{text}}</span></div>
+      {{/page.problem.stats}}
+    </div>
+  </div>
+</section>
+
+<section id="platform-teaser">
+  <div class="wrap">
+    <p class="eyebrow">{{page.platform.eyebrow}}</p>
+    <h2>{{{page.platform.title}}}</h2>
+    <p class="lede">{{page.platform.lede}}</p>
+    <div class="steps">
+      {{#page.platform.steps}}
+      <div class="step">
+        <span class="k">{{k}}</span>
+        <h3>{{title}}</h3>
+        <p>{{text}}</p>
+      </div>
+      {{/page.platform.steps}}
+    </div>
+    <div style="margin-top:44px"><a class="btn btn-ghost" href="{{{depth}}}platform.html">{{page.platform.cta}}</a></div>
+  </div>
+</section>
+
+<section class="light" id="verticals">
+  <div class="wrap">
+    <p class="eyebrow">{{page.verticalsIntro.eyebrow}}</p>
+    <h2>{{{page.verticalsIntro.title}}}</h2>
+    <p class="lede">{{page.verticalsIntro.lede}}</p>
+    <div class="cards">
+      {{#verticals}}
+      <a class="card" href="{{{depth}}}verticals/{{slug}}.html">
+        <span class="tag">{{name}}</span>
+        <h3>{{cardTitle}}</h3>
+        <p>{{cardText}}</p>
+        <span class="more">Explore →</span>
+      </a>
+      {{/verticals}}
+    </div>
+  </div>
+</section>
+
+<section class="resil" id="resilience">
+  <div class="wrap resil-grid">
+    <blockquote>{{{page.resilience.quote}}}</blockquote>
+    <div>
+      <p class="lede" style="margin-bottom:10px">{{page.resilience.lede}}</p>
+      <ul class="dashlist">
+        {{#page.resilience.bullets}}<li>{{.}}</li>{{/page.resilience.bullets}}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="press">
+  <div class="wrap">
+    <p class="eyebrow">{{page.press.eyebrow}}</p>
+    <h2>{{{page.press.title}}}</h2>
+    <div class="press-row">
+      {{#page.press.items}}
+      <a href="{{url}}" target="_blank" rel="noopener">{{name}}</a>
+      {{/page.press.items}}
+    </div>
+    <div style="margin-top:44px"><a class="btn btn-solid" href="{{{depth}}}news.html">{{page.press.cta}}</a></div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap">
+    <p class="eyebrow center">{{page.cta.eyebrow}}</p>
+    <h2>{{{page.cta.title}}}</h2>
+    <p class="lede">{{page.cta.lede}}</p>
+    <a class="btn btn-solid" href="{{{depth}}}contact.html">{{page.cta.button}}</a>
+  </div>
+</section>

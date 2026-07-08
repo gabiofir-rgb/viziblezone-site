@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "title": "Contact",
+    "description": "Contact Viziblezone about partnerships, pilots, OEM integrations, press and investment."
+  },
+  "hero": {
+    "eyebrow": "Contact",
+    "title": "Let's<br><span class=\"hl\">talk</span>",
+    "lede": "Partnerships, pilots, OEM integrations, press and investment. We answer fast."
+  },
+  "form": {
+    "action": "https://formspree.io/f/REPLACE_ME",
+    "topics": ["Partnership", "Pilot program", "OEM integration", "Investment", "Press", "Other"],
+    "button": "Send message"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "viziblezone-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Viziblezone company website - static build from JSON content + Mustache templates",
+  "scripts": {
+    "build": "node build.js",
+    "serve": "npx http-server dist -p 8080"
+  },
+  "dependencies": {
+    "mustache": "^4.2.0"
+  }
+}

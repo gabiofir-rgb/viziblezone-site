@@ -1,0 +1,31 @@
+<header class="page-hero">
+  <div class="wrap">
+    <p class="crumb"><a href="{{{depth}}}index.html">Home</a> / Contact</p>
+    <p class="eyebrow" style="margin-top:26px">{{page.hero.eyebrow}}</p>
+    <h1>{{{page.hero.title}}}</h1>
+    <p class="lede">{{page.hero.lede}}</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <form class="cform" action="{{page.form.action}}" method="POST">
+      <label for="cf-name">Full name</label>
+      <input id="cf-name" name="name" type="text" required>
+      <label for="cf-email">Work email</label>
+      <input id="cf-email" name="email" type="email" required>
+      <label for="cf-org">Company / organization</label>
+      <input id="cf-org" name="organization" type="text">
+      <label for="cf-topic">Topic</label>
+      <select id="cf-topic" name="topic">
+        {{#page.form.topics}}<option>{{.}}</option>{{/page.form.topics}}
+      </select>
+      <label for="cf-msg">Message</label>
+      <textarea id="cf-msg" name="message" required></textarea>
+      <button class="btn btn-solid" type="submit">{{page.form.button}}</button>
+    </form>
+    <div class="contact-alt">
+      Prefer email? Write to <a href="mailto:{{site.contactEmail}}">{{site.contactEmail}}</a> · {{site.location}}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{page.meta.title}} — Viziblezone</title>
+<meta name="description" content="{{page.meta.description}}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{{depth}}}assets/css/main.css">
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap nav-in">
+    <a class="logo" href="{{{depth}}}index.html">Vizible<b>zone</b></a>
+    <button class="nav-burger" aria-label="Menu" onclick="document.getElementById('nl').classList.toggle('open')">≡</button>
+    <ul class="nav-links" id="nl">
+      <li><a href="{{{depth}}}platform.html" {{#isPlatform}}class="active"{{/isPlatform}}>Platform</a></li>
+      <li class="dd">
+        <a href="{{{depth}}}index.html#verticals" {{#isVerticals}}class="active"{{/isVerticals}}>Verticals ▾</a>
+        <div class="dd-menu">
+          {{#verticals}}
+          <a href="{{{depth}}}verticals/{{slug}}.html">{{name}}</a>
+          {{/verticals}}
+        </div>
+      </li>
+      <li><a href="{{{depth}}}company.html" {{#isCompany}}class="active"{{/isCompany}}>Company</a></li>
+      <li><a href="{{{depth}}}news.html" {{#isNews}}class="active"{{/isNews}}>News</a></li>
+    </ul>
+    <a class="nav-cta" href="{{{depth}}}contact.html">Contact us</a>
+  </div>
+</nav>
+
+{{> content}}
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="logo" href="{{{depth}}}index.html">Vizible<b>zone</b></a>
+        <p>{{site.footerBlurb}}</p>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="{{{depth}}}platform.html">How it works</a></li>
+          <li><a href="{{{depth}}}platform.html#integration">Integration</a></li>
+          <li><a href="{{{depth}}}platform.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Verticals</h4>
+        <ul>
+          {{#verticals}}
+          <li><a href="{{{depth}}}verticals/{{slug}}.html">{{name}}</a></li>
+          {{/verticals}}
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="{{{depth}}}company.html">About us</a></li>
+          <li><a href="{{{depth}}}news.html">News &amp; press</a></li>
+          <li><a href="{{{depth}}}contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© {{year}} {{site.legalName}}. All rights reserved.</span>
+      <span>{{site.location}}</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
