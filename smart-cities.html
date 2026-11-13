@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src 'self' https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vizible Zone for smart cities and cars</title>
+<meta name="description" content="Drivers are warned about pedestrians, cyclists and scooter riders before they meet, even behind a bus or a corner.">
+<link rel="icon" href="img/vz-logo.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/overpass-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/overpass-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/vz.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="open" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 5h14M1 11h14" stroke="currentColor" stroke-width="1.75"/></svg>
+      <svg class="close" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5l11 11M13.5 2.5l-11 11" stroke="currentColor" stroke-width="1.75"/></svg>
+      Menu
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav-worlds">
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html" aria-current="page">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul class="nav-more">
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li class="nav-contact"><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a class="button" href="contact.html">Request a pilot</a></li>
+      </ul>
+    </nav>
+    <a class="button button-small" href="contact.html">Request a pilot</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- The segment template: a dark title plate, then the live scene (SPEC 10), then the story of SPEC 3b on white. No status words on the first screen (SPEC 14). -->
+  <section class="hero hero-segment" aria-labelledby="page-title">
+    <div class="wrap grid">
+      <h1 id="page-title">The car knows she is there before the driver can see her.</h1>
+      <p class="hero-support">Vizible Zone links the phones of people on foot, on bikes and on scooters with the cars around them, so that the driver is warned before they meet: behind a bus, around a corner or in the dark.</p>
+    </div>
+  </section>
+
+  <div class="plate-band">
+    <p class="sim-hint wrap" data-needs="smart-city">Switch Vizible Zone off, then on.</p>
+    <div class="sim" id="scene" data-sim="smart-city" data-title="Simulation: a school block" data-eager>
+      <div class="sim-placeholder"><p>A school block</p><p>In preparation.</p></div>
+    </div>
+  </div>
+
+  <section class="section" id="situation" aria-labelledby="h-situation">
+    <div class="wrap grid">
+      <h2 class="side" id="h-situation">The situation</h2>
+      <div class="content">
+        <p class="lead">A car turns right across the bike lane. A&nbsp;woman on a scooter is coming up in its blind spot.</p>
+        <p>Every street has spots like this: a bus at the stop, a van at the kerb, a corner, a stretch with no light. With Vizible Zone, the car knows she is there.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="awareness" aria-labelledby="h-awareness">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-awareness"><small aria-hidden="true">1</small><small aria-hidden="true">2</small>Awareness and understanding</h2>
+      <div class="content">
+        <p class="lead">Her phone and the car know about each other, even out of sight.</p>
+        <p>It does not rely on seeing, so a bus, a corner or the dark do not hide anyone.</p>
+        <p><span class="status" data-status="today">Today:</span> it knows whether its person is walking, crossing, or riding a bike or a scooter.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="warning" aria-labelledby="h-warning">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-warning"><small aria-hidden="true">4</small>Warning</h2>
+      <div class="content">
+        <p class="lead">It tells the turning driver.</p>
+        <p><span class="status" data-status="today">Today:</span> the driver is warned on a screen in the car: “Scooter on the right”.</p>
+        <p><span class="status" data-status="vision">Vision:</span> the person outside will be warned on the phone.</p>
+        <p>Nothing carries her name, and the message is gone once they have passed.</p>
+        <p class="told"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16.75" fill="none" stroke="#FFC400" stroke-opacity=".5" stroke-width="1.5"/><circle cx="18" cy="18" r="10.5" fill="none" stroke="#FFC400" stroke-width="2.25"/><circle cx="18" cy="18" r="4" fill="#000"/></svg><span>Who is told: the turning driver. Nobody&nbsp;else.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="get" aria-labelledby="h-get">
+    <div class="wrap grid">
+      <h2 class="side" id="h-get">What you get</h2>
+      <div class="content">
+        <p class="lead">The driver is warned about people the car cannot see yet.</p>
+        <p><span class="status" data-status="today">Today:</span> the driver gets the warning on a screen in the car, about children, seniors, cyclists and scooter riders.</p>
+        <p><span class="status" data-status="vision">Vision:</span> the person outside will be warned on the phone; you will see where your streets put people at risk, by place and time, with no names; and traffic lights will give a slow walker more time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="where" aria-labelledby="h-where">
+    <div class="wrap grid">
+      <h2 class="side" id="h-where">Where it stands</h2>
+      <div class="content wide">
+        <ul class="key">
+          <li><span class="status" data-status="today">Today</span><p>Works now, and we can show it to you.</p></li>
+          <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
+          <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
+        </ul>
+        <ul class="caps">
+          <li class="cap"><span class="cap-name">Sees what eyes cannot</span><span class="cap-text">Behind a bus, a wall or a corner, and in the dark. It does not rely on seeing; rain and fog are still to be measured.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Warnings about people the driver cannot see</span><span class="cap-text">The driver is told about a person on foot, on a bike or a scooter, with the side they come from and how urgent it is. Shown in field demonstrations with cars since 2019.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">On the car’s own screen</span><span class="cap-text">The warning appears on the car’s own screen, as in our in-car demonstrations, among them one for Mitsubishi Corporation and Yazaki in 2023–⁠24.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Inside the city’s own app</span><span class="cap-text">Delivered as an SDK inside the city app residents already use, so the cars around them know they are there.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">The person outside warned too</span><span class="cap-text">The person on foot, on a bike or on a scooter will be warned on the phone.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+          <li class="cap"><span class="cap-name">Earlier, with prediction</span><span class="cap-text">With prediction, more time to warn before someone crosses.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+          <li class="cap"><span class="cap-name">Adaptive crossing</span><span class="cap-text">Traffic lights will give a slow walker more time.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+          <li class="cap"><span class="cap-name">A city view of risky spots</span><span class="cap-text">The city will see where people cross away from a crossing and where close calls happen, by place and time, with no names.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+          <li class="cap"><span class="cap-name">Into fleets and driver assistance</span><span class="cap-text">The same warning will reach fleet systems and driver-assistance features.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+        </ul>
+        <div class="after-caps">
+          <p>We report what failed, too.</p>
+          <a class="text-link" href="trust.html">How we label what we claim</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="try" aria-labelledby="h-try">
+    <div class="wrap grid">
+      <h2 class="side" id="h-try">Try it</h2>
+      <div class="content">
+        <p>Rush hour on one block. The scene shows what works today: a turning driver warned about a scooter. It also shows the vision: a light that will give a slow walker more time, and the city’s anonymous view of risky spots, appearing and fading.</p>
+        <a class="text-link" href="#scene">Back to the scene</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="child" aria-labelledby="h-child">
+    <div class="wrap grid">
+      <h2 class="side" id="h-child">Where it began</h2>
+      <div class="content">
+        <p class="lead">A child steps out from behind a bus.</p>
+        <p>The car knows she is there before the driver can see her. Switch Vizible Zone on and off, then try it at night or in fog. The scene shows what works today: the warning to the driver.</p>
+      </div>
+    </div>
+  </section>
+  <div class="plate-band plate-band-gap">
+    <div class="sim" id="child-scene" data-sim="hidden-pedestrian" data-title="Simulation: the child behind the bus">
+      <div class="sim-placeholder"><p>The child behind the bus</p><p>In preparation.</p></div>
+    </div>
+  </div>
+
+  <section class="section" id="videos" aria-labelledby="h-videos">
+    <div class="wrap grid">
+      <h2 class="side" id="h-videos">On the road</h2>
+      <div class="content">
+        <p>Field demonstrations, filmed from the driver’s seat.</p>
+        <figure class="video">
+          <div class="video-frame">
+            <button class="video-facade" type="button" data-yt="oxeovBGn8NA" data-title="Field demonstration" aria-label="Play video: field demonstration, 21 seconds">
+              <img src="media/oxeovBGn8NA.jpg" srcset="media/oxeovBGn8NA-640.jpg 640w, media/oxeovBGn8NA.jpg 832w" sizes="(min-width: 1024px) 780px, 100vw" width="832" height="468" loading="lazy" alt="A street seen from the driver’s seat, a phone on the dashboard, and a man standing beside a parked bus.">
+              <span class="video-play" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M3 1.5v12l10-6z" fill="currentColor"/></svg>Play<span class="len">0:21</span></span>
+            </button>
+          </div>
+          <figcaption>A person steps out beside a parked bus. The phone on the dashboard already knew.</figcaption>
+        </figure>
+        <figure class="video">
+          <div class="video-frame">
+            <button class="video-facade" type="button" data-yt="sYLjpyu8fr4" data-title="Night demonstration" aria-label="Play video: night demonstration, 21 seconds">
+              <img src="media/sYLjpyu8fr4.jpg" srcset="media/sYLjpyu8fr4-640.jpg 640w, media/sYLjpyu8fr4.jpg 1072w" sizes="(min-width: 1024px) 780px, 100vw" width="1072" height="603" loading="lazy" alt="A street at night seen from the driver’s seat, a phone on the dashboard, and two people walking on the left.">
+              <span class="video-play" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M3 1.5v12l10-6z" fill="currentColor"/></svg>Play<span class="len">0:21</span></span>
+            </button>
+          </div>
+          <figcaption>Night. Two people hidden behind a vehicle appear on the driver’s phone.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pilot" id="pilot" aria-labelledby="h-pilot">
+    <div class="wrap grid">
+      <h2 class="side" id="h-pilot">Request a pilot</h2>
+      <div class="content">
+        <p class="lead">Pick the crossing that worries you most.</p>
+        <p>The pilot covers a defined part of your city, with equipped cars and participating phones, and targets agreed before it starts. It measures detection and warning in your streets and your weather.</p>
+        <p class="hero-actions"><a class="button" href="contact.html">Request a pilot</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="foot-id">
+      <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+      <p>Situational awareness on the phones people already carry.</p>
+      <p class="invest">Investing in public safety, or building phones? <a href="mailto:info@vizible.zone?subject=Investing%20in%20public%20safety%2C%20or%20building%20phones">Let’s&nbsp;talk.</a></p>
+      <a class="text-link mail" href="mailto:info@vizible.zone">info@vizible.zone</a>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <ul>
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html" aria-current="page">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/viziblezone/">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/channel/UCLZVgcXDj9Wk3JYJ4BRZCEg">YouTube</a></li>
+      </ul>
+    </nav>
+    <p class="legal">© 2026 Vizible Zone Ltd.</p>
+  </div>
+</footer>
+
+<script src="sims/available.js"></script>
+<script src="simkit/simkit.js"></script>
+<script src="simkit/stills.js"></script>
+<script src="simkit/poster.js"></script>
+<script src="js/vz.js"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src 'self' https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vizible Zone for airports and closed sites</title>
+<meta name="description" content="A proactive bubble around each person, tagged asset and danger area, on an airport apron or any closed site. Drivers are warned about workers on foot, even out of sight.">
+<link rel="icon" href="img/vz-logo.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/overpass-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/overpass-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/vz.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="open" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 5h14M1 11h14" stroke="currentColor" stroke-width="1.75"/></svg>
+      <svg class="close" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5l11 11M13.5 2.5l-11 11" stroke="currentColor" stroke-width="1.75"/></svg>
+      Menu
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav-worlds">
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html" aria-current="page">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul class="nav-more">
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li class="nav-contact"><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a class="button" href="contact.html">Request a pilot</a></li>
+      </ul>
+    </nav>
+    <a class="button button-small" href="contact.html">Request a pilot</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- The segment template: a dark title plate, then the live scene (SPEC 10), then the story of SPEC 3b on white. No status words on the first screen (SPEC 14). -->
+  <section class="hero hero-segment" aria-labelledby="page-title">
+    <div class="wrap grid">
+      <h1 id="page-title">A proactive bubble around each person, tagged asset and danger area on site.</h1>
+      <p class="hero-support">On an airport apron or any closed site, every person on foot, every vehicle, every tagged asset and every danger area has a proactive bubble. When two bubbles touch, the driver is warned, even out of sight. A parked aircraft, a vehicle or an open pit is marked with small tags and gets its own bubble.</p>
+    </div>
+  </section>
+
+  <div class="plate-band">
+    <p class="sim-hint wrap" data-needs="closed-compound">Switch Vizible Zone off, then on.</p>
+    <div class="sim" id="scene" data-sim="closed-compound" data-title="Simulation: proactive bubbles" data-eager>
+      <div class="sim-placeholder"><p>Proactive bubbles</p><p>In preparation.</p></div>
+    </div>
+  </div>
+
+  <section class="section" id="situation" aria-labelledby="h-situation">
+    <div class="wrap grid">
+      <h2 class="side" id="h-situation">The situation</h2>
+      <div class="content">
+        <p class="lead">A tug reverses behind a parked aircraft. A&nbsp;worker is walking behind it.</p>
+        <p>Neither sees the other. Across the apron, a vehicle heads for the runway hold line. The oldest risk on any site is a driver who cannot see the person on foot, or the line the vehicle must not cross.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="awareness" aria-labelledby="h-awareness">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-awareness"><small aria-hidden="true">1</small><small aria-hidden="true">2</small>Awareness and understanding</h2>
+      <div class="content">
+        <p class="lead">Every phone on site knows who and what is near it.</p>
+        <p>The worker and the tug are aware of each other, even with the aircraft between them. Each has its own proactive bubble, on a phone people already carry: the worker’s, and the driver’s in the cab.</p>
+        <p><span class="status" data-status="today">Today:</span> a parked aircraft, a vehicle or an open pit is marked with small tags and gets its own bubble.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="prediction" aria-labelledby="h-prediction">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-prediction"><small aria-hidden="true">3</small>Prediction</h2>
+      <div class="content">
+        <p class="lead">It will see the tug and the worker about to meet, before the worker steps into its path.</p>
+        <p><span class="status" data-status="today">Today:</span> the driver is warned the moment the bubbles touch.</p>
+        <p><span class="status" data-status="dev">In development:</span> a warning before the paths meet, not only on entry.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="warning" aria-labelledby="h-warning">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-warning"><small aria-hidden="true">4</small>Warning</h2>
+      <div class="content">
+        <p class="lead">It tells the driver.</p>
+        <p>The driver is warned in the cab. Crews elsewhere on the apron are not disturbed.</p>
+        <p><span class="status" data-status="vision">Vision:</span> workers on foot will be warned too.</p>
+        <p class="told"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16.75" fill="none" stroke="#FFC400" stroke-opacity=".5" stroke-width="1.5"/><circle cx="18" cy="18" r="10.5" fill="none" stroke="#FFC400" stroke-width="2.25"/><circle cx="18" cy="18" r="4" fill="#000"/></svg><span>Who is told: the driver. Nobody&nbsp;else.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="get" aria-labelledby="h-get">
+    <div class="wrap grid">
+      <h2 class="side" id="h-get">What you get</h2>
+      <div class="content">
+        <p class="lead">Drivers warned about workers on foot, even out of sight, on the phones they already carry.</p>
+        <p>The pilot runs on its own, with no connection to your airport’s systems. It works alongside surface surveillance and is never a substitute for clearance.</p>
+        <p><span class="status" data-status="today">Today:</span> tagged assets have their own proactive bubbles.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="where" aria-labelledby="h-where">
+    <div class="wrap grid">
+      <h2 class="side" id="h-where">Where it stands</h2>
+      <div class="content wide">
+        <ul class="key">
+          <li><span class="status" data-status="today">Today</span><p>Works now, and we can show it to you.</p></li>
+          <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
+          <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
+        </ul>
+        <ul class="caps">
+          <li class="cap"><span class="cap-name">Drivers warned about workers on foot</span><span class="cap-text">Even out of sight, with an aircraft between them.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Around a parked aircraft</span><span class="cap-text">The aircraft carries small tags and gets its own bubble.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Around a danger area</span><span class="cap-text">A driver nearing a tagged danger area, such as the runway hold line or an open pit, is warned.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Rules per area and per role</span><span class="cap-text">The site will decide who may enter each area, and who will be warned.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
+          <li class="cap"><span class="cap-name">Seeing the meeting coming</span><span class="cap-text">It will warn before the paths meet, not only on entry.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
+          <li class="cap"><span class="cap-name">Seaports, rail, logistics and construction sites</span><span class="cap-text">The same capability will be set up with each site, in a pilot first.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
+          <li class="cap"><span class="cap-name">Workers on foot warned too</span><span class="cap-text">Workers on foot will be warned too.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+          <li class="cap"><span class="cap-name">Bubbles that switch on or move</span><span class="cap-text">Bubbles will appear around an engine at start-up, a fuelling stand or an aircraft under tow.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+          <li class="cap"><span class="cap-name">A private record for each driver</span><span class="cap-text">It will be kept on the driver’s own phone.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+        </ul>
+        <p class="note">At airports, warnings to drivers about workers on foot are ready to demonstrate on an apron.</p>
+        <div class="after-caps">
+          <p>We report what failed, too.</p>
+          <a class="text-link" href="trust.html">How we label what we claim</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="try" aria-labelledby="h-try">
+    <div class="wrap grid">
+      <h2 class="side" id="h-try">Try it</h2>
+      <div class="content">
+        <p>A tug and a worker head towards each other behind a parked aircraft, while a vehicle nears the hold line. The scene shows what works today: the tug driver warned about the worker, and the tagged bubbles around the aircraft and the hold line.</p>
+        <a class="text-link" href="#scene">Back to the scene</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pilot" id="pilot" aria-labelledby="h-pilot">
+    <div class="wrap grid">
+      <h2 class="side" id="h-pilot">Request a pilot</h2>
+      <div class="content">
+        <p class="lead">Name the stand, the service road or the hold line that worries you.</p>
+        <p>The pilot measures detection and warning on your apron, in your weather, against targets we agree with you before it starts.</p>
+        <p class="hero-actions"><a class="button" href="contact.html">Request a pilot</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="foot-id">
+      <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+      <p>Situational awareness on the phones people already carry.</p>
+      <p class="invest">Investing in public safety, or building phones? <a href="mailto:info@vizible.zone?subject=Investing%20in%20public%20safety%2C%20or%20building%20phones">Let’s&nbsp;talk.</a></p>
+      <a class="text-link mail" href="mailto:info@vizible.zone">info@vizible.zone</a>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <ul>
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html" aria-current="page">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/viziblezone/">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/channel/UCLZVgcXDj9Wk3JYJ4BRZCEg">YouTube</a></li>
+      </ul>
+    </nav>
+    <p class="legal">© 2026 Vizible Zone Ltd.</p>
+  </div>
+</footer>
+
+<script src="sims/available.js"></script>
+<script src="simkit/simkit.js"></script>
+<script src="simkit/stills.js"></script>
+<script src="simkit/poster.js"></script>
+<script src="js/vz.js"></script>
+</body>
+</html>

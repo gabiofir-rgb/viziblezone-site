@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src 'self' https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Vizible Zone labels what it claims</title>
+<meta name="description" content="What works today, what is in development and what is vision. What we measured, what we have not measured yet, what we never claim, and how privacy is built in.">
+<link rel="icon" href="img/vz-logo.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/overpass-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/overpass-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/vz.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="open" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 5h14M1 11h14" stroke="currentColor" stroke-width="1.75"/></svg>
+      <svg class="close" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5l11 11M13.5 2.5l-11 11" stroke="currentColor" stroke-width="1.75"/></svg>
+      Menu
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav-worlds">
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul class="nav-more">
+        <li><a href="trust.html" aria-current="page">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li class="nav-contact"><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a class="button" href="contact.html">Request a pilot</a></li>
+      </ul>
+    </nav>
+    <a class="button button-small" href="contact.html">Request a pilot</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero hero-segment hero-text hero-full" aria-labelledby="page-title">
+    <div class="hero-road still" data-scene="road" data-opt='{"cy":-90}' data-focus="[-115,-300,380,300]" data-anchor="[0.5,0]" data-vig="0.15"></div>
+    <div class="wrap grid">
+      <h1 id="page-title">What we claim, and what we do not.</h1>
+      <p class="hero-support">Every capability on this site carries one of three labels. Here is what they mean, what we have measured, and what we do not claim.</p>
+    </div>
+  </section>
+
+  <section class="section" id="labels" aria-labelledby="h-labels">
+    <div class="wrap grid">
+      <h2 class="side" id="h-labels">Three labels</h2>
+      <div class="content wide">
+        <ul class="key">
+          <li><span class="status" data-status="today">Today</span><p>Works now, and we can show it to you.</p></li>
+          <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
+          <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
+        </ul>
+        <p class="note">We report what failed, too.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="measured" aria-labelledby="h-measured">
+    <div class="wrap grid">
+      <h2 class="side" id="h-measured">What we have measured</h2>
+      <div class="content wide">
+        <p>These results come from our own test phones, indoors, in October and November 2026. Your pilot measures them again on your site.</p>
+        <ul class="caps">
+          <li class="cap" id="m-voice"><span class="cap-name">Push-to-talk</span><span class="cap-text">Voice reaches the whole group in about a second.</span><span class="cap-when"><span class="sr-only">Measured: </span>October 2026</span></li>
+          <li class="cap" id="m-sos"><span class="cap-name">SOS</span><span class="cap-text">An SOS reaches the group within seconds, even indoors.</span><span class="cap-when"><span class="sr-only">Measured: </span>November 2026</span></li>
+          <li class="cap"><span class="cap-name">Messages and positions</span><span class="cap-text">They arrive in under a second on a good signal, and within a few seconds on a weak one.</span><span class="cap-when"><span class="sr-only">Measured: </span>November 2026</span></li>
+          <li class="cap"><span class="cap-name">A sleeping phone</span><span class="cap-text">With its screen off, it wakes to the group’s voice within about a second.</span><span class="cap-when"><span class="sr-only">Measured: </span>October 2026</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="not-measured" aria-labelledby="h-not-measured">
+    <div class="wrap grid">
+      <h2 class="side" id="h-not-measured">What we have not measured yet</h2>
+      <div class="content wide">
+        <p>As of November 2026, these are still open. Each pilot measures them on its own site.</p>
+        <ul class="caps">
+          <li class="cap"><span class="cap-name">Rain and fog</span><span class="cap-text">No result yet in rain or fog.</span></li>
+          <li class="cap"><span class="cap-name">Walls and rubble</span><span class="cap-text">How well it reaches through concrete walls or rubble.</span></li>
+          <li class="cap"><span class="cap-name">Seeing what is about to happen</span><span class="cap-text">How early it warns, and how often it is right. It is still in development.</span></li>
+          <li class="cap"><span class="cap-name">A long shift</span><span class="cap-text">How long a battery lasts through one.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="never" aria-labelledby="h-never">
+    <div class="wrap grid">
+      <h2 class="side" id="h-never">What we never claim</h2>
+      <div class="content wide">
+        <ul class="rules">
+          <li><span>No range figure. Walls, floors and bodies decide reception, not distance.</span></li>
+          <li><span>No proof that accidents are prevented. Pilots measure detection and warning.</span></li>
+          <li><span>No phone calls: push-to-talk, one talker at a time.</span></li>
+          <li><span>No substitute for radios. It complements existing radios and networks.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="warns" aria-labelledby="h-warns">
+    <div class="wrap grid">
+      <h2 class="side" id="h-warns">When it warns, and when it stays quiet</h2>
+      <div class="content wide">
+        <p class="lead">People decide.</p>
+        <p>Vizible Zone informs; the driver, the worker and the rescuer act.</p>
+        <ul class="rules">
+          <li><span>It warns only those a situation concerns.</span></li>
+          <li><span>An old message means unknown, never clear.</span></li>
+          <li><span>The phone never tells a pedestrian it is safe.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="privacy" aria-labelledby="h-privacy">
+    <div class="wrap grid">
+      <h2 class="side" id="h-privacy">Privacy, built in</h2>
+      <div class="content wide">
+        <p class="lead">A warning to people nearby carries no identity.</p>
+        <p>It goes straight from phone to phone, with no cellular network and no server. The connection exists only for the event.</p>
+        <ul class="rules">
+          <li><span>Inside a team’s private group, an SOS tells teammates who is calling and where, because that is its purpose.</span></li>
+          <li><span>No server and no account between the phones.</span></li>
+          <li><span>Contact tracing keeps encounter records on each person’s phone. When a case is confirmed, that person’s record is shared with the organisation, so that only the people who were close are told.</span></li>
+          <li><span>No commercial messages, ever.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="accessibility" aria-labelledby="h-accessibility">
+    <div class="wrap grid">
+      <h2 class="side" id="h-accessibility">Accessibility</h2>
+      <div class="content">
+        <p class="lead">This site is built to meet WCAG 2.1 AA.</p>
+        <p>Every simulation can be paused and describes itself in text. An outside audit has not been done yet. If something does not work for you, write to us.</p>
+        <a class="text-link" href="mailto:info@vizible.zone">info@vizible.zone</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pilot" id="pilot" aria-labelledby="h-pilot">
+    <div class="wrap grid">
+      <h2 class="side" id="h-pilot">Request a pilot</h2>
+      <div class="content">
+        <p class="lead">Every pilot starts with targets agreed in advance.</p>
+        <p>They are measured on your site and reported in full, failures included.</p>
+        <p class="hero-actions"><a class="button" href="contact.html">Request a pilot</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="foot-id">
+      <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+      <p>Situational awareness on the phones people already carry.</p>
+      <p class="invest">Investing in public safety, or building phones? <a href="mailto:info@vizible.zone?subject=Investing%20in%20public%20safety%2C%20or%20building%20phones">Let’s&nbsp;talk.</a></p>
+      <a class="text-link mail" href="mailto:info@vizible.zone">info@vizible.zone</a>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <ul>
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul>
+        <li><a href="trust.html" aria-current="page">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/viziblezone/">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/channel/UCLZVgcXDj9Wk3JYJ4BRZCEg">YouTube</a></li>
+      </ul>
+    </nav>
+    <p class="legal">© 2026 Vizible Zone Ltd.</p>
+  </div>
+</footer>
+
+<script src="sims/available.js"></script>
+<script src="simkit/simkit.js"></script>
+<script src="simkit/stills.js"></script>
+<script src="simkit/poster.js"></script>
+<script src="js/vz.js"></script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src 'self' https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vizible Zone for contact tracing</title>
+<meta name="description" content="Keep a workplace running in an outbreak. Phones note close contact, and only the people who were really close to a reported case are told.">
+<link rel="icon" href="img/vz-logo.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/overpass-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/overpass-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/vz.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="open" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 5h14M1 11h14" stroke="currentColor" stroke-width="1.75"/></svg>
+      <svg class="close" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5l11 11M13.5 2.5l-11 11" stroke="currentColor" stroke-width="1.75"/></svg>
+      Menu
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav-worlds">
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html" aria-current="page">Contact tracing</a></li>
+      </ul>
+      <ul class="nav-more">
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li class="nav-contact"><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a class="button" href="contact.html">Request a pilot</a></li>
+      </ul>
+    </nav>
+    <a class="button button-small" href="contact.html">Request a pilot</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- The segment template: a dark title plate, then the live scene (SPEC 10), then the story of SPEC 3b on white. No status words on the first screen (SPEC 14). -->
+  <section class="hero hero-segment" aria-labelledby="page-title">
+    <div class="wrap grid">
+      <h1 id="page-title">Isolate the few who were close. Keep everyone else at work.</h1>
+      <p class="hero-support">In 2020 and 2021, Vizible Zone gave organisations a way to keep working through the pandemic. When someone reported a case, only the people who were really close were told.</p>
+    </div>
+  </section>
+
+  <div class="plate-band">
+    <p class="sim-hint wrap" data-needs="contact-tracing">Switch Vizible Zone off, then on.</p>
+    <div class="sim" id="scene" data-sim="contact-tracing" data-title="Simulation: an office day" data-eager>
+      <div class="sim-placeholder"><p>An office day</p><p>In preparation.</p></div>
+    </div>
+  </div>
+
+  <section class="section" id="situation" aria-labelledby="h-situation">
+    <div class="wrap grid">
+      <h2 class="side" id="h-situation">The situation</h2>
+      <div class="content">
+        <p class="lead">One person on the floor tests positive.</p>
+        <p>Sending everyone home stops the work. Sending nobody home is not an option, and nobody can say who was really close.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="awareness" aria-labelledby="h-awareness">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-awareness"><small aria-hidden="true">1</small><small aria-hidden="true">2</small>Awareness and understanding</h2>
+      <div class="content">
+        <p class="lead">Each phone knows who was close, and for how long.</p>
+        <p>Phones note close contact through the working day, and each keeps its own record. They warn people who stand too close for too long.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="prediction" aria-labelledby="h-prediction">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-prediction"><small aria-hidden="true">3</small>Prediction</h2>
+      <div class="content">
+        <p class="lead">Here, ahead means days, not seconds.</p>
+        <p>The moment a case is reported, the people who may have been exposed are known.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="warning" aria-labelledby="h-warning">
+    <div class="wrap grid">
+      <h2 class="side side-step" id="h-warning"><small aria-hidden="true">4</small>Warning</h2>
+      <div class="content">
+        <p class="lead">It tells only the people who were really close.</p>
+        <p>They get the notice, and everyone else keeps working. Encounter records stay on each person’s phone. When a case is confirmed, that person’s record is shared with the organisation, so that only the people who were close are told.</p>
+        <p class="told"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16.75" fill="none" stroke="#FFC400" stroke-opacity=".5" stroke-width="1.5"/><circle cx="18" cy="18" r="10.5" fill="none" stroke="#FFC400" stroke-width="2.25"/><circle cx="18" cy="18" r="4" fill="#000"/></svg><span>Who is told: the people who were really close, and those managing the response. Nobody&nbsp;else.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark" id="get" aria-labelledby="h-get">
+    <div class="wrap grid">
+      <h2 class="side" id="h-get">What you get</h2>
+      <div class="content">
+        <p class="lead">Work continues. Only the people who were really close stay home.</p>
+        <p>The organisation sets the rules and gets a console with activity and reports.</p>
+        <ol class="record">
+          <li><span class="yr">2020</span><span>The product spec was defined by the Israeli Ministries of Defense &amp; Healthcare.</span></li>
+          <li><span class="yr">2020</span><span>A partnership with Verint on contact tracing.</span></li>
+          <li><span class="yr">2021</span><span>Exposure notification for Mekorot, Israel’s national water company.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="where" aria-labelledby="h-where">
+    <div class="wrap grid">
+      <h2 class="side" id="h-where">Where it stands</h2>
+      <div class="content wide">
+        <ul class="key">
+          <li><span class="status" data-status="today">Today</span><p>Works now, and we can show it to you.</p></li>
+          <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
+          <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
+        </ul>
+        <ul class="caps">
+          <li class="cap"><span class="cap-name">Distancing alerts</span><span class="cap-text">A warning when people stand too close for too long.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Exposure notice</span><span class="cap-text">The people who were really close are told.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Rules the organisation sets</span><span class="cap-text">How close, how long, how many days.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">A console for the organisation</span><span class="cap-text">Activity and reports.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+          <li class="cap"><span class="cap-name">Encounter records on each phone</span><span class="cap-text">Records stay on each person’s phone. When a case is confirmed, that person’s record is shared with the organisation.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+        </ul>
+        <div class="after-caps">
+          <p>Built and tested in 2020 and 2021, and ready to return when the need does. We report what failed, too.</p>
+          <a class="text-link" href="trust.html">How we label what we claim</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="try" aria-labelledby="h-try">
+    <div class="wrap grid">
+      <h2 class="side" id="h-try">Try it</h2>
+      <div class="content">
+        <p>An office through a working day. Report a case, and see who is told and who keeps working.</p>
+        <a class="text-link" href="#scene">Back to the scene</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pilot" id="pilot" aria-labelledby="h-pilot">
+    <div class="wrap grid">
+      <h2 class="side" id="h-pilot">Request a pilot</h2>
+      <div class="content">
+        <p class="lead">Prepare before the next outbreak, not during it.</p>
+        <p>Your rules for how close and how long are set with you before a pilot starts.</p>
+        <p class="hero-actions"><a class="button" href="contact.html">Request a pilot</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="foot-id">
+      <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+      <p>Situational awareness on the phones people already carry.</p>
+      <p class="invest">Investing in public safety, or building phones? <a href="mailto:info@vizible.zone?subject=Investing%20in%20public%20safety%2C%20or%20building%20phones">Let’s&nbsp;talk.</a></p>
+      <a class="text-link mail" href="mailto:info@vizible.zone">info@vizible.zone</a>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <ul>
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html" aria-current="page">Contact tracing</a></li>
+      </ul>
+      <ul>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/viziblezone/">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/channel/UCLZVgcXDj9Wk3JYJ4BRZCEg">YouTube</a></li>
+      </ul>
+    </nav>
+    <p class="legal">© 2026 Vizible Zone Ltd.</p>
+  </div>
+</footer>
+
+<script src="sims/available.js"></script>
+<script src="simkit/simkit.js"></script>
+<script src="simkit/stills.js"></script>
+<script src="simkit/poster.js"></script>
+<script src="js/vz.js"></script>
+</body>
+</html>

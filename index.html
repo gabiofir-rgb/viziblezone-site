@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; frame-src 'self' https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vizible Zone: visible when it matters</title>
+<meta name="description" content="Push-to-talk and SOS where the network stops, and a proactive bubble around each person and tagged asset on site, on the phones people already carry.">
+<link rel="icon" href="img/vz-logo.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/overpass-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/overpass-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/vz.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg class="open" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 5h14M1 11h14" stroke="currentColor" stroke-width="1.75"/></svg>
+      <svg class="close" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5l11 11M13.5 2.5l-11 11" stroke="currentColor" stroke-width="1.75"/></svg>
+      Menu
+    </button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <ul class="nav-worlds">
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul class="nav-more">
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li class="nav-contact"><a href="contact.html">Contact</a></li>
+        <li class="nav-cta"><a class="button" href="contact.html">Request a pilot</a></li>
+      </ul>
+    </nav>
+    <a class="button button-small" href="contact.html">Request a pilot</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- The hero: the cover scene of the company's slides. No status words on the first screen (SPEC 14). -->
+  <section class="hero hero-home" aria-labelledby="hero-line">
+    <div class="wrap hero-copy">
+      <h1 id="hero-line">Visible when <span>it&nbsp;matters<span class="dot">.</span></span></h1>
+      <p class="hero-support"><span>Push-to-talk and SOS where the network stops.</span> <span>A proactive bubble around each person and tagged asset on site.</span> <span>The child behind the bus, while you drive.</span> <span>On the phones people already carry.</span></p>
+      <p class="hero-actions">
+        <a class="button" href="contact.html">Request a pilot</a>
+        <a class="button button-ghost" href="public-safety.html#scene">See it in a collapsed building</a>
+      </p>
+    </div>
+    <div class="hero-art zone" data-zone="load" role="img" aria-label="Illustration, seen from above. A person is trapped under a collapsed building where there is no cellular network; their phone is linked directly to two rescuers on push-to-talk. In one round inset, a parked aircraft, a tug and a worker each have a proactive bubble. In a smaller inset, a car is told about a child hidden behind a bus.">
+      <div class="still z-off" aria-hidden="true" data-eager data-scene="collapse" data-opt='{"vz":false,"hero":true,"twp":[95,-262]}' data-focus="[-700,-405,1215,910]" data-anchor="[0.7,0.5]" data-focus-m="[-560,-400,1030,880]" data-vig="0.2" data-u="1.16"></div>
+      <div class="still z-on" aria-hidden="true" data-eager data-origin="[-250,-10]" data-scene="collapse" data-opt='{"hero":true,"R":240,"twp":[95,-262]}' data-focus="[-700,-405,1215,910]" data-anchor="[0.7,0.5]" data-focus-m="[-560,-400,1030,880]" data-vig="0.2" data-u="1.16">
+        <div class="still lens" data-eager data-at="[330,-235,118]" data-scene="street" data-opt='{"stage":4,"R":150,"n":2}' data-focus="[-330,-270,1200,1200]" data-vig="0.2"></div>
+        <div class="still lens" data-eager data-at="[236,262,204]" data-scene="apron" data-opt='{"nolabels":true}' data-focus="[-850,-655,1310,1310]" data-vig="0.2"></div>
+      </div>
+      <span class="illus">Illustration</span>
+    </div>
+  </section>
+
+  <section class="band" id="danger" aria-labelledby="h-danger">
+    <div class="wrap">
+      <h2 class="display" id="h-danger">The danger nobody sees in&nbsp;time.</h2>
+      <ul class="dangers bare" data-zone-group aria-label="Three examples, illustrated">
+        <li class="danger"><div class="zone" data-zone="group" role="img" aria-label="Illustration: rubble where there is no cellular network. With Vizible Zone, the trapped person's phone reaches a rescuer directly."><div class="still z-off" aria-hidden="true" data-scene="collapse" data-opt='{"vz":false,"twp":[150,-190],"hero":true}' data-focus="[-560,-330,880,620]" data-anchor="[0.5,0.2]" data-vig="0.2"></div><div class="still z-on" aria-hidden="true" data-origin="[-250,-10]" data-scene="collapse" data-opt='{"hero":true,"solo":true,"twp":[150,-190],"plates":false}' data-focus="[-560,-330,880,620]" data-anchor="[0.5,0.2]" data-vig="0.2"></div></div><p>A person trapped where the network cannot reach.</p><span class="illus">Illustration</span></li>
+        <li class="danger"><div class="zone" data-zone="group" role="img" aria-label="Illustration: a worker hidden behind parked carts and an aircraft. With Vizible Zone, the tug driver is warned: Worker ahead."><div class="still z-off" aria-hidden="true" data-scene="apron" data-opt='{"vz":false}' data-focus="[-800,-420,1240,840]" data-anchor="[0.5,0.2]" data-vig="0.2"></div><div class="still z-on" aria-hidden="true" data-origin="[-545,128]" data-scene="apron" data-opt='{"plates":false}' data-focus="[-800,-420,1240,840]" data-anchor="[0.5,0.2]" data-vig="0.2"></div></div><p>A worker behind a parked aircraft.</p></li>
+        <li class="danger"><div class="zone" data-zone="group" role="img" aria-label="Illustration: a child hidden behind a bus. With Vizible Zone, the driver is warned: Child ahead."><div class="still z-off" aria-hidden="true" data-scene="street" data-opt='{"vz":false}' data-focus="[-290,100,1030,470]" data-anchor="[0.5,0.3]" data-vig="0.2"></div><div class="still z-on" aria-hidden="true" data-origin="[646,400]" data-scene="street" data-opt='{"stage":4,"R":150,"n":2}' data-focus="[-290,100,1030,470]" data-anchor="[0.5,0.3]" data-vig="0.2"></div></div><p>A child behind a bus.</p></li>
+      </ul>
+      <p class="after-dangers">In each case a phone is right there, and it says nothing.</p>
+    </div>
+  </section>
+
+  <section class="idea dark" id="steps" aria-labelledby="h-steps">
+    <div class="idea-art" role="img" aria-label="Illustration: one phone at the centre of its zone, linked directly to a car, a scooter rider and another person. A mobile mast is struck through: no cellular network.">
+      <div class="still" data-scene="idea" data-focus="[-480,-390,1130,760]" data-focus-m="[-480,-390,960,760]" data-vig="0.25"></div>
+      <span class="illus">Illustration</span>
+    </div>
+    <div class="idea-copy wrap">
+      <h2 class="display" id="h-steps">The phone becomes aware, and tells whoever it concerns.</h2>
+      <ol class="step-list">
+        <li><h3><small>1</small>Awareness</h3><p>Knows who and what is near, even out of sight.</p><span class="st"><i class="m today" aria-hidden="true"></i>Today</span></li>
+        <li><h3><small>2</small>Understanding</h3><p>Knows what its person is doing.</p><span class="st"><i class="m today" aria-hidden="true"></i>Today</span></li>
+        <li><h3><small>3</small>Prediction</h3><p>Will see what comes next.</p><span class="st"><i class="m dev" aria-hidden="true"></i>In&nbsp;development</span></li>
+        <li id="warning"><h3><small>4</small>Warning</h3><p>Tells whoever it concerns, directly: today the driver, the rescuers and the command post. Never a commercial message.</p><span class="st"><i class="m today" aria-hidden="true"></i>Today</span></li>
+      </ol>
+      <div class="gloss">
+        <p>Today the phone warns the driver, from what is near and what its person is doing. Prediction will make it earlier.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- One street: the page's one live scene (slide 4). From 768 px it runs live; on phones its still stands in. -->
+  <section class="street dark" id="street" aria-labelledby="h-street">
+    <div class="wrap street-copy">
+      <h2 class="display" id="h-street">One street. Things that can happen at once.</h2>
+      <p class="lead">Each warning goes straight to those it concerns: locally, ad hoc, phone to phone. No cellular network. The connection exists only for the event.</p>
+    </div>
+    <div class="plate-band street-live">
+      <div class="sim" data-sim="one-street" data-title="Simulation: one street, things that can happen at once"><div class="sim-placeholder"><p>One street</p><p>In preparation.</p></div></div>
+    </div>
+    <div class="street-still still" data-scene="ads" data-vig="0.2" role="img" aria-label="Illustration, seen from above: a driver is warned about a child, a tug driver about a worker at a tagged aircraft, and people nearby will be warned about a man who has fallen."><span class="illus">Illustration</span></div>
+  </section>
+
+  <section class="band" id="worlds" aria-labelledby="h-worlds">
+    <div class="wrap">
+      <h2 class="display" id="h-worlds">One idea, four worlds.</h2>
+      <div class="worlds" data-stage>
+        <!-- Desktop: one stage stays in place while the four worlds scroll past it; each picture opens as a zone. -->
+        <div class="stage" aria-hidden="true">
+          <div class="zone" data-w="1"><div class="still z-on" data-origin="[-250,-10]" data-scene="collapse" data-opt='{"plates":false,"R":270}' data-focus="[-560,-330,1330,790]" data-vig="0.25"></div></div>
+          <div class="zone" data-w="2"><div class="still z-on" data-origin="[-545,128]" data-scene="apron" data-opt='{"plates":false}' data-focus="[-1010,-450,1470,900]" data-vig="0.25"></div></div>
+          <div class="zone" data-w="3"><div class="still z-on" data-origin="[646,400]" data-scene="street" data-opt='{"stage":4,"R":300,"n":4}' data-focus="[-390,60,1390,680]" data-vig="0.25"></div></div>
+          <div class="zone" data-w="4"><div class="z-on duo"><div class="still" data-origin="[40,-10]" data-scene="trail" data-opt='{"plates":false}' data-focus="[-380,-400,700,830]" data-vig="0.25"></div><div class="still" data-scene="kerb" data-opt='{"plates":false}' data-focus="[-330,-420,750,830]" data-vig="0.25"></div></div></div>
+          <p class="stage-name"><i></i><span>Public safety</span></p>
+          <p class="stage-rail"><i class="on"></i><i></i><i></i><i></i></p>
+          <span class="illus">Illustration</span>
+        </div>
+        <div class="world-list" tabindex="0" role="group" aria-label="The four worlds">
+        <article class="world" data-w="1">
+          <a class="world-art" href="public-safety.html" aria-label="Public safety: see the live scene" tabindex="-1">
+            <div class="still" data-scene="collapse" data-opt='{"plates":false,"R":270}' data-focus="[-560,-330,1330,790]" data-anchor="[0.5,0.9]" data-vig="0.25"></div>
+            <span class="world-name"><i></i>Public safety</span><span class="illus">Illustration</span>
+          </a>
+          <h3><a href="public-safety.html">Push-to-talk and SOS when cellular networks fail.</a></h3>
+          <div class="rows">
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>First responders, including the armed forces: push-to-talk voice and data, phone to phone, on compatible phones running Vizible Zone.</p>
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>A person in distress or trapped: SOS, and a voice and data channel to the rescuers.</p>
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>Utilities and field crews: push-to-talk and messages where there is no network.</p>
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>One phone in between passes voice and data on; data travels on from phone to phone.</p>
+          </div>
+          <p class="world-note">A communications fallback: D2D using Direct Mode Operation (DMO). It complements existing radios and networks.</p>
+          <a class="text-link see-live" href="public-safety.html#scene">See it live</a>
+        </article>
+        <article class="world" data-w="2">
+          <a class="world-art" href="closed-compounds.html" aria-label="Closed compounds: see the live scene" tabindex="-1">
+            <div class="still" data-scene="apron" data-opt='{"plates":false}' data-focus="[-1010,-450,1470,900]" data-anchor="[0.5,0.9]" data-vig="0.25"></div>
+            <span class="world-name"><i></i>Closed compounds</span><span class="illus">Illustration</span>
+          </a>
+          <h3><a href="closed-compounds.html">A proactive bubble around each person, tagged asset and danger area on site.</a></h3>
+          <div class="rows">
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>Drivers are warned about workers on foot, even out of sight.</p>
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>A parked aircraft, a vehicle or an open pit is marked with small tags and gets its own bubble.</p>
+            <span class="st"><i class="m vision" aria-hidden="true"></i>Vision</span><p>Workers on foot will be warned too.</p>
+          </div>
+          <a class="text-link see-live" href="closed-compounds.html#scene">See it live</a>
+        </article>
+        <article class="world" data-w="3">
+          <a class="world-art" href="smart-cities.html" aria-label="Smart cities: see the live scene" tabindex="-1">
+            <div class="still" data-scene="street" data-opt='{"stage":4,"R":300,"n":4}' data-focus="[-390,60,1390,680]" data-anchor="[0.5,0.9]" data-vig="0.25"></div>
+            <span class="world-name"><i></i>Smart cities</span><span class="illus">Illustration</span>
+          </a>
+          <h3><a href="smart-cities.html">The car knows the child is there before the driver can see her.</a></h3>
+          <div class="rows">
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>It sees past a bus, a wall or a corner.</p>
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>The driver is warned on a screen in the car.</p>
+            <span class="st"><i class="m vision" aria-hidden="true"></i>Vision</span><p>The person outside will be warned on the phone.</p>
+            <span class="st"><i class="m vision" aria-hidden="true"></i>Vision</span><p>Traffic lights will give a slow walker more time.</p>
+          </div>
+          <a class="text-link see-live" href="smart-cities.html#scene">See it live</a>
+        </article>
+        <article class="world" data-w="4">
+          <a class="world-art" href="phone-makers.html" aria-label="Phone makers: see the live scene" tabindex="-1">
+            <div class="still" data-scene="trail" data-opt='{"plates":false}' data-focus="[-380,-400,700,830]" data-anchor="[0.5,0.9]" data-vig="0.25"></div>
+            <div class="still" data-scene="kerb" data-opt='{"plates":false}' data-focus="[-330,-420,750,830]" data-anchor="[0.5,0.9]" data-vig="0.25"></div>
+            <span class="world-name"><i></i>Phone makers</span><span class="illus">Illustration</span>
+          </a>
+          <h3><a href="phone-makers.html">A phone that will look out for the person holding it.</a></h3>
+          <div class="rows">
+            <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>Push-to-talk with family and friends where there is no network.</p>
+            <span class="st"><i class="m dev" aria-hidden="true"></i>In&nbsp;development</span><p>Music on, eyes on the screen, one step from the road: it will say “Look up”.</p>
+            <span class="st"><i class="m vision" aria-hidden="true"></i>Vision</span><p>On an escalator, it will say “Mind the step”.</p>
+            <span class="st"><i class="m vision" aria-hidden="true"></i>Vision</span><p>It will be part of the phone itself.</p>
+          </div>
+          <a class="text-link see-live" href="phone-makers.html#scene">See it live</a>
+        </article>
+        </div>
+        <div class="deck-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+      </div>
+      <p class="quiet-line">Also: <a href="contact-tracing.html">contact tracing for workplaces</a>, the product of 2020–21.</p>
+    </div>
+  </section>
+
+  <section class="band dark" id="foundations" aria-labelledby="h-foundations">
+    <div class="wrap">
+      <h2 class="display" id="h-foundations">Built on six foundations.</h2>
+      <p class="band-lead"><span class="st"><i class="m today" aria-hidden="true"></i>Today, all six</span></p>
+      <ul class="fnds">
+        <li class="fnd"><svg viewBox="0 0 104 104" fill="none" stroke="#FFC400" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="52" cy="52" r="50" fill="#262C31" stroke="none"/><path d="M30 60H74"/><circle cx="26" cy="60" r="7" fill="#FFC400" stroke="none"/><circle cx="78" cy="60" r="7" fill="#FFC400" stroke="none"/><g stroke="#8F999F"><path d="M52 22l-9 16h18z"/><path d="M38 44l28-28" stroke="#E9ECEE" stroke-width="3.5"/></g></svg><div><h3>Works with no network</h3><p>Phones talk directly, phone to phone (D2D). Reaches significantly farther than standard device-to-device (D2D) links.</p></div></li>
+        <li class="fnd"><svg viewBox="0 0 104 104" fill="none" stroke="#FFC400" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="52" cy="52" r="50" fill="#262C31" stroke="none"/><path d="M30 42c5-10 9-10 14 0s9 10 14 0 9-10 14 0"/><path d="M30 66H74" stroke-dasharray="2 9"/><circle cx="22" cy="54" r="7" fill="#FFC400" stroke="none"/><circle cx="82" cy="54" r="7" fill="#FFC400" stroke="none"/></svg><div><h3>Voice and data together</h3><p>Voice, SOS, position, messages, photos and short clips on one link.</p></div></li>
+        <li class="fnd"><svg viewBox="0 0 104 104" fill="none" stroke="#FFC400" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="52" cy="52" r="50" fill="#262C31" stroke="none"/><circle cx="24" cy="52" r="7" fill="#FFC400" stroke="none"/><path d="M40 38a20 20 0 0 1 0 28"/><path d="M52 28a34 34 0 0 1 0 48" stroke-opacity=".75"/><path d="M64 18a48 48 0 0 1 0 68" stroke-opacity=".5"/><circle cx="86" cy="52" r="5" fill="#fff" stroke="none"/></svg><div><h3>Voice in about a second</h3><p>From speaking to hearing, <a href="trust.html#m-voice">measured on our test phones, October 2026</a>.</p></div></li>
+        <li class="fnd"><svg viewBox="0 0 104 104" fill="none" stroke="#FFC400" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="52" cy="52" r="50" fill="#262C31" stroke="none"/><circle cx="52" cy="52" r="33" stroke-dasharray="5 8"/><circle cx="38" cy="40" r="6.5" fill="#FFC400" stroke="none"/><circle cx="68" cy="44" r="6.5" fill="#FFC400" stroke="none"/><circle cx="44" cy="68" r="6.5" fill="#FFC400" stroke="none"/><circle cx="66" cy="66" r="6.5" fill="#FFC400" stroke="none"/></svg><div><h3>Forms on the spot</h3><p>Phones form the group themselves.</p></div></li>
+        <li class="fnd"><svg viewBox="0 0 104 104" fill="none" stroke="#FFC400" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="52" cy="52" r="50" fill="#262C31" stroke="none"/><circle cx="38" cy="52" r="20"/><circle cx="38" cy="52" r="7" fill="#FFC400" stroke="none"/><rect x="64" y="42" width="26" height="20" rx="4" stroke="#8F999F" stroke-dasharray="4 5"/></svg><div><h3>Privacy built in</h3><p>Nothing goes through a server. A warning to people nearby carries no identity.</p></div></li>
+        <li class="fnd"><svg viewBox="0 0 104 104" fill="none" stroke="#FFC400" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="52" cy="52" r="50" fill="#262C31" stroke="none"/><circle cx="26" cy="52" r="7" fill="#FFC400" stroke="none"/><path d="M40 40a18 18 0 0 1 0 24"/><path d="M62 30a32 32 0 0 1 0 44" stroke-opacity=".7"/><rect x="47" y="22" width="9" height="60" rx="2" fill="#8F999F" stroke="none"/><circle cx="82" cy="52" r="6" fill="#fff" stroke="none"/></svg><div><h3>Sees what eyes cannot</h3><p>Works behind a bus, a wall or a corner.</p></div></li>
+      </ul>
+      <div class="lane-rule" aria-hidden="true"></div>
+      <div class="fnd-foot">
+        <div class="rows">
+          <span class="st"><i class="m today" aria-hidden="true"></i>Today</span><p>Delivered as an SDK inside an existing app.</p>
+          <span class="st"><i class="m vision" aria-hidden="true"></i>Vision</span><p>It will be part of the phone itself.</p>
+        </div>
+        <a class="text-link" href="trust.html">How we label what we claim</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band proof-band" id="record" aria-labelledby="h-proof">
+    <div class="wrap proof">
+      <h2 id="h-proof">What stands behind it</h2>
+      <ul aria-labelledby="h-proof">
+        <li><b>Voice in about a second</b><span>From speaking to hearing, <a href="trust.html#m-voice">measured on our test phones, October 2026</a>.</span></li>
+        <li><b>Piloted in Helsinki</b><span>The Jätkäsaari Mobility Lab pilot, with cars and people on real streets.</span></li>
+        <li><b>Demonstrated for Mitsubishi Corporation and Yazaki</b><span>The warning on the car’s own screen.</span></li>
+        <li><b>Founders from mission-critical communications</b><span>Veterans of group communications for emergency and rescue services.</span></li>
+      </ul>
+      <a class="text-link" href="company.html#record">Milestones</a>
+    </div>
+  </section>
+
+  <section class="band dark closing" id="pilot" aria-labelledby="h-which">
+    <div class="wrap">
+      <h2 class="display" id="h-which">Which world is yours?</h2>
+      <ul class="lenses" aria-label="The four worlds, illustrated">
+        <li><a href="public-safety.html"><span class="still lens" data-scene="collapse" data-opt='{"nolabels":true,"R":200,"hero":true,"solo":true}' data-focus="[-650,-305,820,820]" data-z="1.3"></span><span>Public safety</span></a></li>
+        <li><a href="closed-compounds.html"><span class="still lens" data-scene="apron" data-opt='{"nolabels":true,"noac":true}' data-focus="[-966,-344,680,680]" data-z="1.3"></span><span>Closed compounds</span></a></li>
+        <li><a href="smart-cities.html"><span class="still lens" data-scene="junction" data-opt='{"nolabels":true,"k":0.55,"novan":true}' data-focus="[-37,-58,680,680]" data-z="1.3"></span><span>Smart cities</span></a></li>
+        <li><a href="phone-makers.html"><span class="still lens" data-scene="trail" data-opt='{"nolabels":true}' data-focus="[-400,-380,760,760]" data-z="1.3"></span><span>Phone makers</span></a></li>
+      </ul>
+      <div class="lane-rule" aria-hidden="true"></div>
+      <div class="pilot-ask">
+        <div>
+          <h2>Let’s design a pilot.</h2>
+          <p>Show us the moment your people are most exposed. We agree the targets with you before it starts.</p>
+        </div>
+        <div>
+        <p class="hero-actions">
+          <a class="button" href="contact.html">Request a pilot</a>
+          <a class="text-link mail" href="mailto:info@vizible.zone">info@vizible.zone</a>
+        </p>
+        <p class="invest">Investing in public safety, or building phones? <a href="mailto:info@vizible.zone?subject=Investing%20in%20public%20safety%2C%20or%20building%20phones">Let’s&nbsp;talk.</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap grid">
+    <div class="foot-id">
+      <a class="brand" href="index.html"><img src="img/vz-logo.svg" alt="" width="46" height="46"><span>Vizible Zone</span></a>
+      <p>Situational awareness on the phones people already carry.</p>
+      <p class="invest">Investing in public safety, or building phones? <a href="mailto:info@vizible.zone?subject=Investing%20in%20public%20safety%2C%20or%20building%20phones">Let’s&nbsp;talk.</a></p>
+      <a class="text-link mail" href="mailto:info@vizible.zone">info@vizible.zone</a>
+    </div>
+    <nav class="foot-nav" aria-label="Footer">
+      <ul>
+        <li><a href="public-safety.html">Public safety</a></li>
+        <li><a href="closed-compounds.html">Closed compounds</a></li>
+        <li><a href="smart-cities.html">Smart cities</a></li>
+        <li><a href="phone-makers.html">Phone makers</a></li>
+        <li><a href="contact-tracing.html">Contact tracing</a></li>
+      </ul>
+      <ul>
+        <li><a href="trust.html">Trust</a></li>
+        <li><a href="company.html">Company</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <ul>
+        <li><a href="https://www.linkedin.com/company/viziblezone/">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/channel/UCLZVgcXDj9Wk3JYJ4BRZCEg">YouTube</a></li>
+      </ul>
+    </nav>
+    <p class="legal">© 2026 Vizible Zone Ltd.</p>
+  </div>
+</footer>
+
+<script src="sims/available.js"></script>
+<script src="simkit/simkit.js"></script>
+<script src="simkit/stills.js"></script>
+<script src="simkit/poster.js"></script>
+<script src="js/vz.js"></script>
+</body>
+</html>

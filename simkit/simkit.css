@@ -1,0 +1,93 @@
+/* VZ simkit: shared styles for every simulation page. Tokens follow SPEC section 5.
+   A scene is a dark plate: the asphalt stage, then its caption and controls on the same dark ground,
+   with the label system of the company's printed slides (mustard marks, white type). */
+
+/* Overpass, self-hosted (SIL OFL 1.1, fonts/OFL.txt). ../fonts/ is resolved from this file, so it is
+   build/fonts/ for the scenes in build/sims/ and site/fonts/ for the copies sync-sims.sh puts in the site. */
+@font-face { font-family: Overpass; font-style: normal; font-weight: 400; font-display: swap; src: url(../fonts/overpass-latin-400-normal.woff2) format('woff2'); }
+@font-face { font-family: Overpass; font-style: normal; font-weight: 600; font-display: swap; src: url(../fonts/overpass-latin-600-normal.woff2) format('woff2'); }
+@font-face { font-family: Overpass; font-style: normal; font-weight: 800; font-display: swap; src: url(../fonts/overpass-latin-800-normal.woff2) format('woff2'); }
+:root {
+  --paper: #FFFFFF; --surface: #F6F6F4; --ink: #000000; --muted: #4D4D4D; --line: #E3E3E0;
+  --asphalt: #1B2024; --night: #14181B; --lane: #E9ECEE; --zone: #FFC400; --zone-soft: rgba(255,196,0,.16); --alert: #C8321F;
+  --on-dark: rgba(233,236,238,.96); --on-dark-muted: rgba(233,236,238,.74); /* 12.9:1 and 8.1:1 on --night */
+  --edge: rgba(233,236,238,.34); /* control outlines on the dark plate */
+  --vzs-font: Overpass, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+.vzs-doc { margin: 0; background: var(--night); color: var(--on-dark); font: 400 18px/1.55 var(--vzs-font); -webkit-font-smoothing: antialiased; }
+
+/* Page chrome, hidden by ?embed=1 */
+.vzs-page { max-width: 1200px; margin: 0 auto; padding: 48px 24px 36px; }
+.vzs-page .vzs-brand { margin: 0 0 56px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--zone); }
+.vzs-page h1 { margin: 0 0 16px; font-weight: 800; font-size: clamp(36px, 5.4vw, 64px); line-height: 1.02; letter-spacing: -0.02em; color: #fff; }
+.vzs-page p { margin: 0; max-width: 60ch; }
+.vzs-status { display: inline-flex; align-items: flex-start; gap: 10px; margin-top: 20px !important; color: var(--on-dark); font-weight: 600; font-size: 16px; line-height: 1.5; }
+.vzs-status i { margin-top: 0.3em; } /* the mark sits on the first line when the text wraps */
+.vzs-page .vzs-status { display: flex; }                      /* several statuses stack, one per line */
+.vzs-page .vzs-status + .vzs-status { margin-top: 8px !important; }
+.vzs-status i, .vzs-statuses i, .vzs-key i { flex: none; width: 13px; height: 13px; box-sizing: border-box; border-radius: 50%; border: 2.5px solid var(--zone); }
+.vzs-status i.today, .vzs-statuses i.today, .vzs-key i.today { background: var(--zone); border-color: var(--zone); }
+.vzs-status i.vision, .vzs-statuses i.vision, .vzs-key i.vision { border-style: dashed; }
+.vzs-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 72px; }
+.vzs-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* The simulation block */
+.vzs { --vzs-inset: 0px; --vzs-stage-max: calc(100vh - 230px); background: var(--night); color: var(--on-dark); font-family: var(--vzs-font); } /* text aligns with the stage edge */
+/* The stage never grows taller than the window that shows it: the host page passes the height it has. */
+.vzs-stage { position: relative; height: min(56.25vw, max(320px, var(--vzs-stage-max))); background: var(--asphalt); overflow: hidden; }
+.vzs-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.vzs-illus { position: absolute; right: 16px; bottom: 12px; font-size: 13px; line-height: 1; color: rgba(233,236,238,.72); letter-spacing: .01em; pointer-events: none; text-shadow: 0 1px 6px rgba(10,13,16,.9); }
+.vzs-bar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 40px; padding: 20px var(--vzs-inset) 6px; }
+.vzs-caption { flex: 1 1 32ch; max-width: 62ch; min-height: 2.9em; margin: 0; font-size: 19px; font-weight: 600; line-height: 1.4; color: #fff; text-wrap: pretty; }
+.vzs-note { margin: 0; color: var(--on-dark-muted); font-size: 14px; }
+/* Status rows of a scene (Today / In development / Vision): part of the bar, so they survive ?embed=1 */
+.vzs-statuses { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 4px 28px; margin: 6px 0 0; padding: 0; list-style: none; color: var(--on-dark-muted); font-size: 15px; line-height: 1.5; }
+.vzs-statuses li { display: inline-flex; align-items: flex-start; gap: 9px; }
+.vzs-statuses li i { margin-top: 0.3em; }
+.vzs-key { display: none; flex: 1 1 100%; flex-wrap: wrap; gap: 4px 20px; margin: 8px 0 0; font-size: 15px; font-weight: 800; color: #fff; }
+.vzs-key span { display: inline-flex; align-items: center; gap: 8px; }
+.vzs-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 10px var(--vzs-inset) 26px; }
+.vzs-btn, .vzs-seg span { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; border-radius: 22px; font: 600 15px/1 var(--vzs-font); color: #fff; }
+.vzs-btn { padding: 0 18px 0 15px; border: 1px solid var(--edge); background: transparent; cursor: pointer; }
+.vzs-btn, .vzs-seg label { -webkit-tap-highlight-color: transparent; }
+.vzs-pair { display: inline-flex; gap: 8px; }
+.vzs-btn svg { width: 15px; height: 15px; flex: none; }
+.vzs-group { display: inline-flex; align-items: center; gap: 12px; }
+.vzs-glabel { color: var(--on-dark-muted); font-size: 15px; }
+.vzs-seg { display: inline-flex; border: 1px solid var(--edge); border-radius: 23px; }
+.vzs-seg label { position: relative; display: inline-flex; }
+.vzs-seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.vzs-seg span { padding: 0 16px; background: transparent; }
+/* Selected: every option pill (With VZ, Weather, Scene...) is mustard with black text (13.6:1), like the chips in
+   the scene, and it switches at once. No colour transition. Highest specificity, so no hover or touch state can repaint it. */
+.vzs .vzs-seg label input:checked + span { background: var(--zone); color: var(--ink); font-weight: 800; }
+/* Hover only where a real pointer hovers: on touch screens :hover sticks to the last tapped pill. */
+@media (hover: hover) and (pointer: fine) {
+  .vzs-btn:hover { border-color: #fff; }
+  .vzs-seg label:hover input:not(:checked) + span { background: rgba(233,236,238,.1); }
+}
+.vzs-btn:focus-visible, .vzs-seg input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+@media (forced-colors: active) { .vzs .vzs-seg label input:checked + span { background: Highlight; color: HighlightText; forced-color-adjust: none; } }
+
+/* ?embed=1: the host page owns the chrome */
+.vzs-embed .vzs-page { display: none; }
+.vzs-embed .vzs-wrap { max-width: none; padding: 0; }
+.vzs-embed .vzs { --vzs-inset: 24px; --vzs-stage-max: 100000px; }
+
+@media (max-width: 640px) {
+  .vzs-page { padding: 28px 16px 24px; }
+  .vzs-page .vzs-brand { margin-bottom: 32px; }
+  .vzs, .vzs-embed .vzs { --vzs-inset: 16px; }
+  .vzs-wrap { padding: 0 0 48px; }
+  .vzs-stage { height: min(125vw, max(320px, var(--vzs-stage-max))); }
+  .vzs-illus { right: 12px; bottom: 10px; }
+  .vzs-caption { font-size: 17px; min-height: 4.2em; }
+  .vzs-statuses { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } /* read out, not shown: the one-line key stands in */
+  .vzs-key { display: flex; }
+  .vzs-controls { gap: 10px 12px; }
+  .vzs-seg span { padding: 0 13px; }
+}
+@media (max-width: 359.98px) {
+  .vzs-seg span { padding: 0 10px; }
+  .vzs-controls { gap: 10px 8px; }
+}
