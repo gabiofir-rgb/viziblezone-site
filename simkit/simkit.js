@@ -433,6 +433,14 @@
       c.strokeStyle = rgba('zone', 0.95 * k); c.lineWidth = 2.2 * px; c.stroke(); c.restore();
     }
   };
+  // A place that has the message (a city block, an area): the zone's colour as a quiet wash, never above --zone-soft,
+  // with a 1 px inset line. k 0..1 fades it in. Used where a whole place is told at once; never as decoration.
+  P.wash = function (x, y, w, h, k = 1) {
+    if (!(k > 0)) return;
+    const c = this.ctx, px = this.px, i = 2 * px;
+    c.fillStyle = rgba('zone', 0.11 * clamp(k)); c.fillRect(x, y, w, h);
+    c.strokeStyle = rgba('zone', 0.3 * clamp(k)); c.lineWidth = px; c.strokeRect(x + i, y + i, w - 2 * i, h - 2 * i);
+  };
   // Asset tag: what gives an object without a phone (an aircraft, a cone, a crane) its bubble. Square, so it never reads as a phone.
   P.tag = function (x, y) {
     const c = this.ctx, px = this.px, g = c.createRadialGradient(x, y, 0, x, y, 12 * px);
@@ -611,9 +619,19 @@
 
   function mount(cfg) {
     const el = typeof cfg.el === 'string' ? document.querySelector(cfg.el) : cfg.el, id = ++uid;
-    const reducedMQ = matchMedia('(prefers-reduced-motion: reduce)');
-    if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.classList.add('vzs-embed');
-    const choices = cfg.choices || [];
+    const reducedMQ = matchMedia('(prefers-reduced-motion: reduce)'), q = new URLSearchParams(location.search), micro = q.get('micro') === '1';
+    if (q.get('embed') === '1') document.documentElement.classList.add('vzs-embed');
+    if (micro) document.documentElement.classList.add('vzs-micro'); // a demo under a row: the row carries name and status
+    const choices = cfg.choices || [], fn = (v, o) => (typeof v === 'function' ? v(o) : v);
+    // An option's value as setOption accepts it (case-insensitive; a two-value choice also takes a boolean), else undefined.
+    function pick(name, value) {
+      if (name === 'vz' || name === 'compare') return parseBool(value) ?? undefined;
+      const ch = choices.find((c) => c.name === name), b = parseBool(value); if (!ch) return;
+      return ch.values.find((x) => String(x).toLowerCase() === String(value).toLowerCase()) ?? (ch.values.length === 2 && b != null ? ch.values[b ? 0 : 1] : undefined);
+    }
+    // Options from the query (?send=SOS, ?vz=0), through the same validation; a bad value is ignored.
+    const opts = Object.assign({ vz: true, compare: !!cfg.compare && !micro, micro }, cfg.options); // o.micro: a scene may trim a run for a row
+    for (const n of ['vz'].concat(choices.map((c) => c.name))) { const v = q.has(n) ? pick(n, q.get(n)) : undefined; if (v !== undefined) { opts[n] = v; if (n === 'vz') opts.compare = false; } }
     const group = (name, label, vals, show) => `<div class="vzs-group" role="radiogroup" aria-label="${esc(label)}">${show ? `<span class="vzs-glabel" aria-hidden="true">${esc(label)}</span>` : ''}<span class="vzs-seg">${vals.map(([v, t]) => `<label><input type="radio" name="vzs${id}-${name}" value="${esc(v)}"><span>${esc(t)}</span></label>`).join('')}</span></div>`;
     el.classList.add('vzs');
     // Status rows stay in the bar, so an embedded scene still says what is Today, In development or Vision.
@@ -622,24 +640,25 @@
     const levels = ['today', 'dev', 'vision'].filter((l) => (cfg.statuses || []).some(([lvl]) => lvl === l));
     const key = levels.map((l) => `<span><i class="${MARK[l]}"></i>${NAME[l]}</span>`).join('');
     const statuses = (cfg.statuses || []).map(([lvl, text]) => `<li><i class="${MARK[lvl] ?? ''}" aria-hidden="true"></i>${esc(text).replace(/In development/g, 'In&nbsp;development')}</li>`).join(''); // the label never splits
-    el.innerHTML = `<div class="vzs-stage"><canvas role="img" aria-label="${esc(cfg.label || '')}"></canvas><span class="vzs-illus" aria-hidden="true">Illustration</span></div>`
-      + '<div class="vzs-bar"><p class="vzs-caption" aria-live="polite" aria-atomic="true"></p><p class="vzs-note">Illustration. Not a recording.</p>'
-      + (statuses ? `<ul class="vzs-statuses" aria-label="Status">${statuses}</ul><p class="vzs-key" aria-hidden="true">${key}</p>` : '') + '</div>'
+    el.innerHTML = `<div class="vzs-stage"><canvas role="img" aria-label="${esc(fn(cfg.label, opts) || '')}"></canvas><span class="vzs-illus" aria-hidden="true">Illustration</span></div>`
+      + '<div class="vzs-bar"><p class="vzs-caption" aria-live="polite" aria-atomic="true"></p><p class="vzs-note">Illustration. Not a recording.'
+      + (cfg.notes || []).map((n) => '<br>' + esc(n)).join('') + '</p>'
+      + (statuses && !micro ? `<ul class="vzs-statuses" aria-label="Status">${statuses}</ul><p class="vzs-key" aria-hidden="true">${key}</p>` : '') + '</div>'
       + '<div class="vzs-controls" role="group" aria-label="Simulation controls">'
       + '<span class="vzs-pair"><button type="button" class="vzs-btn" data-act="play"></button>'
       + `<button type="button" class="vzs-btn" data-act="replay">${ICON.replay}<span>Replay</span></button></span>`
       + group('vz', 'View', [['1', 'With VZ'], ['0', 'Without VZ']], false)
-      + choices.map((ch) => group(ch.name, ch.label, ch.values.map((v) => [v, v]), true)).join('') + '</div>';
+      + choices.filter((ch) => !ch.hidden && !micro).map((ch) => group(ch.name, ch.label, ch.values.map((v) => [v, v]), true)).join('') + '</div>';
     const stage = el.querySelector('.vzs-stage'), canvas = el.querySelector('canvas'), ctx = canvas.getContext('2d');
     const capEl = el.querySelector('.vzs-caption'), playBtn = el.querySelector('[data-act=play]');
     const cam = { w: 0, h: 0, dpr: 1, scale: 1, rot: 0, cx: 0, cy: 0, view: null };
     const g = new Painter(ctx, cam), bg = document.createElement('canvas'), bgP = new Painter(bg.getContext('2d'), cam);
-    const opts = Object.assign({ vz: true, compare: !!cfg.compare }, cfg.options);
-    let cur, s, phase = 'run', phaseT = 0, acc = 0, last = null, raf = 0, clock = 0, bgKey = '';
+    let cur, s, phase = 'run', phaseT = 0, acc = 0, last = null, raf = 0, clock = 0, bgKey = '', ended = false;
     let playing = !reducedMQ.matches, onScreen = true, capIdx = -1, capAt = -1e9;
 
     function startRun(vz) {
-      cur = Object.assign({}, opts, { vz }); s = cfg.init(cur, rng(cfg.seed || 1)); s.t = 0; acc = 0; capIdx = -1;
+      cur = Object.assign({}, opts, { vz }); fit(); canvas.setAttribute('aria-label', fn(cfg.label, cur) || ''); // focus and label may follow the options
+      s = cfg.init(cur, rng(cfg.seed || 1)); s.t = 0; acc = 0; capIdx = -1;
       const t0 = cfg.start ? cfg.start(cur) : 0; while (s.t + STEP / 2 < t0) step(); // a repeat run may skip its set-up
       sync();
     }
@@ -647,19 +666,20 @@
     const step = () => { cfg.update(s, STEP, cur); s.t += STEP; }; // update sees s.t at the start of the step
     function seekTo(t, vz) { startRun(vz); phase = 'run'; while (s.t + STEP / 2 < t) step(); caption(true); render(); }
     const stillVz = () => (opts.compare ? true : opts.vz);
-    const toStill = () => seekTo(cfg.still ? cfg.still(stillVz()) : 0, stillVz());
+    function toStill() { const vz = stillVz(); startRun(vz); const t = cfg.still ? cfg.still(vz, cur) : 0; phase = 'run'; while (s.t + STEP / 2 < t) step(); caption(true); render(); }
 
     function caption(force) {
       const lines = cfg.lines(cur), want = Math.min(cfg.beat(s, cur), lines.length - 1);
-      if (want === capIdx && !force) return;
-      if (force) capIdx = want; else if (capIdx < 0) capIdx = 0; else if (clock - capAt >= DWELL) capIdx = Math.min(capIdx + 1, want); else return;
+      if (want === capIdx && !force) return true;
+      if (force) capIdx = want; else if (capIdx < 0) capIdx = 0; else if (clock - capAt >= DWELL) capIdx = Math.min(capIdx + 1, want); else return false;
       capAt = clock; if (capEl.textContent !== lines[capIdx]) capEl.textContent = lines[capIdx];
+      return capIdx === want;
     }
     function fit() {
       const r = stage.getBoundingClientRect(), w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height)), dpr = Math.min(window.devicePixelRatio || 1, 2);
-      if (w === cam.w && h === cam.h && dpr === cam.dpr) return false;
+      const o = cur || opts, tall = h > w, portrait = cfg.rotate !== false && tall, f = (tall && fn(cfg.portraitFocus, o)) || fn(cfg.focus, o); // rotate: false keeps the plan upright but still uses portraitFocus
+      const key = [w, h, dpr, f.x, f.y, f.w, f.h].join(); if (key === cam.key) return false; cam.key = key;
       canvas.width = bg.width = Math.round(w * dpr); canvas.height = bg.height = Math.round(h * dpr);
-      const tall = h > w, portrait = cfg.rotate !== false && tall, f = (tall && cfg.portraitFocus) || cfg.focus; // rotate: false keeps the plan upright but still uses portraitFocus
       const scale = portrait ? Math.min(w / f.h, h / f.w) : Math.min(w / f.w, h / f.h);
       Object.assign(cam, { w, h, dpr, scale, rot: portrait ? -Math.PI / 2 : 0, cx: f.x + f.w / 2, cy: f.y + f.h / 2 });
       const hw = w / 2 / scale, hh = h / 2 / scale, ex = portrait ? hh : hw, ey = portrait ? hw : hh;
@@ -685,12 +705,14 @@
     function frame(now) {
       raf = 0; if (!active()) return;
       const dt = last == null ? 0 : Math.min((now - last) / 1000, 0.1); last = now; clock += dt;
-      if (phase !== 'in') { acc += dt; while (acc >= STEP) { step(); acc -= STEP; } }
-      if (phase === 'run' && s.over) { phase = reducedMQ.matches ? 'swap' : 'out'; phaseT = 0; }
+      if (phase !== 'in' && phase !== 'rest') { acc += dt; while (acc >= STEP) { step(); acc -= STEP; } }
+      if (phase === 'run' && s.over) { phase = micro ? 'rest' : reducedMQ.matches ? 'swap' : 'out'; phaseT = 0; }
       else if (phase !== 'run') phaseT += dt;
       if ((phase === 'out' && phaseT >= FADE) || phase === 'swap') { startRun(opts.compare ? !cur.vz : cur.vz); phase = reducedMQ.matches ? 'run' : 'in'; phaseT = 0; }
       else if (phase === 'in' && phaseT >= FADE) phase = 'run';
-      caption(false); render(); raf = requestAnimationFrame(frame);
+      const told = caption(false); render();
+      if (phase === 'rest' && told) { ended = true; playing = false; sync(); return; } // micro: played once, every line read
+      raf = requestAnimationFrame(frame);
     }
     const active = () => playing && onScreen && !document.hidden;
     function schedule() { if (active() && !raf) { last = null; raf = requestAnimationFrame(frame); } }
@@ -703,26 +725,27 @@
       });
       el.dataset.vz = cur && cur.vz ? 'with' : 'without';
     }
-    function restart() { phase = 'run'; phaseT = 0; if (reducedMQ.matches && !playing) toStill(); else { startRun(firstVz()); caption(true); render(); } }
+    // go: play from the start (micro: Replay, Play after the end, and a new With or Without VZ run).
+    function restart(go) {
+      phase = 'run'; phaseT = 0; ended = false; if (go) playing = true;
+      if (reducedMQ.matches && !playing) toStill(); else { startRun(firstVz()); caption(true); render(); }
+      sync(); schedule();
+    }
     const api = {
-      play() { playing = true; sync(); schedule(); },
+      play() { if (ended) restart(true); else { playing = true; sync(); schedule(); } },
       pause() { playing = false; halt(); sync(); },
-      reset() { restart(); },
+      reset() { restart(micro); },
       setOption(name, value) {
+        const v = pick(name, value); if (v === undefined) return false;
         if (name === 'vz') {
-          const v = parseBool(value); if (v == null) return false;
           if (opts.compare && phase === 'run' && cur.vz === v) { opts.compare = cur.compare = false; opts.vz = v; sync(); return true; }
           opts.compare = false; opts.vz = v;
-        } else if (name === 'compare') {
-          const v = parseBool(value); if (v == null) return false; opts.compare = v;
-        } else {
-          const ch = choices.find((c) => c.name === name); if (!ch) return false;
-          let val = ch.values.find((x) => String(x).toLowerCase() === String(value).toLowerCase());
-          if (val == null && ch.values.length === 2 && parseBool(value) != null) val = ch.values[parseBool(value) ? 0 : 1]; // e.g. Show / Hide
-          if (val == null) return false; opts[name] = val;
-          if (ch.live) { cur[name] = val; sync(); render(); return true; } // a view option: the run goes on
+        } else if (name === 'compare') opts.compare = v && !micro;
+        else {
+          opts[name] = v;
+          if (choices.find((c) => c.name === name).live) { cur[name] = v; sync(); render(); return true; } // a view option: the run goes on
         }
-        restart(); return true;
+        restart(micro && !reducedMQ.matches); return true;
       },
       // Testing helpers, not part of the embedding contract.
       seek(t, vz = stillVz()) { seekTo(t, !!vz); },

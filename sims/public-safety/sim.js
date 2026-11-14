@@ -10,18 +10,30 @@
   const OCC = [{ x: 570, y: 515, a: 0, l: 380, w: 370 }]; // the heap's core: sight reaches the edge of the pile, not into it
   const SEARCH = K.route([[1090, 822], [420, 822]]), EDGE = { x: 600, y: 796 };
   const ZONE = { rmax: 950, reach: 900, period: 0.7, rings: 3 }, SOS = 0.8, HOP = 0.8;
-  const STATUS = [['today', 'Push-to-talk, SOS, position and messages, phone to phone: Today'], ['today', 'A trapped person’s phone opens a voice and data channel: Today'],
-    ['today', 'One phone in between passes voice and data on: Today'], ['today', 'Data travels on from phone to phone: Today']];
+  // Yitro, decision 12 (13.11): no relay claim anywhere until there is evidence; the rescuers receive her directly.
+  const STATUS = [['today', 'Push-to-talk, SOS, position and messages, phone to phone: Today'], ['today', 'A trapped person’s phone opens a voice and data channel: Today']];
   const L = {
     with: ['A building has collapsed and the network is down. Someone is trapped inside.',
       'Today: her phone opens a voice and data channel and shares where she is. Rescuers can hear and answer her.',
-      'Rescuers\' phones nearby receive it. One phone in between passes voice and data on to the command post today.',
+      'Rescuers\' phones nearby receive it directly.',
       'Voice and messages come back to her and to the rescuers, with no network.'],
     without: ['A building has collapsed and the network is down. Someone is trapped inside.',
       'Without VZ, her phone cannot reach anyone while the network is down.',
       'The rescuers search the rubble without knowing where she is.'],
     again: 'Now without VZ. The network is down, so her phone cannot reach anyone.'
   };
+  // Show me (plan 13.11.2026, 3.3): the hidden option `show` plays one moment of the same run under a capability row,
+  // with its own frame, canvas label, lines and end. `All` is the scene above, unchanged. No new drawing.
+  const WIN = {
+    Trapped: {
+      focus: { x: 225, y: 170, w: 1250, h: 703 }, portraitFocus: { x: 240, y: 200, w: 1240, h: 820 },
+      label: 'Plan view of a street after an earthquake. A building has collapsed, the network is down and someone is trapped in the rubble. With VZ, her phone opens a voice and data channel by itself (Today); the rescuers nearby hear her, head to where she is and answer her. Without VZ, her phone cannot call anyone and nobody knows she is there.',
+      with: ['A building has collapsed and the network is down. Someone is trapped and cannot reach the phone.',
+        'The phone opens a voice and data channel by itself.', 'Rescuers receive the call and the available position.'],
+      without: ['Someone is trapped, and the network is down.', 'The phone cannot call anyone. Nobody knows.']
+    }
+  };
+  const SHOW = ['All'].concat(Object.keys(WIN));
 
   /* ---------------------------------------------------------------- ground */
   function rubble(g) {
@@ -73,7 +85,7 @@
   /* ---------------------------------------------------------------- motion */
   const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   function init() {
-    return { end: null, over: false, r1: { s: 0, v: 66, caught: null, goTo: null, gs: 0, arrived: null }, r2c: null, cpc: null, tc: null, back: null };
+    return { end: null, over: false, r1: { s: 0, v: 66, caught: null, goTo: null, gs: 0, arrived: null }, r2c: null, tc: null, back: null };
   }
   function r1pos(s) { return s.r1.goTo ? s.r1.goTo.at(s.r1.gs) : SEARCH.at(s.r1.s); }
   function update(s, dt, o) {
@@ -83,13 +95,18 @@
       if (r1.caught == null && K.zoneCrossed(t0, T, dist(p1, TRAP), z) && dist(p1, TRAP) <= ZONE.reach) r1.caught = T;
       if (s.r2c == null && K.zoneCrossed(t0, T, dist(R2, TRAP), z)) s.r2c = T;
     }
-    if (s.r2c != null && s.cpc == null && T >= s.r2c + 0.25 + HOP) s.cpc = T; // passed along to the command post
-    if (s.cpc != null && s.back == null && T >= s.cpc + 0.9) s.back = T;    // voice and messages come back
+    if (s.r2c != null && s.back == null && T >= s.r2c + 1.15 + HOP) s.back = T; // voice and messages come back, directly
     if (s.back != null && s.tc == null && T >= s.back + 2 * HOP) s.tc = T;
+    if (o.show === 'Trapped' && r1.caught != null && s.tc == null && T >= r1.caught + 1.4) s.tc = T; // the nearest rescuer answers her
     // Rescuer one: searches along the rubble; warned, heads straight to where she is.
     if (r1.caught != null && !r1.goTo && T > r1.caught + 0.6) r1.goTo = K.route([[p1.x, p1.y], [p1.x - 40, p1.y - 6], [EDGE.x, EDGE.y]], 30);
     if (r1.goTo) { r1.gs = Math.min(r1.goTo.total, r1.gs + 80 * dt); if (r1.arrived == null && r1.gs >= r1.goTo.total - 1) r1.arrived = T; }
     else r1.s = Math.min(SEARCH.total, r1.s + r1.v * dt);
+    const w = o.show;
+    if (s.end == null && WIN[w]) { // a window ends on its own moment
+      if (!o.vz) { if (T > 5.2) s.end = T; }
+      else if (r1.arrived != null && T > r1.arrived + 0.3) s.end = T;
+    }
     if (s.end == null) {
       if (o.vz && s.tc != null && T > Math.max(s.tc + 2.2, (r1.arrived ?? 99) + 0.6)) s.end = T;
       else if (!o.vz && T > (o.compare ? 7.2 : 8.4)) s.end = T;
@@ -100,59 +117,55 @@
 
   /* --------------------------------------------------------------- picture */
   function draw(g, s, o) {
-    const T = s.t, r1 = s.r1, p1 = r1pos(s), show = o.relay === 'Show', ph = o.vz ? null : 'off';
+    const T = s.t, r1 = s.r1, p1 = r1pos(s), w = o.show, ph = o.vz ? null : 'off';
+    const cp = w !== 'Trapped'; // the command post is a place in the full scene, out of her phone's reach
     const a1 = r1.goTo ? p1.a : Math.PI, toHer = Math.atan2(TRAP.y - p1.y, TRAP.x - p1.x);
     const look = r1.caught != null ? toHer : toHer + 0.42 * Math.sin(T * 1.25), k = g.cam.scale; // searching: the gaze sweeps the pile
-    // Labels sit in screen space: beside each object whatever the orientation, and across a path from its line.
-    const across = (a, b, u, d) => { const [ax, ay] = g.toScreen(a.x, a.y), [bx, by] = g.toScreen(b.x, b.y), L = Math.hypot(bx - ax, by - ay) || 1; let nx = -(by - ay) / L, ny = (bx - ax) / L; if (ny > 0) { nx = -nx; ny = -ny; } return [lerp(a.x, b.x, u), lerp(a.y, b.y, u), { dx: nx * d, dy: ny * d }]; };
     const fade = (a, z) => (a == null ? 0 : clamp((T - a) / 0.22) * (z == null ? 1 : 1 - clamp((T - z) / 0.3)));
-    for (const p of [R2, CP, MATE]) g.person(p, { r: R_P, phone: ph });
+    for (const p of cp ? [R2, CP, MATE] : [R2]) g.person(p, { r: R_P, phone: ph });
     g.person({ x: p1.x, y: p1.y, a: a1 }, { r: R_P, phone: ph });
     g.cone({ x: p1.x, y: p1.y }, look, 0.55, 620, OCC, { k: 1.1 });
-    g.label(TW.x, TW.y, 'No cellular network', { dy: 70 * k + 18 });
-    g.label(1625, 535, 'Field command post', { dy: -(g.portrait ? 105 : 65) * k - 18 });
+    if (w === 'All' || w === 'Trapped') g.label(TW.x, TW.y, 'No cellular network', { dy: 70 * k + 18 });
+    if (cp) g.label(1625, 535, 'Field command post', { dy: -(g.portrait ? 105 : 65) * k - 18 });
     if (o.vz) {
       const on = T > SOS;
       if (on) g.zone(TRAP.x, TRAP.y, { rmax: ZONE.rmax, period: ZONE.period, rings: 3, phase: SOS, start: SOS });
       g.person(TRAP, { r: R_P, ghost: true, alpha: clamp((T - SOS) / 0.2) });
       if (r1.goTo && r1.arrived == null) g.trail(r1.goTo, r1.gs + R_P, r1.goTo.total - r1.gs - 6);
-      if (show && s.r2c != null) { // the relay path: direct to the nearest rescuer, then passed along to the command post
-        const kp = clamp((T - s.r2c) / 0.3);
-        g.hop(TRAP, R2, 0, { alpha: 0.32 * kp }); g.hop(R2, CP, (T - s.r2c - 0.25) / HOP, { alpha: 0.4 * kp });
-        if (s.back != null) for (let i = 0; i < 3; i++) { const u = T - s.back - i * 0.22; g.hop(CP, R2, u / HOP, { line: false }); g.hop(R2, TRAP, (u - HOP) / HOP, { line: false }); }
-        const [ax, ay, ao] = across(TRAP, R2, 0.58, 22), [bx, by, bo] = across(R2, CP, 0.5, 22);
-        g.label(ax, ay, 'Direct', Object.assign({ status: 'today', k: kp }, ao));
-        g.label(bx, by, 'One phone in between', Object.assign({ status: 'today', k: kp }, bo));
-      }
-      for (const p of [R2, CP, MATE, p1]) g.device(p.x, p.y);
+      for (const p of cp ? [R2, CP, MATE, p1] : [R2, p1]) g.device(p.x, p.y);
       if (on) g.device(TRAP.x, TRAP.y);
       if (r1.caught != null) { g.catchFx(p1.x, p1.y, T - r1.caught); g.flash({ x: p1.x, y: p1.y }, T - r1.caught, { l: R_P * 2, w: R_P * 2 }); }
       if (s.r2c != null) g.catchFx(R2.x, R2.y, T - s.r2c);
-      if (s.cpc != null) { g.catchFx(CP.x, CP.y, T - s.cpc); g.flash(CP, T - s.cpc, { l: R_P * 2, w: R_P * 2 }); }
       if (s.tc != null) { g.catchFx(TRAP.x, TRAP.y, T - s.tc); g.flash(TRAP, T - s.tc, { l: R_P * 2, w: R_P * 2 }); }
       g.chip(p1.x, p1.y, 'Person trapped', { k: fade(r1.caught, r1.arrived), side: 'down', gap: 20 });
-      g.chip(CP.x, CP.y, 'SOS and position', { k: fade(s.cpc, null), side: 'down', gap: 20 });
       g.chip(TRAP.x, TRAP.y, 'Help is coming', { k: fade(s.tc, null), side: 'up', gap: 22 });
     }
   }
 
+  const LABEL = 'Plan view of a street after an earthquake. A building has collapsed, the mobile mast is down and someone is trapped in the rubble. With VZ, her phone opens a voice and data channel and shares where she is (Today). Rescuers can hear and answer her. Nearby rescuers\' phones receive it directly, and voice and messages come back. Without VZ, the call reaches no one and the rescuers search without knowing where she is. The caption below describes each moment.';
+  const ALL = { focus: { x: 130, y: 90, w: 1800, h: 1013 }, portraitFocus: { x: 290, y: 200, w: 1440, h: 860 } };
   K.mount({
     el: '#sim',
-    label: 'Plan view of a street after an earthquake. A building has collapsed, the mobile mast is down and someone is trapped in the rubble. With VZ, her phone opens a voice and data channel and shares where she is (Today). Rescuers can hear and answer her. Nearby rescuers\' phones receive it directly; one phone in between passes voice and data on to the field command post (Today); voice and messages come back. Data also travels on from phone to phone. Without VZ, the call reaches no one and the rescuers search without knowing where she is. The caption below describes each moment.',
-    focus: { x: 130, y: 90, w: 1800, h: 1013 },
-    portraitFocus: { x: 290, y: 200, w: 1440, h: 860 },
+    label: (o) => (WIN[o.show] ? WIN[o.show].label : LABEL),
+    focus: (o) => (WIN[o.show] || ALL).focus,
+    portraitFocus: (o) => (WIN[o.show] || ALL).portraitFocus,
     compare: false, // the scene stays With VZ; Without VZ is the toggle
-    options: { relay: 'Show' },
-    choices: [{ name: 'relay', label: 'Relay path', values: ['Show', 'Hide'], live: true }],
+    options: { show: 'All' },
+    choices: [{ name: 'show', label: 'Show', values: SHOW, hidden: true }],
     statuses: STATUS,
     start: (o) => (o.compare && !o.vz ? 0.8 : 0),
-    still: (vz) => (vz ? 3.4 : 4),
-    lines: (o) => (o.compare && !o.vz ? [L.again, L.without[2]] : o.vz ? L.with : L.without),
+    still: (vz, o) => (vz ? 3.4 : WIN[o.show] ? 2.6 : 4),
+    lines: (o) => (WIN[o.show] ? WIN[o.show][o.vz ? 'with' : 'without'] : o.compare && !o.vz ? [L.again, L.without[2]] : o.vz ? L.with : L.without),
     beat(s, o) {
+      const w = o.show;
+      if (WIN[w]) {
+        if (!o.vz) return s.t > 1.4 ? 1 : 0;
+        return s.tc != null ? 2 : s.t > SOS ? 1 : 0; // Trapped
+      }
       if (o.vz) return s.back != null ? 3 : s.r2c != null && s.t > s.r2c + 0.3 ? 2 : s.t > SOS ? 1 : 0;
       return o.compare ? (s.t > 2.2 ? 1 : 0) : s.t > 3.6 ? 2 : s.t > 1.4 ? 1 : 0;
     },
-    debug: (s) => ({ r1Caught: s.r1.caught, r2c: s.r2c, cpc: s.cpc, back: s.back, tc: s.tc, arrived: s.r1.arrived, end: s.end, r1x: r1pos(s).x }),
+    debug: (s) => ({ r1Caught: s.r1.caught, r2c: s.r2c, back: s.back, tc: s.tc, arrived: s.r1.arrived, end: s.end, r1x: r1pos(s).x }),
     init, update, draw, ground
   });
 })();

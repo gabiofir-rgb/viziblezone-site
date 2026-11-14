@@ -123,16 +123,62 @@
           <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
           <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
         </ul>
-        <ul class="caps">
-          <li class="cap"><span class="cap-name">Distancing alerts</span><span class="cap-text">A warning when people stand too close for too long.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Exposure notice</span><span class="cap-text">The people who were really close are told.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Rules the organisation sets</span><span class="cap-text">How close, how long, how many days.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">A console for the organisation</span><span class="cap-text">Activity and reports.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Encounter records on each phone</span><span class="cap-text">Records stay on each person’s phone. When a case is confirmed, that person’s record is shared with the organisation.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
+        <ul class="caps has-demos">
+          <li class="cap" id="cap-ct-distance">
+            <span class="cap-name">Distancing alerts</span>
+            <span class="cap-text">A warning when people stand too close for too long.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ct-distance" data-demo="demos-office" data-demo-opt="demo=distance">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Distancing alerts</span>
+            </button>
+            <div class="demo" id="demo-ct-distance" role="group" aria-label="Demonstration: Distancing alerts" hidden></div>
+          </li>
+          <li class="cap" id="cap-ct-notice">
+            <span class="cap-name">Exposure notice</span>
+            <span class="cap-text">The people who were really close are told.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ct-notice" data-demo="contact-tracing" data-demo-opt="reportCase=On&amp;daySpeed=Fast">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Exposure notice</span>
+            </button>
+            <div class="demo" id="demo-ct-notice" role="group" aria-label="Demonstration: Exposure notice" hidden></div>
+          </li>
+          <li class="cap" id="cap-ct-rules">
+            <span class="cap-name">Rules the organisation sets</span>
+            <span class="cap-text">How close, how long, how many days.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ct-rules" data-demo="demos-office" data-demo-opt="demo=rules">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Rules the organisation sets</span>
+            </button>
+            <div class="demo" id="demo-ct-rules" role="group" aria-label="Demonstration: Rules the organisation sets" hidden></div>
+          </li>
+          <li class="cap" id="cap-ct-console">
+            <span class="cap-name">A console for the organisation</span>
+            <span class="cap-text">Activity and reports.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ct-console" data-demo="demos-office" data-demo-opt="demo=console">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: A console for the organisation</span>
+            </button>
+            <div class="demo" id="demo-ct-console" role="group" aria-label="Demonstration: A console for the organisation" hidden></div>
+          </li>
+          <li class="cap" id="cap-ct-records">
+            <span class="cap-name">Encounter records on each phone</span>
+            <span class="cap-text">Records stay on each person’s phone. When a case is confirmed, that person’s record is shared with the organisation.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ct-records" data-demo="demos-office" data-demo-opt="demo=records">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Encounter records on each phone</span>
+            </button>
+            <div class="demo" id="demo-ct-records" role="group" aria-label="Demonstration: Encounter records on each phone" hidden></div>
+          </li>
         </ul>
         <div class="after-caps">
           <p>Built and tested in 2020 and 2021, and ready to return when the need does. We report what failed, too.</p>
           <a class="text-link" href="trust.html">How we label what we claim</a>
+          <a class="text-link" href="demos.html">Every demonstration</a>
         </div>
       </div>
     </div>

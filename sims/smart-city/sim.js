@@ -35,6 +35,28 @@
     cityWith: 'Vision: a city view will show where near misses happen, as anonymous spots that fade. No names, no tracks.',
     cityWithout: 'Without VZ, these near misses would leave no trace for the city.'
   };
+  // Show me: one window of the same run, played up to its start, then on its own clock (s.off).
+  const WIN = {
+    Scooter: {
+      with: ['A car turns right across the bike lane. A scooter is coming up in its blind spot.', 'The car knows she is there, though the driver cannot see her.', 'The driver is warned on a screen in the car: “Scooter on the right”.'],
+      without: ['A car turns right across the bike lane.', 'The driver sees the scooter late and stops hard.'],
+      start: [4.9, 6.4], still: [3.1, 2.9], focus: { x: 470, y: 230, w: 1460, h: 760 },
+      label: 'Plan of a school block. A car turns right across the bike lane, a scooter in its blind spot. With VZ the driver is warned on a screen in the car and waits; without VZ, a hard stop.'
+    },
+    Crossing: {
+      with: ['A senior is crossing slowly at the school. The light is about to change.', 'Vision: the crossing will know someone is still on it.', 'Vision: the light will give a slow walker more time.'],
+      without: ['A senior is crossing slowly.', 'The light changes while she is still in the road.'],
+      start: [0, 0], still: [3.3, 2.6], focus: { x: 300, y: 70, w: 1080, h: 640 },
+      label: 'Plan of a school crossing. A senior crosses slowly. With VZ the light will give her more time, a vision; without VZ it changes with her still in the road.'
+    },
+    'City view': {
+      with: ['People cross away from the crossing, and close calls happen at the same corners.', 'Vision: the city will see where its streets put people at risk, by place and time.', 'Vision: it will show no names, and the marks will fade.'],
+      without: ['Close calls happen at the same corners.', 'The city has no picture of them.'],
+      start: [4.9, 6.4], still: [3.1, 3.2],
+      label: 'Plan of a school block with a city view. With VZ, close calls will show as anonymous spots that fade, a vision; without VZ nothing reaches it.'
+    }
+  };
+  const city = (o) => o.cityView === 'On' || o.show === 'City view';
 
   function rr(c, x, y, w, h, r) { c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
   const off = (p, u, v) => ({ x: p.x + u * Math.cos(p.a) - v * Math.sin(p.a), y: p.y + u * Math.sin(p.a) + v * Math.cos(p.a) });
@@ -120,7 +142,7 @@
   function init(o) {
     const rush = o.rushHour === 'On', car = (u, v) => ({ u, v, brake: 0 });
     return {
-      go: null, hold: null, kerb: null, warnC: null, warnB: null, passed: null, end: null, over: false, sr: { u: 0 },
+      go: null, hold: null, kerb: null, warnC: null, passed: null, end: null, over: false, sr: { u: 0 },
       W: Object.assign(car(X1 - 1760, 260), { mode: 'drive', notice: null, brakeAt: null, stopAt: null, skid: null, stopU: 0 }),
       G: Array.from({ length: rush ? 4 : 1 }, (_, i) => car(X1 - 2004 - 250 * i, 260)),
       A: Object.assign(car(U_STOPE, 0), { mode: 'wait', notice: null, brakeAt: null, stopAt: null, resume: null }),
@@ -168,7 +190,7 @@
     if (o.vz && !red) {
       const near = A.u > U_TS - 420 && bp.x < TX + 20, d = dist(dA, bp);
       if (near && s.warnC == null && K.zoneCrossed(t0, T, d, ZB)) s.warnC = T; // the rider's zone reaches the driver
-      if (near && s.warnB == null && K.zoneCrossed(t0, T, d, ZC)) s.warnB = T; // the driver's zone reaches the rider
+      // Today only the driver is warned: nothing warns the rider, here or in the Scooter window (the rider warned is Vision).
     }
     if (s.passed == null && bp.x > TX + 70) s.passed = T;
     const minX = bandMinX(ap), fr = off(ap, CH, 37); // where the car's body meets the rider's line; its front right corner
@@ -187,7 +209,7 @@
     if (B.mode === 'ride') {
       if (!o.vz && B.notice == null && A.u > U_TS + 10 && bp.x < CONF && CONF - bp.x < 330) B.notice = T;
       if (B.notice != null && B.brakeAt == null && T >= B.notice + 0.3) { B.mode = 'hard'; B.brakeAt = T; }
-      else drive(B, dt, Infinity, o.vz && s.warnB != null && T >= s.warnB + 0.4 && s.passed == null ? 170 : 210, 90);
+      else drive(B, dt, Infinity, 210, 90);
     }
     if (B.mode === 'hard') { B.stopU = B.u + Math.min(CONF, minX) - 52 - bp.x; hardStop(B, dt, T); }
     else if (B.mode === 'stopped' && A.resume != null && minX > bp.x + 240) B.mode = 'ride';
@@ -195,10 +217,11 @@
     s.F.forEach((c, i) => drive(c, dt, Math.min((i ? s.F[i - 1].u : leadA) - 214, red ? U_STOPE : Infinity), 280, 110));
     // End of run: each run stops once its point is made.
     if (s.end == null) {
-      const hold = o.cityView === 'On' ? 2.2 : 0;
-      if (o.vz && A.resume != null && T > A.resume + 1.4 + hold) s.end = T;
-      else if (!o.vz && A.stopAt != null && B.stopAt != null && T > Math.max(A.stopAt, B.stopAt) + 2.4 + hold) s.end = T;
-      else if (T > 22) s.end = T;
+      const hold = city(o) ? 2.2 : 0, stop = Math.max(A.stopAt ?? 1e9, B.stopAt ?? 1e9);
+      if (WIN[o.show]) { if (o.show === 'Crossing' ? (o.vz ? s.go != null && T > s.go + 1.2 : W.stopAt != null && T > W.stopAt + 2) : o.vz ? A.resume != null && T > A.resume + 1.2 : T > stop + 3) s.end = T; }
+      else if (o.vz && A.resume != null && T > A.resume + 1.4 + hold) s.end = T;
+      else if (!o.vz && T > stop + 2.4 + hold) s.end = T;
+      if (s.end == null && T > 22) s.end = T;
     }
     s.over = s.end != null && T > s.end + 0.3;
   }
@@ -228,7 +251,7 @@
     const k0 = off(sp, 4, 13), k1 = off(sp, 19, 16); c.moveTo(k0.x, k0.y); c.lineTo(k1.x, k1.y); c.stroke();
     for (const h of SIG) signal(g, h, red);
     g.atmosphere('Clear', {});
-    if (o.cityView === 'On') cityView(g, s, o);
+    if (city(o)) cityView(g, s, o);
     if (o.vz) {
       // Zones only for the people in the current event: first the senior, then the driver and the rider.
       const e1 = 1 - clamp((T - (s.kerb ?? 1e9) - 0.6) / 0.6), e2 = red ? 0 : clamp((T - s.go - 0.3) / 0.5) * (1 - clamp((T - (A.resume ?? 1e9) - 0.9) / 0.6));
@@ -241,11 +264,10 @@
       g.device(sp.x, sp.y); g.device(dA.x, dA.y); g.device(bp.x, bp.y);
       if (s.hold != null) for (const h of SIG) { g.catchFx(h.x, h.y, T - s.hold); g.flash({ x: h.x, y: h.y, a: PI / 2 }, T - s.hold, { l: 34, w: 16 }); }
       if (s.warnC != null) { g.catchFx(dA.x, dA.y, T - s.warnC); g.flash(ap, T - s.warnC, { l: 176, w: 74 }); }
-      if (s.warnB != null) { g.catchFx(bp.x, bp.y, T - s.warnB); g.flash(bp, T - s.warnB, { l: 60, w: 30 }); }
       g.label(sp.x, sp.y, 'More time to cross: Vision', { status: 'vision', k: fade(s.hold, (s.kerb ?? 1e9) + 0.8), align: 'right', dx: -22 });
       g.chip(ap.x, ap.y, 'Scooter on the right', { k: fade(s.warnC, A.resume != null ? A.resume + 0.6 : null), side: P ? 'left' : 'up', gap: 50 });
     } else {
-      if (W.brakeAt != null) { g.flash(wp, T - W.brakeAt, { l: 176, w: 74, tone: 'alert' }); g.chip(wp.x, wp.y, 'Hard stop', { tone: 'alert', k: fade(W.brakeAt, W.stopAt != null ? W.stopAt + 1.8 : null), side: P ? 'left' : 'up', gap: 50 }); }
+      if (W.brakeAt != null && (o.show === 'All' || o.show === 'Crossing')) { g.flash(wp, T - W.brakeAt, { l: 176, w: 74, tone: 'alert' }); g.chip(wp.x, wp.y, 'Hard stop', { tone: 'alert', k: fade(W.brakeAt, W.stopAt != null ? W.stopAt + 1.8 : null), side: P ? 'left' : 'up', gap: 50 }); }
       if (A.brakeAt != null) g.flash(ap, T - A.brakeAt, { l: 176, w: 74, tone: 'alert' });
       if (B.brakeAt != null) { g.flash(bp, T - B.brakeAt, { l: 60, w: 30, tone: 'alert' }); g.chip(bp.x, bp.y, 'Hard stop', { tone: 'alert', k: fade(B.brakeAt, B.stopAt != null ? B.stopAt + 1.8 : null), side: P ? 'right' : 'down', gap: 22 }); }
     }
@@ -255,25 +277,34 @@
   // rider. Every later run plays the whole block, the Vision light included.
   let first = true, skipped = false;
   const OPEN = ['The light is green. A car is about to turn right across the bike lane, and a scooter rider is coming up beside it.', L.with[3], L.with[4]];
+  const FOCUS = { x: 200, y: 40, w: 1640, h: 860 };
+  // focus and label: a function per window, or the hero's rectangle and string.
+  const focus = Object.assign((o) => (WIN[o.show] || 0).focus || FOCUS, FOCUS);
+  const label = Object.assign((o) => (WIN[o.show] ? WIN[o.show].label : LABEL), { toString: () => LABEL });
+  const LABEL = 'Top-down plan of a school block with a crossing, a traffic light and a bike lane. The illustration shows, with VZ, a light that will give a slow senior more time to cross (Vision), a turning driver warned on a screen in the car (Today); the rider will be warned on her phone (Vision), and a city view of anonymous spots where near misses happen, fading over time (Vision). Without VZ, the light changes while she is still crossing and both conflicts end in hard braking. The caption below describes each moment.';
   K.mount({
     el: '#sim',
-    label: 'Top-down plan of a school block with a crossing, a traffic light and a bike lane. The illustration shows, with VZ, a light that will give a slow senior more time to cross (Vision), a turning driver warned on a screen in the car (Today); the rider will be warned on her phone (Vision), and a city view of anonymous spots where near misses happen, fading over time (Vision). Without VZ, the light changes while she is still crossing and both conflicts end in hard braking. The caption below describes each moment.',
+    label,
     statuses: STATUS,
-    focus: { x: 200, y: 40, w: 1640, h: 860 },
+    focus,
     portraitFocus: { x: 410, y: 90, w: 1230, h: 760 },
     compare: false, // the scene stays With VZ; Without VZ is the toggle
-    options: { rushHour: 'Off', cityView: 'Off' },
-    choices: [{ name: 'rushHour', label: 'Rush hour', values: ['On', 'Off'] }, { name: 'cityView', label: 'City view', values: ['On', 'Off'], live: true }],
-    start: (o) => { skipped = o.vz && first; first = false; return skipped ? 6.4 : o.compare && !o.vz ? 0.6 : 0; },
-    still: (vz) => (vz ? 9.6 : 3.6),
+    options: { rushHour: 'Off', cityView: 'Off', show: 'All' },
+    choices: [{ name: 'rushHour', label: 'Rush hour', values: ['On', 'Off'] }, { name: 'cityView', label: 'City view', values: ['On', 'Off'], live: true },
+      { name: 'show', label: 'Show', values: ['All'].concat(Object.keys(WIN)), hidden: true }],
+    start: (o) => { if (WIN[o.show]) return 0; skipped = o.vz && first; first = false; return skipped ? 6.4 : o.compare && !o.vz ? 0.6 : 0; },
+    still: (vz, o) => { const w = o && WIN[o.show]; return w ? w.still[+vz] : vz ? 9.6 : 3.6; },
     lines(o) {
+      if (WIN[o.show]) return WIN[o.show][o.vz ? 'with' : 'without'];
       const city = o.cityView === 'On';
       if (o.vz && skipped) return OPEN.concat(city ? [L.cityWith] : []);
       if (o.vz) return o.compare ? [L.with[0], L.with[1], L.with[3], L.with[4]].concat(city ? [L.cityWith] : []) : L.with.concat(city ? [L.cityWith] : []);
       return (o.compare ? [L.again].concat(L.without.slice(1)) : L.without).concat(city ? [L.cityWithout] : []);
     },
     beat(s, o) {
-      const { A, B, W } = s;
+      const { A, B, W } = s, w = o.show, t = s.t + s.off;
+      if (w === 'Crossing') return o.vz ? (s.go != null || (s.hold != null && t > s.hold + 1.6) ? 2 : s.hold != null ? 1 : 0) : s.go != null ? 1 : 0;
+      if (WIN[w]) return o.vz ? (A.resume != null || (s.warnC != null && t > s.warnC + 1.2) ? 2 : s.warnC != null ? 1 : 0) : A.brakeAt != null || B.brakeAt != null ? 1 : 0;
       if (o.vz) {
         const b = A.resume != null && s.t > A.resume + (o.cityView === 'On' ? 0.9 : 0) ? (o.cityView === 'On' ? 5 : 4) : s.warnC != null ? 3 : s.go != null && s.t > s.go + 0.4 ? 2 : s.hold != null ? 1 : 0;
         if (skipped) return Math.max(0, b - 2);
@@ -282,7 +313,10 @@
       const b = B.brakeAt != null ? 3 : A.u > U_TS - 300 ? 2 : W.brakeAt != null ? 1 : 0;
       return b === 3 && o.cityView === 'On' && s.t > Math.max(A.stopAt ?? 1e9, B.stopAt ?? 1e9) + 1 ? 4 : b;
     },
-    debug: (s) => ({ go: s.go, hold: s.hold, kerb: s.kerb, warnC: s.warnC, warnB: s.warnB, passed: s.passed, aMode: s.A.mode, aResume: s.A.resume, aStop: s.A.stopAt, bStop: s.B.stopAt, wBrake: s.W.brakeAt, wStop: s.W.stopAt, wFront: X1 - s.W.u - CH, gapB: Math.round(bandMinX(TURN.at(s.A.u)) - BIKE_RT.at(s.B.u).x - 30), gapW: Math.round(X1 - s.W.u - CH - SENIOR.at(s.sr.u).x - 11), end: s.end }),
-    ground, init, update, draw
+    debug: (s) => ({ go: s.go, hold: s.hold, warnC: s.warnC, end: s.end }),
+    ground,
+    init(o) { const s = init(o), w = WIN[o.show]; s.t = 0; while (w && s.t + 1e-3 < w.start[+o.vz]) { update(s, 1 / 120, o); s.t += 1 / 120; } s.off = s.t; return s; },
+    update(s, dt, o) { s.t += s.off; update(s, dt, o); s.t -= s.off; },
+    draw(g, s, o) { s.t = g.t += s.off; draw(g, s, o); s.t -= s.off; }
   });
 })();

@@ -230,8 +230,7 @@
     if (o.vz) for (let i = 1; i < N; i++) if (s.note[i] != null) g.chip(s.pos[i].x, s.pos[i].y, 'Close contact', { k: fade(s.note[i], s.note[i] + 3.4), side: P ? 'down' : 'up', gap: 18 });
   }
 
-  let speedNow = 1;
-  const api = K.mount({
+  K.mount({
     el: '#sim',
     label: 'Top-down plan of an office floor through a working day. People move between desks, meeting rooms and the kitchen. With VZ, time spent close together leaves a short-lived mark on each phone. When one colleague reports positive, only the people who were really close are notified and pause; everyone else keeps working, and the marks expire by evening. Without VZ, nobody knows who was close and the whole floor pauses. The caption below describes each moment.',
     focus: { x: -40, y: -40, w: 1180, h: 840 },
@@ -241,7 +240,7 @@
     options: { daySpeed: 'Normal', reportCase: 'On' },
     choices: [{ name: 'daySpeed', label: 'Day speed', values: ['Normal', 'Fast'] }, { name: 'reportCase', label: 'Report a case', values: ['On', 'Off'] }],
     start: (o) => (o.compare && !o.vz ? 6.5 / (SPEED[o.daySpeed] || 1) : 0),
-    still: () => D_REP / speedNow + 1.4,
+    still: (vz, o) => D_REP / SPEED[o.daySpeed] + 1.4, // the report, a moment after it reaches the floor, at the day speed in force
     lines(o) {
       const on = o.reportCase === 'On';
       if (o.vz) return [L.start, L.mark, L.pass].concat(on ? [L.report, L.pause, L.expire] : [L.none, L.expire]);
@@ -262,7 +261,4 @@
     debug: (s) => ({ d: s.d, rep: s.rep, clearAt: s.clearAt, notified: s.note.map((n, i) => (n != null ? i : -1)).filter((i) => i >= 0), paused: s.pause.filter(Boolean).length, marks: s.marks.map((m) => m.map((q) => q.j).join('')).join('|'), end: s.end }),
     ground, init, update, draw
   });
-  // The reduced-motion still depends on the day speed, so remember it before the kit restarts the run.
-  const set = api.setOption;
-  api.setOption = (name, value) => { const prev = speedNow; if (name === 'daySpeed') speedNow = String(value).toLowerCase() === 'fast' ? 2 : 1; const ok = set(name, value); if (!ok) speedNow = prev; return ok; };
 })();

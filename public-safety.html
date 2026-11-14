@@ -85,8 +85,6 @@
       <div class="content">
         <p class="lead">It tells the rescuers and the command post.</p>
         <p>Today, a person presses SOS and the call for help goes out with its position. Teammates talk in their own private group, where an SOS tells them who is calling and where; a phone outside the group hears nothing.</p>
-        <p><span class="status" data-status="today">Today:</span> one phone in between passes voice and data on to the field command post.</p>
-        <p><span class="status" data-status="today">Today:</span> data travels on from phone to phone. Voice passes through one phone in between.</p>
         <p class="told"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16.75" fill="none" stroke="#FFC400" stroke-opacity=".5" stroke-width="1.5"/><circle cx="18" cy="18" r="10.5" fill="none" stroke="#FFC400" stroke-width="2.25"/><circle cx="18" cy="18" r="4" fill="#000"/></svg><span>Who is told: the team, the rescuers nearby and the command post. Nobody&nbsp;else.</span></p>
       </div>
     </div>
@@ -111,23 +109,82 @@
           <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
           <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
         </ul>
-        <ul class="caps">
-          <li class="cap"><span class="cap-name">Group push-to-talk</span><span class="cap-text">One person talks, and the whole group hears, in about a second (<a href="trust.html#m-voice">measured on our test phones, October 2026</a>).</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Utilities and field crews</span><span class="cap-text">Push-to-talk and messages where there is no network.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">SOS with position</span><span class="cap-text">One press sends every teammate a call for help with your position. In our tests it arrived within seconds, even indoors (<a href="trust.html#m-sos">measured on our test phones, November 2026</a>).</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Team map</span><span class="cap-text">Where each teammate is, and how far away.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Messages, photos and short clips</span><span class="cap-text">Over the same direct link.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Private groups, joined by a touch</span><span class="cap-text">Two phones touch, and a teammate is in. A phone from another group does not hear yours.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Ready while asleep</span><span class="cap-text">With the screen off, the phone still wakes to the group’s voice.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Inside the apps people already have</span><span class="cap-text">Delivered as an SDK inside an existing app, such as an emergency app, so nobody installs anything on the day of a disaster.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Automatic trapped mode</span><span class="cap-text">A trapped person’s phone opens a voice and data channel. Rescuers can hear and answer them.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Help that passes along</span><span class="cap-text">One phone in between passes voice and data on to the command post.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Across many phones</span><span class="cap-text">Data travels on from phone to phone to the command post. Voice passes through one phone in between.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Built into the phone</span><span class="cap-text">It will be part of the phone itself, for every user, with no app to install.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+        <ul class="caps has-demos">
+          <li class="cap" id="cap-ps-ptt">
+            <span class="cap-name">Group push-to-talk</span><span class="cap-text">One person talks, and the whole group hears, in about a second (<a href="trust.html#m-voice">measured on our test phones, October 2026</a>).</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-ptt" data-demo="demos-team" data-demo-opt="demo=ptt"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Group push-to-talk</span></button>
+            <div class="demo" id="demo-ps-ptt" role="group" aria-label="Demonstration: Group push-to-talk" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-crews">
+            <span class="cap-name">Utilities and field crews</span><span class="cap-text">Push-to-talk and messages where there is no network.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-crews" data-demo="demos-field" data-demo-opt="demo=crews"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Utilities and field crews</span></button>
+            <div class="demo" id="demo-ps-crews" role="group" aria-label="Demonstration: Utilities and field crews" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-sos">
+            <span class="cap-name">SOS with position</span><span class="cap-text">One press sends a call for help, with your available position, to teammates on supported phones in coverage. In our tests it arrived within seconds, even indoors (<a href="trust.html#m-sos">measured on our test phones, November 2026</a>).</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-sos" data-demo="demos-team" data-demo-opt="demo=sos"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: SOS with position</span></button>
+            <div class="demo" id="demo-ps-sos" role="group" aria-label="Demonstration: SOS with position" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-map">
+            <span class="cap-name">Team map</span><span class="cap-text">The available positions of teammates in coverage, and how far away they are.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-map" data-demo="demos-team" data-demo-opt="demo=map"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Team map</span></button>
+            <div class="demo" id="demo-ps-map" role="group" aria-label="Demonstration: Team map" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-media">
+            <span class="cap-name">Messages, photos and short clips</span><span class="cap-text">Over the same direct link.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-media" data-demo="demos-team" data-demo-opt="demo=media"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Messages, photos and short clips</span></button>
+            <div class="demo" id="demo-ps-media" role="group" aria-label="Demonstration: Messages, photos and short clips" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-groups">
+            <span class="cap-name">Private groups, joined by a touch</span><span class="cap-text">Two phones touch, and a teammate is in. A phone from another group does not hear yours.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-groups" data-demo="demos-team" data-demo-opt="demo=groups"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Private groups, joined by a touch</span></button>
+            <div class="demo" id="demo-ps-groups" role="group" aria-label="Demonstration: Private groups, joined by a touch" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-asleep">
+            <span class="cap-name">Ready while asleep</span><span class="cap-text">With the screen off, the phone still wakes to the group’s voice.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-asleep" data-demo="demos-team" data-demo-opt="demo=asleep"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Ready while asleep</span></button>
+            <div class="demo" id="demo-ps-asleep" role="group" aria-label="Demonstration: Ready while asleep" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-app">
+            <span class="cap-name">Inside the apps people already have</span><span class="cap-text">Delivered as an SDK inside an existing app, such as an emergency app, so nobody installs anything on the day of a disaster.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-app" data-demo="demos-field" data-demo-opt="demo=app"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Inside the apps people already have</span></button>
+            <div class="demo" id="demo-ps-app" role="group" aria-label="Demonstration: Inside the apps people already have" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-trapped">
+            <span class="cap-name">Automatic trapped mode</span><span class="cap-text">A trapped person’s phone opens a voice and data channel. Rescuers can hear and answer them.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-trapped" data-demo="public-safety" data-demo-opt="show=Trapped"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Automatic trapped mode</span></button>
+            <div class="demo" id="demo-ps-trapped" role="group" aria-label="Demonstration: Automatic trapped mode" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-city-alert">
+            <span class="cap-name">An alert across the city</span><span class="cap-text">One alert from the command post will reach phones across a whole city, with no network. Shown so far in computer simulation.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-city-alert" data-demo="city-wide" data-demo-opt="send=Alert"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: An alert across the city</span></button>
+            <div class="demo" id="demo-ps-city-alert" role="group" aria-label="Demonstration: An alert across the city" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-city-sos">
+            <span class="cap-name">SOS beyond the team</span><span class="cap-text">A call for help will carry its position to the people nearby and to the nearest command post, anywhere in the city.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-city-sos" data-demo="city-wide" data-demo-opt="send=SOS"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: SOS beyond the team</span></button>
+            <div class="demo" id="demo-ps-city-sos" role="group" aria-label="Demonstration: SOS beyond the team" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-city-message">
+            <span class="cap-name">A message to one person</span><span class="cap-text">A message will travel across the city to one phone, one group or the command post, and the sender will know it arrived.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-city-message" data-demo="city-wide" data-demo-opt="send=Message"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: A message to one person</span></button>
+            <div class="demo" id="demo-ps-city-message" role="group" aria-label="Demonstration: A message to one person" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-fixed">
+            <span class="cap-name">Shelters and places indoors</span><span class="cap-text">Alerts will also reach people sheltering indoors.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-fixed" data-demo="demos-field" data-demo-opt="demo=fixed"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Shelters and places indoors</span></button>
+            <div class="demo" id="demo-ps-fixed" role="group" aria-label="Demonstration: Shelters and places indoors" hidden></div>
+          </li>
+          <li class="cap" id="cap-ps-builtin">
+            <span class="cap-name">Built into the phone</span><span class="cap-text">It will be part of the phone itself, for every user, with no app to install.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-builtin" data-demo="demos-phone" data-demo-opt="demo=builtin"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Built into the phone</span></button>
+            <div class="demo" id="demo-ps-builtin" role="group" aria-label="Demonstration: Built into the phone" hidden></div>
+          </li>
         </ul>
         <div class="after-caps">
           <p>We report what failed, too.</p>
           <a class="text-link" href="trust.html">How we label what we claim</a>
+          <a class="text-link" href="demos.html">Every demonstration</a>
         </div>
         <div class="qa">
           <h3>Questions evaluators ask</h3>
@@ -135,9 +192,13 @@
             <dt>How far?</dt>
             <dd>Reaches significantly farther than standard device-to-device (D2D) links. We state no range figure: walls, floors and bodies decide reception, not distance. Your pilot measures it.</dd>
             <dt>Who can hear it?</dt>
-            <dd>Only phones in the group.</dd>
+            <dd>Phones in the group. A phone from another group does not hear it.</dd>
             <dt>Can two people talk at once?</dt>
             <dd>No. It is push-to-talk: one talker at a time.</dd>
+            <dt>Does it reach a whole city today?</dt>
+            <dd>No. It is a vision, shown so far in computer simulation.</dd>
+            <dt>Will it work inside buildings and shelters?</dt>
+            <dd>Walls decide reception, and we have not measured this yet. It is the first thing a pilot measures.</dd>
           </dl>
         </div>
       </div>
@@ -148,11 +209,30 @@
     <div class="wrap grid">
       <h2 class="side" id="h-try">Try it</h2>
       <div class="content">
-        <p>A building has collapsed and the network is gone. The scene shows what works today: a trapped person’s phone opens a voice and data channel, and one rescuer’s phone passes voice and data on to the command post. Rescuers can hear and answer the trapped person. Data also travels on from phone to phone.</p>
+        <p>A building has collapsed and the network is gone. The scene shows what works today: a trapped person’s phone opens a voice and data channel, and the rescuers’ phones nearby receive it directly. Rescuers can hear and answer the trapped person.</p>
         <a class="text-link" href="#scene">Back to the scene</a>
       </div>
     </div>
   </section>
+
+  <!-- A whole city (plan 13.11.2026): Vision, said in the future tense; the scene is an illustration drawn after a computer simulation. -->
+  <section class="section" id="city" aria-labelledby="h-city">
+    <div class="wrap grid">
+      <h2 class="side" id="h-city">A whole city</h2>
+      <div class="content">
+        <p class="lead">When the networks fail, the city will still get the message.</p>
+        <p><span class="status" data-status="vision">Vision:</span> one alert will cross a whole city, from phone to phone. A call for help will carry its position to the nearest command post. A message will find one person, one team or the command post, and the rest of the city will stay quiet. No cellular network, no internet, nothing extra for residents to carry. Speech will be sent as a short text.</p>
+        <p>Shown so far in a computer simulation of a whole city. It is not built yet, and it has not been measured in the field. What it grows from works today: SOS with position.</p>
+        <p class="told"><svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16.75" fill="none" stroke="#FFC400" stroke-opacity=".5" stroke-width="1.5"/><circle cx="18" cy="18" r="10.5" fill="none" stroke="#FFC400" stroke-width="2.25"/><circle cx="18" cy="18" r="4" fill="#000"/></svg><span>Who is told: an alert, the whole city. A call for help, the people nearby and the nearest command post. A message, only the one it is addressed to. Nobody&nbsp;else.</span></p>
+      </div>
+    </div>
+  </section>
+  <div class="plate-band plate-band-gap">
+    <p class="sim-hint wrap" data-needs="city-wide">Choose what is sent, then switch Vizible Zone off and on.</p>
+    <div class="sim" id="city-scene" data-sim="city-wide" data-title="Simulation: a city without a network">
+      <div class="sim-placeholder"><p>A city without a network</p><p>In preparation.</p></div>
+    </div>
+  </div>
 
   <section class="section pilot" id="pilot" aria-labelledby="h-pilot">
     <div class="wrap grid">

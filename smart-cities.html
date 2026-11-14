@@ -98,7 +98,7 @@
       <div class="content">
         <p class="lead">The driver is warned about people the car cannot see yet.</p>
         <p><span class="status" data-status="today">Today:</span> the driver gets the warning on a screen in the car, about children, seniors, cyclists and scooter riders.</p>
-        <p><span class="status" data-status="vision">Vision:</span> the person outside will be warned on the phone; you will see where your streets put people at risk, by place and time, with no names; and traffic lights will give a slow walker more time.</p>
+        <p><span class="status" data-status="vision">Vision:</span> the person outside will be warned on the phone; you will see where your streets put people at risk, by place and time, with no names; and traffic lights will give a slow walker more time. When the networks fail, the same phones will keep the city connected: see <a href="public-safety.html#city">a whole city</a>.</p>
       </div>
     </div>
   </section>
@@ -112,20 +112,112 @@
           <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
           <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
         </ul>
-        <ul class="caps">
-          <li class="cap"><span class="cap-name">Sees what eyes cannot</span><span class="cap-text">Behind a bus, a wall or a corner, and in the dark. It does not rely on seeing; rain and fog are still to be measured.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Warnings about people the driver cannot see</span><span class="cap-text">The driver is told about a person on foot, on a bike or a scooter, with the side they come from and how urgent it is. Shown in field demonstrations with cars since 2019.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">On the car’s own screen</span><span class="cap-text">The warning appears on the car’s own screen, as in our in-car demonstrations, among them one for Mitsubishi Corporation and Yazaki in 2023–⁠24.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Inside the city’s own app</span><span class="cap-text">Delivered as an SDK inside the city app residents already use, so the cars around them know they are there.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">The person outside warned too</span><span class="cap-text">The person on foot, on a bike or on a scooter will be warned on the phone.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">Earlier, with prediction</span><span class="cap-text">With prediction, more time to warn before someone crosses.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">Adaptive crossing</span><span class="cap-text">Traffic lights will give a slow walker more time.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">A city view of risky spots</span><span class="cap-text">The city will see where people cross away from a crossing and where close calls happen, by place and time, with no names.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">Into fleets and driver assistance</span><span class="cap-text">The same warning will reach fleet systems and driver-assistance features.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+        <ul class="caps has-demos">
+          <li class="cap" id="cap-sc-sees">
+            <span class="cap-name">Sees what eyes cannot</span>
+            <span class="cap-text">Behind a bus, a wall or a corner, and in the dark. It does not rely on seeing; rain and fog are still to be measured.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-sees" data-demo="hidden-pedestrian" data-demo-opt="weather=Night">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Sees what eyes cannot</span>
+            </button>
+            <div class="demo" id="demo-sc-sees" role="group" aria-label="Demonstration: Sees what eyes cannot" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-scooter">
+            <span class="cap-name">Warnings about people the driver cannot see</span>
+            <span class="cap-text">The driver is told about a person on foot, on a bike or a scooter, with the side they come from and how urgent it is. Shown in field demonstrations with cars since 2019.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-scooter" data-demo="smart-city" data-demo-opt="show=Scooter">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Warnings about people the driver cannot see</span>
+            </button>
+            <div class="demo" id="demo-sc-scooter" role="group" aria-label="Demonstration: Warnings about people the driver cannot see" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-screen">
+            <span class="cap-name">On the car’s own screen</span>
+            <span class="cap-text">The warning appears on the car’s own screen, as in our in-car demonstrations, among them one for Mitsubishi Corporation and Yazaki in 2023–⁠24.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-screen" data-demo="demos-street" data-demo-opt="demo=screen">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: On the car’s own screen</span>
+            </button>
+            <div class="demo" id="demo-sc-screen" role="group" aria-label="Demonstration: On the car’s own screen" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-app">
+            <span class="cap-name">Inside the city’s own app</span>
+            <span class="cap-text">Delivered as an SDK inside the city app residents already use, so the cars around them know they are there.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-app" data-demo="demos-street" data-demo-opt="demo=app">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Inside the city’s own app</span>
+            </button>
+            <div class="demo" id="demo-sc-app" role="group" aria-label="Demonstration: Inside the city’s own app" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-outside">
+            <span class="cap-name">The person outside warned too</span>
+            <span class="cap-text">The person on foot, on a bike or on a scooter will be warned on the phone.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-outside" data-demo="demos-street" data-demo-opt="demo=outside">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: The person outside warned too</span>
+            </button>
+            <div class="demo" id="demo-sc-outside" role="group" aria-label="Demonstration: The person outside warned too" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-earlier">
+            <span class="cap-name">Earlier, with prediction</span>
+            <span class="cap-text">With prediction, more time to warn before someone crosses.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-earlier" data-demo="demos-street" data-demo-opt="demo=earlier">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Earlier, with prediction</span>
+            </button>
+            <div class="demo" id="demo-sc-earlier" role="group" aria-label="Demonstration: Earlier, with prediction" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-crossing">
+            <span class="cap-name">Adaptive crossing</span>
+            <span class="cap-text">Traffic lights will give a slow walker more time.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-crossing" data-demo="smart-city" data-demo-opt="show=Crossing">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Adaptive crossing</span>
+            </button>
+            <div class="demo" id="demo-sc-crossing" role="group" aria-label="Demonstration: Adaptive crossing" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-view">
+            <span class="cap-name">A city view of risky spots</span>
+            <span class="cap-text">The city will see where people cross away from a crossing and where close calls happen, by place and time, with no names.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-view" data-demo="smart-city" data-demo-opt="show=City view">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: A city view of risky spots</span>
+            </button>
+            <div class="demo" id="demo-sc-view" role="group" aria-label="Demonstration: A city view of risky spots" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-fleet">
+            <span class="cap-name">Into fleets and driver assistance</span>
+            <span class="cap-text">The same warning will reach fleet systems and driver-assistance features.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-fleet" data-demo="demos-street" data-demo-opt="demo=fleet">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Into fleets and driver assistance</span>
+            </button>
+            <div class="demo" id="demo-sc-fleet" role="group" aria-label="Demonstration: Into fleets and driver assistance" hidden></div>
+          </li>
+          <li class="cap" id="cap-sc-lighting">
+            <span class="cap-name">Smart lighting</span>
+            <span class="cap-text">The same awareness will serve smart lighting.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-lighting" data-demo="demos-street" data-demo-opt="demo=lighting">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Smart lighting</span>
+            </button>
+            <div class="demo" id="demo-sc-lighting" role="group" aria-label="Demonstration: Smart lighting" hidden></div>
+          </li>
         </ul>
         <div class="after-caps">
           <p>We report what failed, too.</p>
           <a class="text-link" href="trust.html">How we label what we claim</a>
+          <a class="text-link" href="demos.html">Every demonstration</a>
         </div>
       </div>
     </div>
