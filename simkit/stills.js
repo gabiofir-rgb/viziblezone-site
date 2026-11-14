@@ -135,7 +135,7 @@
       L.pulse(kid.x, kid.y, o.R || 300); if (st >= 4) L.run(kid, { x: car.x + 4, y: car.y });
       if (st === 2) L.plate(kid.x, kid.y, 'About to cross', { dy: 46 });
       if (st >= 4) {
-        g.flash(car, 0.5, { l: 176, w: 74 }); g.flash(kid, 0.5, { l: 34, w: 34 });
+        g.flash(car, 0.5, { l: 176, w: 74 }); // only the driver is warned (Today); nothing lights on the child
         L.chip(car.x, car.y, 'Child ahead', { side: o.carSide || 'up', gap: 52 });
       }
     }
@@ -177,7 +177,7 @@
       if (!o.vz) { g.cone({ x: tug.x, y: tug.y + 30 }, HP, 0.6, 700, CARTS.map((p) => ({ x: p.x, y: p.y, a: p.a, l: 104, w: 62 })), { k: 1.5 }); return; }
       if (!o.noac) { g.bubble(B_AC, { alert: 0.5 }); for (const [x, y] of [[404, 0], [-404, 0], [-90, -386], [-90, 386]]) g.tag(x, y); }
       g.bubble({ x: 150, y: -210, a: 0, rx: 84, ry: 84, n: 2 }, { strength: 0.8 }); if (!o.noac) g.bubble({ x: -900, y: 300, a: 0, rx: 84, ry: 84, n: 2 }, { strength: 0.8 });
-      g.bubble(B_TUG, { alert: 1 }); g.bubble(B_WK, { alert: 1 }); g.overlap(B_TUG, B_WK, 1);
+      g.bubble(B_TUG, { alert: 1 }); g.bubble(B_WK); g.overlap(B_TUG, B_WK, 1); // the driver is warned; the worker's bubble stays calm
       dev(g, tug.x, tug.y); dev(g, wk.x, wk.y); dev(g, 150, -210); if (!o.noac) dev(g, -900, 300);
       L.pulse(wk.x, wk.y, 84); L.run(wk, tug);
       L.chip(tug.x, tug.y, 'Worker ahead', { side: 'up', gap: 44 });
@@ -217,19 +217,17 @@
       rings(g, trap.x, trap.y, o.R || 330, { n: 3 });
       for (const p of crew) rings(g, p.x, p.y, 120, { n: 2, s: 0.75, core: 0.9 });
       link(g, trap, r1, { p: 0.6 }); if (!o.solo) link(g, trap, r3, { p: 0.7, alpha: 0.6 });
-      if (o.solo) {} else if (o.hero) link(g, r1, r3, { p: 0.5, alpha: 0.6 }); else { link(g, r1, r2, { p: 0.5 }); link(g, r2, cp, { p: 0.55 }); }
+      if (o.hero && !o.solo) link(g, r1, r3, { p: 0.5, alpha: 0.6 }); // push-to-talk between two rescuers; no chain onward (Yitro, 12)
       for (const p of [trap, ...crew]) dev(g, p.x, p.y);
       // the zone breathes, and each message runs from the trapped person to whoever is told
       L.pulse(trap.x, trap.y, o.R || 330); crew.forEach((p, i) => L.pulse(p.x, p.y, 120, { delay: 0.6 + i * 0.15 }));
-      if (!o.tw) { L.run(trap, r1); if (!o.solo) L.run(r1, o.hero ? r3 : r2, { delay: 1.2 }); if (!o.hero && !o.solo) L.run(r2, cp, { delay: 2.4 }); }
+      if (!o.tw) { L.run(trap, r1); if (o.hero && !o.solo) L.run(r1, r3, { delay: 1.2 }); else if (!o.solo) L.run(trap, r3, { delay: 1.2 }); }
       L.plate(tw.x, tw.y, 'No cellular network', { dy: 78 });
       L.chip(trap.x, trap.y, 'Person trapped', { side: 'up', gap: 30 });
       if (o.hero) { if (!o.solo) L.plate(r3.x, r3.y, 'Push-to-talk', { dy: 46 }); return; }
-      L.chip(cp.x, cp.y, 'SOS and position', { side: 'down', gap: 32 });
       L.plate(645, -4, 'Field command post', {});
       if (o.plates !== false) {
         L.plate(-500, -255, 'Voice and data: Today', { status: 'today', align: 'left' });
-        L.plate(470, 196, 'One phone in between: Today', { status: 'today', dy: -70 });
       }
     }
   };
@@ -363,9 +361,10 @@
       g.vehicle('car', car, { lights: 1 }); scooter(g, sc, null); person(g, p, { r: PR + 2 }); person(g, q); person(g, { x: 440, y: 40, a: 2.2 }, { phone: 'off' });
       headlamps(g, car, [], 0.5, 520); g.lights('Night');
       rings(g, p.x, p.y, 300, { n: 4 });
-      link(g, p, { x: car.x + 4, y: car.y }, { p: 0.6 }); link(g, p, sc, { p: 0.55 }); link(g, p, q, { p: 0.6 });
+      // Linked to all three (it knows they are near); the message goes to the driver only: Today, the driver is warned.
+      link(g, p, { x: car.x + 4, y: car.y }, { p: 0.6 }); link(g, p, sc); link(g, p, q);
       dev(g, p.x, p.y); dev(g, car.x + 4, car.y); dev(g, sc.x - 3, sc.y); dev(g, q.x, q.y);
-      L.pulse(p.x, p.y, 300); L.run(p, { x: car.x + 4, y: car.y }); L.run(p, sc, { delay: 0.8 }); L.run(p, q, { delay: 1.6 });
+      L.pulse(p.x, p.y, 300); L.run(p, { x: car.x + 4, y: car.y });
       L.plate(ID.tw.x, ID.tw.y, 'No cellular network', { dy: 80 });
       L.plate(-165, 186, 'Direct, phone to phone (D2D)', { dy: -44 });
     }
@@ -404,7 +403,7 @@
       g.vehicle('van', van, {}); g.vehicle('car', car, { lights: 1 });
       g.vehicle('car', { x: 90, y: -500, a: HP }, { lights: 1, phone: 'off' });
       g.vehicle('truck', trk, { l: 440, lights: 1 });
-      person(g, kid); person(g, wk); person(g, m1); person(g, m2);
+      person(g, kid); person(g, wk); person(g, m1, { status: 'vision' }); person(g, m2, { status: 'vision' }); // the responders: Vision
       // the person who fell: lying, drawn as a longer body
       const c = g.ctx; c.save(); c.translate(fall.x, fall.y); c.rotate(fall.a); c.fillStyle = 'rgba(0,0,0,.45)'; c.beginPath(); rr(c, -24, -11, 60, 28, 13); c.fill(); c.strokeStyle = 'rgba(5,8,10,.85)'; c.lineWidth = 3 * g.px; c.fillStyle = '#F7F8F8'; c.beginPath(); rr(c, -27, -14, 60, 28, 13); c.stroke(); c.fill(); c.restore();
       for (const [x, y, a] of [[-130, -330, 1.4], [900, -60, 2.6], [1000, 250, -2], [-125, 250, -1.5]]) person(g, { x, y, a }, { phone: 'off', r: PR - 2 });
@@ -415,12 +414,12 @@
       rings(g, kid.x, kid.y, 230, { n: 3 }); link(g, kid, { x: car.x, y: car.y - 4 }, { p: 0.6 });
       rings(g, fall.x, fall.y, 280, { n: 3, s: 0.9 });
       link(g, fall, m1, { p: 0.6, dash: true }); link(g, fall, m2, { p: 0.6, dash: true });
-      g.bubble(B_TRK, { alert: 1 }); g.bubble(B_W2, { alert: 1 }); g.overlap(B_TRK, B_W2, 1);
+      g.bubble(B_TRK, { alert: 1 }); g.bubble(B_W2); g.overlap(B_TRK, B_W2, 1); // the driver is warned; the worker's bubble stays calm
       for (const p of [kid, { x: car.x, y: car.y - 4 }, fall, m1, m2, { x: trk.x + 172, y: trk.y }, wk]) dev(g, p.x, p.y);
       L.pulse(kid.x, kid.y, 230); L.run(kid, { x: car.x, y: car.y - 4 }); L.pulse(fall.x, fall.y, 280, { delay: 1.2 }); L.run(wk, { x: trk.x + 172, y: trk.y }, { delay: 0.6 });
       L.plate(trk.x - 20, trk.y - 30, 'Driver warned: Today', { status: 'today' });
       L.chip(car.x, car.y, 'Pedestrian ahead', { side: 'down', gap: 50 });
-      L.plate(m2.x, m2.y, 'People nearby will be warned', {});
+      L.plate(m2.x, m2.y, 'People nearby will be warned: Vision', { status: 'vision' });
     }
   };
 
@@ -441,6 +440,52 @@
       g.trail(K.route([[75, car.y], [75, car.y + 1000]]), 100, 200, { gap: 15 });
       rings(g, car.x, car.y, 112, { n: 2, core: 0.9 });
       dev(g, car.x, car.y + 4);
+    }
+  };
+
+  /* ============================================================ 10. a whole city: the alert spreading (Vision) */
+  // The city-wide scene's still (sims/city-wide, Alert, With VZ, about 3.6 s): the near bank lit block by block,
+  // the front on both bridges, the first block of the far bank lighting, the far side still dark. Without VZ
+  // (o.vz false): a dark city, grey phones. An invented district; drawn after a computer simulation.
+  const CW = { rows: [[-300, 40], [170, 480], [540, 840], [1180, 1480], [1540, 1860]], br: [1350, 3190], cp: { x: 230, y: -60 }, mast: { x: 1580, y: -140 } };
+  const cwBlocks = [];
+  for (let r = 0; r < 5; r++) for (let c = -1; c < 9; c++) cwBlocks.push({ r, c, x0: c * 460, y0: CW.rows[r][0], x1: c * 460 + 400, y1: CW.rows[r][1], lit: r < 3 ? (r === 0 && c === 8 ? 0 : 1) : r === 3 && (c === 2 || c === 3) ? (c === 2 ? 0.8 : 0.35) : 0 });
+  S.city = {
+    focus: { x: -200, y: -340, w: 4100, h: 2240 },
+    ground(g) {
+      const c = g.ctx, r = rng(23);
+      g.pavement([[-1400, -1200], [5400, -1200], [5400, 2600], [-1400, 2600]], { grid: 0 });
+      g.path([[-1400, 890], [5400, 890], [5400, 1130], [-1400, 1130]]); c.fillStyle = K.C.asphalt; c.fill();
+      c.strokeStyle = rgba('lane', 0.16); c.lineWidth = g.px; c.beginPath(); c.moveTo(-1400, 890); c.lineTo(5400, 890); c.moveTo(-1400, 1130); c.lineTo(5400, 1130); c.stroke();
+      for (const b of cwBlocks) {
+        if (b.r === 0 && b.c === 3) { g.building(b.x0, b.y0, 400, 110, { seed: 4 }); continue; } // the mast's yard
+        const two = r() < 0.6, w = two ? 193 : 400;
+        g.building(b.x0, b.y0, w, b.y1 - b.y0, { seed: b.r * 31 + b.c }); if (two) g.building(b.x0 + 207, b.y0, 193, b.y1 - b.y0, { seed: b.r * 37 + b.c });
+      }
+      for (const x of CW.br) { g.pavement([[x - 52, 840], [x + 52, 840], [x + 52, 1180], [x - 52, 1180]], { grid: 0 }); for (const sx of [-52, 52]) g.marking([[x + sx, 870], [x + sx, 1150]], { w: 6, alpha: 0.28 }); }
+      g.marking([[-1400, 105], [5400, 105]], { dash: [60, 70], w: 6, alpha: 0.32 });
+      g.building(CW.cp.x - 110, CW.cp.y - 70, 220, 130, { tone: '#3E464B', height: 0.7 });
+      tower(g, CW.mast.x, CW.mast.y, 1.6); // the mast, struck through
+    },
+    draw(g, o, L) {
+      const c = g.ctx, r = rng(29), vz = o.vz !== false, grey = (x, y) => { c.fillStyle = K.C.off; c.beginPath(); c.arc(x, y, 2.7 * g.px, 0, TAU); c.fill(); };
+      const phones = [];
+      for (const b of cwBlocks) for (let i = 0; i < 2 + (r() < 0.4); i++) {
+        const x = lerp(b.x0 + 50, b.x1 - 50, r()), y = lerp(b.y0 + 50, b.y1 - 50, r());
+        if (Math.hypot(x - CW.mast.x, y - CW.mast.y) > 150) phones.push({ x, y, lit: vz && b.lit > 0.5 });
+      }
+      if (vz) for (const b of cwBlocks) if (b.lit) g.wash(b.x0, b.y0, b.x1 - b.x0, b.y1 - b.y0, b.lit);
+      for (const p of phones) if (!p.lit) grey(p.x, p.y);
+      if (!vz) { grey(CW.cp.x, CW.cp.y); L.plate(CW.cp.x, CW.cp.y, 'Command post', { dy: -150 }); L.plate(CW.mast.x, CW.mast.y, 'No cellular network', { dy: 120 }); return; }
+      rings(g, CW.cp.x, CW.cp.y, 560, { n: 3 });
+      for (const x of CW.br) { rings(g, x + 18, 1010, 230, { n: 2, s: 0.5, fill: false }); dev(g, x + 18, 1010); }
+      for (const p of phones) if (p.lit) dev(g, p.x, p.y);
+      dev(g, CW.cp.x, CW.cp.y);
+      L.pulse(CW.cp.x, CW.cp.y, 560); CW.br.forEach((x, i) => L.pulse(x + 18, 1010, 230, { delay: 0.6 + i * 0.3 }));
+      L.plate(CW.cp.x, CW.cp.y, 'Command post', { dy: -150 });
+      L.plate(CW.mast.x, CW.mast.y, 'No cellular network', { dy: 120 });
+      L.plate(3640, 1330, 'A whole city', { status: 'vision' });
+      L.chip(CW.cp.x, CW.cp.y, 'Alert sent', { side: 'down', gap: 40 });
     }
   };
 

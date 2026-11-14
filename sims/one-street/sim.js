@@ -25,8 +25,8 @@
   const EXTRA = [[[[78, 1150], [78, -300]], 64], [[[20, -300], [20, 1500]], 56], [[[46, -330], [46, 1470]], 56], [[[448, -120], [448, 1500]], 52],
     [[[790, 1250], [700, -250]], 64], [[[175, 560], [175, 1900]], 240, 'car'], [[[1290, 1400], [1330, 870]], 50]].map(([w, v, k]) => [rt(w), v, k]);
   const SEATED = [[706, 334, -Math.PI / 2], [1372, 905, Math.PI]];
-  const S_WAIT = RT.child.find((p) => p.x <= 425), S_FREEZE = RT.child.find((p) => p.x <= 348), S_CLEAR = RT.child.find((p) => p.x <= 240);
-  const S_KERB = RT.child.find((p) => p.x <= 400), S_HOME = RT.child.find((p) => p.x <= 96), S_FALL = 187, W_SAFE = RT.worker.find((p) => p.y >= 446);
+  const S_FREEZE = RT.child.find((p) => p.x <= 348), S_CLEAR = RT.child.find((p) => p.x <= 240);
+  const S_KERB = RT.child.find((p) => p.x <= 400), S_HOME = RT.child.find((p) => p.x <= 96), S_FALL = 187;
   const L = {
     with: ['One street. Things that can happen at once. Only those it concerns are told.',
       'A child is near the road. Today: the driver is warned on a screen in the car. Nobody else.',
@@ -116,7 +116,8 @@
   function update(s, dt, o) {
     const T = s.t + dt, { child, car, man, tug, worker, ev } = s, vz = o.vz, cp = pos(child), kp = pos(car), tp = pos(tug), wp = pos(worker);
     const reach = (i, src, a, p) => { if (ev[i].t0 != null && a.lit == null && T - ev[i].t0 >= arrive(dist(src, p), ZR[i])) a.lit = T; };
-    // 1. The child heads for the kerb with a car coming. Her phone predicts the step and tells the car, and her.
+    // 1. The child heads for the kerb with a car coming. Her phone tells the car. Today only the driver is warned:
+    // her phone is on (lit), and nothing warns her.
     if (vz && ev[0].t0 == null && S_KERB - child.s < 190) ev[0].t0 = child.lit = T;
     reach(0, cp, car, kp);
     if (car.brakeAt == null && child.s < S_CLEAR) {
@@ -129,12 +130,9 @@
     if (car.brakeAt != null && car.stopAt == null) { brake(car, dt, T); car.brake = car.hard ? 1 : 0.5; }
     else if (car.stopAt != null && child.clear != null && T > child.clear + 0.4) { car.brake = 0; car.v = Math.min(280, car.v + 140 * dt); }
     car.s += car.v * dt;
-    // Warned, she waits at the kerb until the car has stopped; unwarned, she steps out and freezes in the lane.
+    // The child, in both runs: she crosses; if the car stops hard beside her, she freezes in the lane until it has stopped.
     let stop = null, dec = 240;
-    if (child.go == null) {
-      if (vz && child.lit != null) { if (car.stopAt != null || (car.brakeAt != null && car.v < 40)) child.go = T; else stop = S_WAIT; }
-      else if (car.hard && child.s >= S_FREEZE - 40) { if (car.stopAt != null && T > car.stopAt + 0.6) child.go = T; else { stop = S_FREEZE; dec = 900; } }
-    }
+    if (child.go == null && car.hard && child.s >= S_FREEZE - 40) { if (car.stopAt != null && T > car.stopAt + 0.6) child.go = T; else { stop = S_FREEZE; dec = 900; } }
     walk(child, dt, child.go != null ? 84 : 70, stop, 300, dec);
     if (child.clear == null && child.s >= S_CLEAR) child.clear = T;
     if (ev[0].t0 != null && ev[0].t1 == null && child.s >= S_HOME) ev[0].t1 = child.off = car.off = T;
@@ -154,24 +152,26 @@
     }
     if (ev[1].t0 != null && ev[1].t1 == null && s.r1.at != null && s.r2.at != null) ev[1].t1 = man.off = s.r1.off = s.r2.off = T;
 
-    // 3. A worker on foot enters the aircraft's protective bubble as a tug comes in. The aircraft's tag tells both.
-    if (vz && ev[2].t0 == null && inBubble(wp) && dist(tp, wp) < 1000 && tug.s < tug.rt.total - 40) ev[2].t0 = s.tag.lit = T;
-    reach(2, TAG, tug, tp); reach(2, TAG, worker, wp);
+    // 3. A worker on foot enters the aircraft's protective bubble as a tug comes in. The aircraft's tag tells the tug
+    // driver (Today); the worker's phone is on (lit), and nothing warns him.
+    if (vz && ev[2].t0 == null && inBubble(wp) && dist(tp, wp) < 1000 && tug.s < tug.rt.total - 40) ev[2].t0 = s.tag.lit = worker.lit = T;
+    reach(2, TAG, tug, tp);
     if (tug.stopAt == null) {
-      if (tug.hard) { brake(tug, dt, T); tug.s += tug.v * dt; }
-      else { // warned, it creeps in to the nose; unwarned, the driver notices the worker only when he is close and ahead
+      if (tug.brakeAt != null) { brake(tug, dt, T); tug.s += tug.v * dt; if (tug.stopAt != null && ev[2].t0 != null) ev[2].t1 = tug.off = worker.off = s.tag.off = T; }
+      else { // warned, it creeps in; the driver stops once the worker is close and ahead: calmly when warned, hard when not
         walk(tug, dt, tug.lit != null && T > tug.lit + 0.45 ? 60 : tug.s > tug.rt.total - 330 ? 150 : 180, tug.rt.total, 160, tug.lit != null ? 120 : 200);
         if (tug.s >= tug.rt.total - 0.5) { tug.stopAt = T; if (ev[2].t0 != null) ev[2].t1 = tug.off = worker.off = s.tag.off = T; }
         const d = dist(tp, wp), b = Math.atan2(wp.y - tp.y, wp.x - tp.x) - tp.a;
-        if (!vz && d < 200 && Math.abs(Math.atan2(Math.sin(b), Math.cos(b))) < 1) {
+        if (d < 200 && Math.abs(Math.atan2(Math.sin(b), Math.cos(b))) < 1) {
           tug.seen = tug.seen ?? T;
-          if (T >= tug.seen + 0.35) Object.assign(tug, { hard: true, brakeAt: T, stop: tug.s + d - 93, skid: tug.s, lit: (worker.lit = T) });
+          if (vz && tug.lit != null) Object.assign(tug, { brakeAt: T, stop: tug.s + d - 110 });
+          else if (!vz && T >= tug.seen + 0.35) Object.assign(tug, { hard: true, brakeAt: T, stop: tug.s + d - 93, skid: tug.s, lit: (worker.lit = T) });
         }
       }
     }
     tug.brake = tug.hard ? 1 : tug.lit != null && tug.stopAt == null && tug.v > 62 ? 0.5 : 0;
     if (tug.hard && tug.stopAt != null && tug.off == null && T > tug.stopAt + 1.6) tug.off = worker.off = T;
-    walk(worker, dt, 64, worker.lit != null && vz ? W_SAFE : null, 200, 300); // told, he stops short of the tug's path
+    walk(worker, dt, 64, null, 200, 300); // nobody warns him: he walks on in both runs
 
     for (const a of s.ex) walk(a, dt, a.v, null, 100, 100);
     if (s.end == null && ((vz && ev[2].t1 != null && ev[0].t1 != null && ev[1].t1 != null && T > ev[2].t1 + 3) || (!vz && tug.stopAt != null && T > tug.stopAt + 3) || T > 17)) s.end = T;
@@ -242,7 +242,8 @@
     for (const [x, y, a] of SEATED) g.person({ x, y, a }, { alpha: QUIET, phone: 'off' });
     c.globalAlpha = Q(s.car); g.vehicle('car', P.car, { brake: s.car.brake, lights: 1, phone: on(s.car) });
     c.globalAlpha = Q(s.tug); g.vehicle('tug', P.tug, { brake: s.tug.brake, lights: 1, phone: on(s.tug) }); c.globalAlpha = 1;
-    for (const k of ['r1', 'r2', 'worker', 'child']) g.person(P[k], { r: k === 'child' ? 10.5 : 11, alpha: Q(s[k]), phone: on(s[k]) });
+    // The fall's responders are told in its Vision moment: marked so, for the gate that keeps Today to the drivers.
+    for (const k of ['r1', 'r2', 'worker', 'child']) g.person(P[k], { r: k === 'child' ? 10.5 : 11, alpha: Q(s[k]), phone: on(s[k]), status: k[0] === 'r' ? 'vision' : undefined });
     if (s.fell == null) g.person(P.man, { alpha: Q(s.man), phone: 'off' });
     else lying(g, { x: P.man.x, y: P.man.y, a: P.man.a + 0.9 }, (T - s.fell) / 0.35, Q(s.man));
     g.atmosphere('Clear', {});
@@ -251,12 +252,15 @@
     if (vz) {
       // The VZ layer: the aircraft's bubble, each event's broadcast, who receives it, and the recipients lighting up.
       bubble(g, lev(s.tag, T));
-      const both = (a, b) => (a == null || b == null ? null : Math.max(a, b)), told = [s.car.lit, both(s.r1.lit, s.r2.lit), both(s.tug.lit, s.worker.lit)], src = [P.child, P.man, TAG];
+      const both = (a, b) => (a == null || b == null ? null : Math.max(a, b)), told = [s.car.lit, both(s.r1.lit, s.r2.lit), s.tug.lit], src = [P.child, P.man, TAG];
       s.ev.forEach((e, i) => { if (e.t0 != null) rings(g, src[i], ZR[i], e.t0, e.t1, told[i], T); });
-      if (o.receivers === 'On') { link(g, P.child, P.car, lev(s.car, T), T); for (const k of ['r1', 'r2']) link(g, P.man, P[k], lev(s[k], T), T); for (const k of ['tug', 'worker']) link(g, TAG, P[k], lev(s[k], T), T); }
-      for (const k of ['child', 'car', 'man', 'r1', 'r2', 'tug', 'worker']) lit(g, P[k], lev(s[k], T), T, s[k]);
+      if (o.receivers === 'On') { link(g, P.child, P.car, lev(s.car, T), T); for (const k of ['r1', 'r2']) link(g, P.man, P[k], lev(s[k], T), T); link(g, TAG, P.tug, lev(s.tug, T), T); }
+      // Lit up: those told, and the fallen man's phone (the Vision moment). The child's and the worker's phones are
+      // on, and nothing lights on them: today only the drivers are warned.
+      for (const k of ['car', 'man', 'r1', 'r2', 'tug']) lit(g, P[k], lev(s[k], T), T, s[k]);
+      for (const k of ['child', 'worker']) { const v = lev(s[k], T); if (v > 0.01) { c.globalAlpha = v; g.device(P[k].x, P[k].y); c.globalAlpha = 1; } }
       lit(g, TAG, lev(s.tag, T), T, s.tag);
-      for (const [k, l, w] of [['car', 176, 74], ['tug', 120, 72], ['child', 21, 21], ['r1', 22, 22], ['r2', 22, 22], ['worker', 22, 22]]) if (s[k].lit != null) g.flash(P[k], T - s[k].lit, { l, w });
+      for (const [k, l, w] of [['car', 176, 74], ['tug', 120, 72], ['r1', 22, 22], ['r2', 22, 22]]) if (s[k].lit != null) g.flash(P[k], T - s[k].lit, { l, w });
       chip('car', 'Pedestrian ahead', 'right', 'down', 50);
       chip('r1', 'Man down', 'down', 'right', 18); chip('r2', 'Man down', 'right', 'up', 18);
       chip('tug', 'Worker ahead', 'left', 'down', 44);
@@ -280,7 +284,7 @@
     still: (vz) => (vz ? 8.5 : 9.2),
     lines: (o) => (o.vz ? L.with : L.without),
     beat(s, o) {
-      if (o.vz) return s.ev[2].t1 != null && s.t > s.ev[2].t1 + 0.2 ? 4 : s.worker.lit != null ? 3 : s.r1.lit != null || s.r2.lit != null ? 2 : s.car.lit != null ? 1 : 0;
+      if (o.vz) return s.ev[2].t1 != null && s.t > s.ev[2].t1 + 0.2 ? 4 : s.tug.lit != null ? 3 : s.r1.lit != null || s.r2.lit != null ? 2 : s.car.lit != null ? 1 : 0;
       return s.tug.stopAt != null && s.t > s.tug.stopAt + 0.8 ? 4 : s.tug.brakeAt != null ? 3 : s.fell != null && s.t > s.fell + 1 ? 2 : s.car.brakeAt != null ? 1 : 0;
     },
     debug: (s) => ({ ev: s.ev.map((e) => [e.t0, e.t1]), carLit: s.car.lit, carBrake: s.car.brakeAt, carStop: s.car.stopAt, childGo: s.child.go, fell: s.fell, r1: s.r1.lit, r2: s.r2.lit, r1at: s.r1.at, r2at: s.r2.at, tugLit: s.tug.lit, wLit: s.worker.lit, tugBrake: s.tug.brakeAt, tugStop: s.tug.stopAt, end: s.end }),

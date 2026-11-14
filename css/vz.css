@@ -137,11 +137,14 @@ a:hover { text-decoration-thickness: 2px; }
 .menu-open .menu-toggle .open { display: none; }
 .menu-open .menu-toggle .close { display: block; }
 
-/* The menu, below 1280 px: a dark disclosure panel under the header, with the one action at its foot. */
+/* The menu, below 1280 px: a dark disclosure panel under the header, with the one action at its foot. It fills the
+   window below the header and never more: on a short screen (a phone held sideways) it scrolls inside itself, while
+   the page behind it stays locked. */
 @media (max-width: 1279.98px) {
   .menu-open .nav {
     display: block; position: absolute; left: 0; right: 0; top: 100%;
-    min-height: calc(100vh - var(--head)); min-height: calc(100dvh - var(--head));
+    height: calc(100vh - var(--head)); height: calc(100dvh - var(--head));
+    overflow-y: auto; overscroll-behavior: contain;
     background: var(--night); border-top: 1px solid var(--rule-dark);
     padding: var(--s3) var(--gutter) var(--s6);
   }
@@ -405,6 +408,45 @@ a:hover { text-decoration-thickness: 2px; }
 }
 @media (min-width: 1024px) { .cap .cap-when { grid-column: 3; justify-self: start; } }
 .content > p + .caps { margin-top: var(--s4) !important; }
+
+/* ---------- Show me: one control and one plate on every capability row ----------
+   The pill is the kit's own control (44 px, 22 px radius, mustard when on); it switches at once, with no transition
+   (motion lives only inside simulations). The plate is a dark scene plate under the row: edge to edge on a phone. */
+:is(.cap, .fnd) .show {
+  grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: var(--s1); min-height: 44px;
+  margin-top: 10px; padding: 0 18px 0 14px; border: 1px solid var(--ink); border-radius: 22px; background: var(--paper);
+  color: var(--ink); font: 600 var(--t15)/1 var(--font); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+:is(.cap, .fnd) .show svg { width: 13px; height: 13px; fill: currentColor; flex: none; }
+:is(.cap, .fnd) .show .show-off, :is(.cap, .fnd) .show[aria-expanded="true"] .show-on { display: none; }
+:is(.cap, .fnd) .show[aria-expanded="true"] .show-off { display: inline; }
+:is(.cap, .fnd) .show[aria-expanded="true"] { background: var(--zone); border-color: var(--zone); font-weight: 800; }
+.dark :is(.cap, .fnd) .show { background: transparent; border-color: #fff; color: #fff; }
+.dark :is(.cap, .fnd) .show[aria-expanded="true"] { background: var(--zone); border-color: var(--zone); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+  :is(.cap, .fnd) .show:hover { background: var(--surface); }
+  .dark :is(.cap, .fnd) .show:hover { background: var(--hair-dark); }
+  :is(.cap, .fnd) .show[aria-expanded="true"]:hover { background: var(--zone); }
+}
+@media (forced-colors: active) { :is(.cap, .fnd) .show[aria-expanded="true"] { background: Highlight; color: HighlightText; forced-color-adjust: none; } }
+.cap .demo { grid-column: 1 / -1; margin-top: var(--s2); background: var(--asphalt); border-radius: 4px; overflow: hidden; }
+.cap .demo iframe { display: block; width: 100%; height: 520px; border: 0; } /* the estimate until the frame measures itself */
+@media (min-width: 1024px) {
+  /* a fixed last column: Show me and Hide differ in width, and a row's columns must not move when it opens */
+  .caps.has-demos .cap { grid-template-columns: minmax(0, 3fr) minmax(0, 4.4fr) minmax(0, 1.7fr) 8.5rem; }
+  .caps.has-demos .cap .show { grid-column: 4; grid-row: 1; margin-top: 0; align-self: center; justify-self: end; }
+}
+@media (max-width: 640px) {
+  /* edge to edge: back over the row's padding and status rule (16 + 3 px) and the page gutter on both sides */
+  .cap .demo { margin-left: calc(-19px - var(--gutter)); margin-right: calc(-1 * var(--gutter)); border-radius: 0; }
+  .cap .demo iframe { height: 560px; }
+}
+
+/* The home page's six foundations: the same pill under each tile's text, and one plate under their grid (plan 2.6). */
+.fnd .show { margin-top: var(--s2); }
+.fnd-demo { margin-top: var(--s5); background: var(--asphalt); border-radius: 4px; overflow: hidden; }
+.fnd-demo iframe { display: block; width: 100%; height: 520px; border: 0; }
+@media (max-width: 640px) { .fnd-demo { margin-inline: calc(-1 * var(--gutter)); border-radius: 0; } .fnd-demo iframe { height: 560px; } }
 
 /* ---------- Ruled list: short statements, one per hairline row ---------- */
 .rules { list-style: none; padding: 0; border-bottom: 1px solid var(--line); }

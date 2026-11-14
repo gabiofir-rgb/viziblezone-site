@@ -9,7 +9,7 @@
   const ZEBRA = [1130, 1260], CROSS_X = 1168, KID_R = 10.5, SIDE = [1390, 1570];
   const KID = K.route([[1092, 762], [CROSS_X, 762], [CROSS_X, 226]], 36);
   const ROAD = K.route([[-1000, LANE], [3000, LANE]]);
-  const S_WAIT = KID.find((p) => p.y <= 622), S_FREEZE = KID.find((p) => p.y <= 522), S_CLEAR = KID.find((p) => p.y <= LANE - CAR_W / 2 - 14), S_TURN = KID.find((p) => p.y < 760);
+  const S_FREEZE = KID.find((p) => p.y <= 522), S_CLEAR = KID.find((p) => p.y <= LANE - CAR_W / 2 - 14), S_TURN = KID.find((p) => p.y < 760);
   const ZONE = { rmax: 1100, reach: 900, period: 0.7, rings: 3, phase: 0 };
   const CAR_ZONE = Object.assign({}, ZONE, { phase: 0.35, strength: 0.45, fill: false });
   // Weather changes the driver, never the zone: how far they see, how fast they drive, how close a late stop ends.
@@ -23,7 +23,7 @@
   const L = {
     with: ['A child is hidden behind a parked bus. A car approaches.',
       'The child is still hidden. Today: the driver is warned on a screen in the car.',
-      'The car slows early. The child waits, then crosses in front of the stopped car.',
+      'The car slows early. The child steps out and the car stops before the crossing.',
       'The child crosses with room to spare. The car knew she was there before the driver could see her.'],
     without: ['A child is hidden behind a parked bus. A car approaches.',
       'Without VZ, the bus hides the child. The driver has no early warning.',
@@ -56,7 +56,7 @@
     return {
       end: null, over: false,
       car: { x: -40, v: WX[o.weather].cruise, mode: 'cruise', brake: 0, hard: false, stop: 0, caught: null, seen: null, brakeAt: null, stopAt: null, skid: null },
-      kid: { s: 0, v: 70, caught: null, go: null, clear: null, vis: 0, seenFor: 0 }
+      kid: { s: 0, v: 70, go: null, clear: null, vis: 0, seenFor: 0 }
     };
   }
 
@@ -67,11 +67,11 @@
     kid.seenFor = K.sees(eye, 0, HALF, w.range, p, OCC) ? kid.seenFor + dt : 0;
     if (car.seen == null && kid.seenFor >= 0.1) car.seen = T;
     kid.vis = clamp(kid.vis + (K.occluded(eye, p, OCC) ? -dt : dt) / 0.2);
-    // With VZ each phone's rings carry its presence through the bus; the first ring within reach warns.
+    // With VZ the child's phone carries her presence through the bus; the first ring within reach warns the driver.
+    // Today only the driver is warned: nothing warns the child.
     if (o.vz) {
       const d = Math.hypot(dev.x - p.x, dev.y - p.y);
       if (car.caught == null && d <= ZONE.reach && K.zoneCrossed(t0, T, d, ZONE)) car.caught = T;
-      if (kid.caught == null && d <= ZONE.reach && K.zoneCrossed(t0, T, d, CAR_ZONE)) kid.caught = T;
     }
     // Driver: reacts to the warning (with VZ) or to sight (without), after a reaction time.
     const cue = Math.min(car.caught ?? Infinity, car.seen ?? Infinity);
@@ -92,13 +92,13 @@
       if (kid.clear != null && T > kid.clear + 0.5) car.mode = 'go';
     } else if (car.mode === 'go') { car.brake = 0; car.v = Math.min(w.cruise, car.v + 130 * dt); }
     car.x += car.v * dt;
-    // Child: walks to the crossing. Warned, she waits at the kerb; unwarned, she steps out and freezes in the lane.
+    // Child: nobody warns her, so she walks the same way in both runs. The bus hides the car from her too: she steps
+    // out, and if the car is still moving she freezes in the lane. She goes once it has stopped; after a hard stop,
+    // only once the shock has passed.
     let target = kid.s < S_TURN ? 70 : 100, stopAt = null, dec = 260;
-    // Warned, she goes as the car settles to a stop; unwarned, only once the shock has passed.
-    const carStill = o.vz ? car.mode === 'stopped' || (car.mode === 'brake' && car.v < 45) : car.mode === 'stopped' && T > car.stopAt + 0.7;
-    if (kid.go != null) target = o.vz ? 88 : 115;
-    else if (o.vz && kid.caught != null) { if (carStill) { kid.go = T; target = 88; } else stopAt = S_WAIT; }
-    else if (!o.vz && kid.s >= S_FREEZE - 30) { if (carStill) { kid.go = T; target = 115; } else { stopAt = S_FREEZE; dec = 900; } }
+    const carStill = car.mode === 'stopped' && T > car.stopAt + (car.hard ? 0.7 : 0.2);
+    if (kid.go != null) target = car.hard ? 115 : 88;
+    else if (kid.s >= S_FREEZE - 30) { if (carStill) { kid.go = T; target = car.hard ? 115 : 88; } else { stopAt = S_FREEZE; dec = 900; } }
     if (stopAt != null) target = Math.min(target, Math.sqrt(2 * dec * Math.max(0, stopAt - kid.s)));
     kid.v += clamp(target - kid.v, -dec * dt, 320 * dt);
     kid.s = Math.min(KID.total, kid.s + Math.max(0, kid.v) * dt);
@@ -138,8 +138,7 @@
       g.trail(KID, kid.s + KID_R, kid.s >= KID.total - 2 ? 0 : 270);
       g.trail(ROAD, car.x + CAR_L / 2 + 1000 + 6, trailLen, { gap: 15 });
       g.device(dev.x, dev.y); g.device(p.x, p.y);
-      if (car.caught != null) { g.catchFx(dev.x, dev.y, T - car.caught); g.flash(cp, T - car.caught, { l: CAR_L, w: CAR_W }); }
-      if (kid.caught != null) { g.catchFx(p.x, p.y, T - kid.caught); g.flash(p, T - kid.caught, { l: KID_R * 2, w: KID_R * 2 }); }
+      if (car.caught != null) { g.catchFx(dev.x, dev.y, T - car.caught); g.flash(cp, T - car.caught, { l: CAR_L, w: CAR_W }); } // only the driver is warned
       g.chip(car.x, LANE, 'Child ahead', { k: fade(car.caught, car.stopAt != null ? car.stopAt + 1.2 : null), side: g.portrait ? 'left' : 'up', gap: 50 });
     } else if (car.brakeAt != null) {
       g.flash(cp, T - car.brakeAt, { l: CAR_L, w: CAR_W, tone: 'alert' });
@@ -166,7 +165,7 @@
       const b = c.stopAt != null && s.t > c.stopAt + 0.3 ? 3 : c.brakeAt != null ? 2 : s.t > 1.3 ? 1 : 0;
       return o.compare ? Math.max(0, b - 1) : b;
     },
-    debug: (s) => ({ caught: s.car.caught, kidCaught: s.kid.caught, seen: s.car.seen, brakeAt: s.car.brakeAt, stopAt: s.car.stopAt, kidGo: s.kid.go, end: s.end, carFront: s.car.x + CAR_L / 2, kidY: KID.at(s.kid.s).y, mode: s.car.mode }),
+    debug: (s) => ({ caught: s.car.caught, seen: s.car.seen, brakeAt: s.car.brakeAt, stopAt: s.car.stopAt, kidGo: s.kid.go, end: s.end, carFront: s.car.x + CAR_L / 2, kidY: KID.at(s.kid.s).y, mode: s.car.mode }),
     ground, init, update, draw
   });
 })();

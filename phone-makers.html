@@ -123,17 +123,72 @@
           <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
           <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
         </ul>
-        <ul class="caps">
-          <li class="cap"><span class="cap-name">Push-to-talk with family and friends</span><span class="cap-text">Family and friends talk phone to phone where there is no network.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Crossing with music on</span><span class="cap-text">It will notice its person heading into the road and say “Look up”.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
-          <li class="cap"><span class="cap-name">The top of the steps</span><span class="cap-text">It will say “Mind the step” before its person misses one.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">A fall</span><span class="cap-text">It will notice a fall and call for help.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">A phone that knows itself</span><span class="cap-text">It will notice its own abnormal behaviour and say how sure it is.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">Inside the phone itself</span><span class="cap-text">It will be part of the phone itself, for every user, with no app to install.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+        <ul class="caps has-demos">
+          <li class="cap" id="cap-pm-family">
+            <span class="cap-name">Push-to-talk with family and friends</span>
+            <span class="cap-text">Family and friends talk phone to phone where there is no network.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-pm-family" data-demo="phone-makers" data-demo-opt="scene=Ski slope">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Push-to-talk with family and friends</span>
+            </button>
+            <div class="demo" id="demo-pm-family" role="group" aria-label="Demonstration: Push-to-talk with family and friends" hidden></div>
+          </li>
+          <li class="cap" id="cap-pm-crossing">
+            <span class="cap-name">Crossing with music on</span>
+            <span class="cap-text">It will notice its person heading into the road and say “Look up”.</span>
+            <span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-pm-crossing" data-demo="phone-makers" data-demo-opt="scene=Crossing">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Crossing with music on</span>
+            </button>
+            <div class="demo" id="demo-pm-crossing" role="group" aria-label="Demonstration: Crossing with music on" hidden></div>
+          </li>
+          <li class="cap" id="cap-pm-steps">
+            <span class="cap-name">The top of the steps</span>
+            <span class="cap-text">It will say “Mind the step” before its person misses one.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-pm-steps" data-demo="phone-makers" data-demo-opt="scene=Escalator">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: The top of the steps</span>
+            </button>
+            <div class="demo" id="demo-pm-steps" role="group" aria-label="Demonstration: The top of the steps" hidden></div>
+          </li>
+          <li class="cap" id="cap-pm-fall">
+            <span class="cap-name">A fall</span>
+            <span class="cap-text">It will notice a fall and call for help.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-pm-fall" data-demo="demos-phone" data-demo-opt="demo=fall">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: A fall</span>
+            </button>
+            <div class="demo" id="demo-pm-fall" role="group" aria-label="Demonstration: A fall" hidden></div>
+          </li>
+          <li class="cap" id="cap-pm-itself">
+            <span class="cap-name">A phone that knows itself</span>
+            <span class="cap-text">It will notice its own abnormal behaviour and say how sure it is.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-pm-itself" data-demo="demos-phone" data-demo-opt="demo=itself">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: A phone that knows itself</span>
+            </button>
+            <div class="demo" id="demo-pm-itself" role="group" aria-label="Demonstration: A phone that knows itself" hidden></div>
+          </li>
+          <li class="cap" id="cap-pm-builtin">
+            <span class="cap-name">Inside the phone itself</span>
+            <span class="cap-text">It will be part of the phone itself, for every user, with no app to install.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-pm-builtin" data-demo="demos-phone" data-demo-opt="demo=builtin">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg>
+              <span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Inside the phone itself</span>
+            </button>
+            <div class="demo" id="demo-pm-builtin" role="group" aria-label="Demonstration: Inside the phone itself" hidden></div>
+          </li>
         </ul>
         <div class="after-caps">
           <p>We report what failed, too.</p>
           <a class="text-link" href="trust.html">How we label what we claim</a>
+          <a class="text-link" href="demos.html">Every demonstration</a>
         </div>
       </div>
     </div>

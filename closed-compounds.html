@@ -122,21 +122,83 @@
           <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
           <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
         </ul>
-        <ul class="caps">
-          <li class="cap"><span class="cap-name">Drivers warned about workers on foot</span><span class="cap-text">Even out of sight, with an aircraft between them.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Around a parked aircraft</span><span class="cap-text">The aircraft carries small tags and gets its own bubble.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Around a danger area</span><span class="cap-text">A driver nearing a tagged danger area, such as the runway hold line or an open pit, is warned.</span><span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span></li>
-          <li class="cap"><span class="cap-name">Rules per area and per role</span><span class="cap-text">The site will decide who may enter each area, and who will be warned.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
-          <li class="cap"><span class="cap-name">Seeing the meeting coming</span><span class="cap-text">It will warn before the paths meet, not only on entry.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
-          <li class="cap"><span class="cap-name">Seaports, rail, logistics and construction sites</span><span class="cap-text">The same capability will be set up with each site, in a pilot first.</span><span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span></li>
-          <li class="cap"><span class="cap-name">Workers on foot warned too</span><span class="cap-text">Workers on foot will be warned too.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">Bubbles that switch on or move</span><span class="cap-text">Bubbles will appear around an engine at start-up, a fuelling stand or an aircraft under tow.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
-          <li class="cap"><span class="cap-name">A private record for each driver</span><span class="cap-text">It will be kept on the driver’s own phone.</span><span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span></li>
+        <ul class="caps has-demos">
+          <li class="cap" id="cap-cc-worker">
+            <span class="cap-name">Drivers warned about workers on foot</span>
+            <span class="cap-text">Even out of sight, with an aircraft between them.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-worker" data-demo="closed-compound" data-demo-opt="show=Worker"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Drivers warned about workers on foot</span></button>
+            <div class="demo" id="demo-cc-worker" role="group" aria-label="Demonstration: Drivers warned about workers on foot" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-aircraft">
+            <span class="cap-name">Around a parked aircraft</span>
+            <span class="cap-text">The aircraft carries small tags and gets its own bubble.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-aircraft" data-demo="closed-compound" data-demo-opt="show=Aircraft"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Around a parked aircraft</span></button>
+            <div class="demo" id="demo-cc-aircraft" role="group" aria-label="Demonstration: Around a parked aircraft" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-pit">
+            <span class="cap-name">Around a danger area</span>
+            <span class="cap-text">A driver nearing a tagged danger area, such as an open pit, is warned.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-pit" data-demo="demos-compound" data-demo-opt="demo=pit"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Around a danger area</span></button>
+            <div class="demo" id="demo-cc-pit" role="group" aria-label="Demonstration: Around a danger area" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-runway">
+            <span class="cap-name">At the runway hold line</span>
+            <span class="cap-text">At an airport, the hold line can be tagged as a danger area. A driver nearing it is warned.</span>
+            <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-runway" data-demo="closed-compound" data-demo-opt="show=Runway"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: At the runway hold line</span></button>
+            <div class="demo" id="demo-cc-runway" role="group" aria-label="Demonstration: At the runway hold line" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-rules">
+            <span class="cap-name">Rules per area and per role</span>
+            <span class="cap-text">The site will decide who may enter each area, and who will be warned.</span>
+            <span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-rules" data-demo="demos-compound" data-demo-opt="demo=rules"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Rules per area and per role</span></button>
+            <div class="demo" id="demo-cc-rules" role="group" aria-label="Demonstration: Rules per area and per role" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-coming">
+            <span class="cap-name">Seeing the meeting coming</span>
+            <span class="cap-text">It will warn before the paths meet, not only on entry.</span>
+            <span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-coming" data-demo="demos-compound" data-demo-opt="demo=coming"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Seeing the meeting coming</span></button>
+            <div class="demo" id="demo-cc-coming" role="group" aria-label="Demonstration: Seeing the meeting coming" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-seaport">
+            <span class="cap-name">Seaports, rail, logistics and construction sites</span>
+            <span class="cap-text">The same capability will be set up with each site, in a pilot first.</span>
+            <span class="status" data-status="dev"><span class="sr-only">Status: </span>In development</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-seaport" data-demo="closed-compound" data-demo-opt="site=Seaport"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Seaports, rail, logistics and construction sites</span></button>
+            <div class="demo" id="demo-cc-seaport" role="group" aria-label="Demonstration: Seaports, rail, logistics and construction sites" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-told">
+            <span class="cap-name">Workers on foot warned too</span>
+            <span class="cap-text">Workers on foot will be warned too.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-told" data-demo="demos-compound" data-demo-opt="demo=told"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Workers on foot warned too</span></button>
+            <div class="demo" id="demo-cc-told" role="group" aria-label="Demonstration: Workers on foot warned too" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-moving">
+            <span class="cap-name">Bubbles that switch on or move</span>
+            <span class="cap-text">Bubbles will appear around an engine at start-up, a fuelling stand or an aircraft under tow.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-moving" data-demo="demos-compound" data-demo-opt="demo=moving"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Bubbles that switch on or move</span></button>
+            <div class="demo" id="demo-cc-moving" role="group" aria-label="Demonstration: Bubbles that switch on or move" hidden></div>
+          </li>
+          <li class="cap" id="cap-cc-record">
+            <span class="cap-name">A private record for each driver</span>
+            <span class="cap-text">It will be kept on the driver’s own phone.</span>
+            <span class="status" data-status="vision"><span class="sr-only">Status: </span>Vision</span>
+            <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-record" data-demo="demos-compound" data-demo-opt="demo=record"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: A private record for each driver</span></button>
+            <div class="demo" id="demo-cc-record" role="group" aria-label="Demonstration: A private record for each driver" hidden></div>
+          </li>
         </ul>
         <p class="note">At airports, warnings to drivers about workers on foot are ready to demonstrate on an apron.</p>
         <div class="after-caps">
           <p>We report what failed, too.</p>
           <a class="text-link" href="trust.html">How we label what we claim</a>
+          <a class="text-link" href="demos.html">Every demonstration</a>
         </div>
       </div>
     </div>

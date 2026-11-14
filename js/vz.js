@@ -142,9 +142,12 @@
       if (h > 0) frame.style.height = h + 'px';
     } catch (e) { /* another origin (for example file://): keep the CSS estimate */ }
   }
+  // A demonstration plate under a row (.demo) has a fixed inset, and its stage keeps to 56% of a phone's window.
   function align(frame) {
     try {
-      var px = inset(frame.parentNode) + 'px', max = stageMax() + 'px';
+      var demo = frame.parentNode.classList.contains('demo'), phone = innerWidth <= 640;
+      var px = (demo ? (phone ? 16 : 20) : inset(frame.parentNode)) + 'px';
+      var max = (demo && phone ? Math.round(innerHeight * 0.56) : stageMax()) + 'px';
       frame.contentDocument.querySelectorAll('.vzs').forEach(function (el) {
         el.style.setProperty('--vzs-inset', px); el.style.setProperty('--vzs-stage-max', max);
       });
@@ -185,8 +188,64 @@
     if (innerWidth === lastW && innerWidth <= 640) return; // a phone's address bar sliding away is not a resize
     lastW = innerWidth;
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () { frames.forEach(align); }, 120);
+    resizeTimer = setTimeout(function () { frames.forEach(align); doc.querySelectorAll('.demo iframe').forEach(align); }, 120);
   });
+
+  /* ---------- Show me: one demonstration per capability row ----------
+     A .show button names its scene (data-demo) and options (data-demo-opt, name=value pairs joined by &) and the
+     plate it opens (aria-controls). It stays hidden unless the scene is in sims/available.js, so without script, or
+     without the scene, the row reads as before. One plate is open per page; closing removes the frame, which stops
+     the scene. A #demo-... address opens that plate on load and scrolls to its row. */
+  var openBtn = null;
+  function demoName(btn) {
+    var cap = btn.closest('.cap'), n = cap && cap.querySelector('.cap-name'), sr = btn.querySelector('.sr-only');
+    return (n ? n.textContent : sr ? sr.textContent.replace(/^:\s*/, '') : '').trim();
+  }
+  // A press brings the plate's bottom into the window if it is below it; a #demo- address puts the row at the top.
+  function reveal(el, jump) {
+    if (jump || el.getBoundingClientRect().bottom > innerHeight) el.scrollIntoView({ block: jump ? 'start' : 'nearest', behavior: jump || calm ? 'auto' : 'smooth' });
+  }
+  function closeDemo(btn) {
+    var plate = doc.getElementById(btn.getAttribute('aria-controls')), f = plate && plate.querySelector('iframe');
+    if (f) plate.removeChild(f);
+    if (plate) plate.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    if (openBtn === btn) openBtn = null;
+  }
+  function openDemo(btn, jump) {
+    if (openBtn) closeDemo(openBtn);
+    var plate = doc.getElementById(btn.getAttribute('aria-controls')), name = demoName(btn), frame = doc.createElement('iframe');
+    var opt = (btn.getAttribute('data-demo-opt') || '').split('&').filter(Boolean).map(function (p) {
+      var i = p.indexOf('='); return encodeURIComponent(p.slice(0, i)) + '=' + encodeURIComponent(p.slice(i + 1));
+    });
+    frame.src = 'sims/' + btn.getAttribute('data-demo') + '/index.html?' + ['embed=1', 'micro=1'].concat(opt).join('&');
+    frame.title = 'Demonstration: ' + name;
+    frame.setAttribute('loading', 'eager');
+    plate.setAttribute('aria-label', 'Demonstration: ' + name);
+    plate.appendChild(frame);
+    plate.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    openBtn = btn;
+    wire(frame);
+    var row = jump ? btn.closest('.cap') || plate : plate;
+    reveal(row, jump);
+    frame.addEventListener('load', function () { reveal(row, jump); }, { once: true }); // again once the frame has its height
+  }
+  doc.querySelectorAll('button.show[data-demo]').forEach(function (btn) {
+    if (available.indexOf(btn.getAttribute('data-demo')) === -1 || !doc.getElementById(btn.getAttribute('aria-controls'))) return;
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      if (btn.getAttribute('aria-expanded') === 'true') closeDemo(btn); else openDemo(btn, false);
+    });
+  });
+  function fromHash() {
+    var id = location.hash.slice(1), btn = null; // the ids are plain ASCII (plan section 2)
+    if (id.indexOf('demo-') !== 0) return;
+    doc.querySelectorAll('button.show[data-demo]').forEach(function (b) { if (b.getAttribute('aria-controls') === id && !b.hidden) btn = b; });
+    if (btn && btn !== openBtn) openDemo(btn, true);
+  }
+  fromHash();
+  addEventListener('hashchange', fromHash);
 
   /* ---------- Video facade: youtube-nocookie loads only on click ---------- */
   doc.querySelectorAll('.video-facade').forEach(function (btn) {

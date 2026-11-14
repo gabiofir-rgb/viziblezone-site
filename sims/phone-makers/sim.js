@@ -245,7 +245,7 @@
         for (const k of 'BDC') voice(g, P.A, P[k], T, ...SPK[1]);
         for (const k of 'ADCB') g.device(P[k].x, P[k].y);
         for (const key in s.heard) g.catchFx(P[key[0]].x, P[key[0]].y, T - s.heard[key]);
-        say(g, B, 'I’m by the trees', fade(T, SPK[0][0], SPK[0][1] + 0.6), g.portrait ? 'left' : 'down', 20);
+        say(g, B, o.micro ? 'By the trees' : 'I’m by the trees', fade(T, SPK[0][0], SPK[0][1] + 0.6), g.portrait ? 'left' : 'down', 20); // under a row, a chip of at most three words
         say(g, P.A, 'We see you', fade(T, SPK[1][0], SPK[1][1] + 0.6), g.portrait ? 'right' : 'up', 20);
       } else {
         g.flash(B, T - SPK[0][0], { l: 19, w: 19, tone: 'alert' });
@@ -258,9 +258,16 @@
   /* mount */
   const SCENE = { 'Ski slope': SK, Crossing: CR, Escalator: ES };
   let scene = NAMES[0];
+  const FULL = 'Three everyday moments in plan view: a family on a ski slope with no network; a person with headphones on, eyes on the phone, at a crossing; a person reading at the top of an escalator. With VZ, the phone will warn its own person in time (in development; vision at the escalator), and the family keeps talking phone to phone, which works today. The caption below describes each moment.';
+  // Under a row (?micro=1) the canvas label describes only the moment shown, with VZ and without it.
+  const MICRO = {
+    'Ski slope': 'Plan of a ski slope with no network. A family is spread out; one of them, by the trees, talks, and the others hear it phone to phone and come back together, which works today. Without VZ the call does not go through and they ski on apart.',
+    Crossing: 'Plan of a street crossing. A person with headphones on and eyes on the phone walks towards the road as a car comes. With VZ, in development, the phone will say “Look up” and the person will stop at the kerb. Without VZ the person steps into the road and the driver brakes hard.',
+    Escalator: 'Plan of the top of an escalator. A person walks towards it, eyes on the phone. With VZ, a vision, the phone will say “Mind the step” before the person reaches it. Without VZ the person reaches the moving step still reading, stumbles and grabs the rail.'
+  };
   const api = K.mount({
     el: '#sim',
-    label: 'Three everyday moments in plan view: a family on a ski slope with no network; a person with headphones on, eyes on the phone, at a crossing; a person reading at the top of an escalator. With VZ, the phone will warn its own person in time (in development; vision at the escalator), and the family keeps talking phone to phone, which works today. The caption below describes each moment.',
+    label: (o) => (o.micro ? MICRO[o.scene] : FULL),
     focus: { x: 360, y: 120, w: 1200, h: 675 },
     portraitFocus: { x: 560, y: 137, w: 800, h: 640 },
     compare: false,
