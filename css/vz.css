@@ -460,6 +460,26 @@ a:hover { text-decoration-thickness: 2px; }
   .rules-named .r-text { grid-column: 2 / -1; }
 }
 
+/* ---------- Team (Company): a round photo in the zone's ring, the name, the role and one experience line ----------
+   On a phone each person is a ruled row, photo beside the words; from 700 px a two-by-two grid, photo above. */
+.team { list-style: none; padding: 0; display: grid; border-bottom: 1px solid var(--line); }
+.member { display: grid; grid-template-columns: 80px minmax(0, 1fr); column-gap: var(--s2); align-items: start; align-content: start; padding-block: 20px 22px; border-top: 1px solid var(--line); }
+.member-photo {
+  width: 80px; height: 80px; border-radius: 50%; object-fit: cover; background: var(--surface);
+  box-shadow: 0 0 0 2px var(--zone), 0 0 0 7px var(--zone-glow);
+}
+.member-name { font-size: var(--t18); font-weight: 800; line-height: 1.3; letter-spacing: -.005em; }
+.member-role { font: 800 var(--t15)/1.3 var(--font); color: var(--muted); margin-top: 2px; }
+.member-text { margin-top: var(--s1); color: var(--muted); font-size: var(--t16); line-height: 1.5; max-width: 40em; }
+#team > .grid { align-items: start; } /* the first thing in the content is a photo, which has no text baseline */
+@media (min-width: 700px) {
+  .team { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s5) var(--s5); border-bottom: 0; }
+  .member { grid-template-columns: minmax(0, 1fr); padding-block: var(--s3) 0; border-top: 1px solid var(--line); }
+  .member-photo { width: 120px; height: 120px; }
+  .member-copy { margin-top: var(--s3); }
+  .member-name { font-size: var(--t21); }
+}
+
 /* Questions an evaluator asks */
 .qa { margin-top: var(--s5) !important; }
 .qa h3 { font-size: var(--t18); font-weight: 800; line-height: 1.3; }
