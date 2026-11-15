@@ -116,6 +116,7 @@
   }
 
   /* --------------------------------------------------------------- picture */
+  const moment = (s, o) => (o.show === 'All' && o.vz ? s.r1.caught : null); // her call reaches the rescuer: his phone's beat follows (phone.js)
   function draw(g, s, o) {
     const T = s.t, r1 = s.r1, p1 = r1pos(s), w = o.show, ph = o.vz ? null : 'off';
     const cp = w !== 'Trapped'; // the command post is a place in the full scene, out of her phone's reach
@@ -142,7 +143,7 @@
       g.chip(p1.x, p1.y, 'Person trapped', { k: fade(r1.caught, r1.arrived), side: 'up', gap: 20 }); // above him: the phone view takes the bottom
       g.chip(TRAP.x, TRAP.y, 'Help is coming', { k: fade(s.tc, null), side: 'up', gap: 22 });
       // A second view (Today, what the caption says): the phone of the rescuer her call reaches, with where she is and her voice.
-      if (w === 'All' && r1.caught != null) g.phone('br', 'Rescuer’s phone', ['Where she is', 'Hears her'], { k: clamp((T - r1.caught) / 0.3) * (s.tc == null ? 1 : 1 - clamp((T - s.tc) / 0.3)), map: true, talk: true, margin: 8, beat: T - r1.caught, at: g.cam.w > 900 ? { x: RUB[0], y: TRAP.y } : null }); // until help is coming; where no one passes under it (tests sweep it): on a wide stage beside the rubble, by her
+      if (w === 'All' && r1.caught != null) g.phone('br', 'Rescuer’s phone', ['Where she is', 'Hears her'], { k: s.tc == null ? 1 : 1 - clamp((T - s.tc) / 0.3), map: true, talk: true, margin: 8, moment: moment(s, o), at: g.cam.w > 900 ? { x: RUB[0], y: TRAP.y } : null }); // until help is coming; where no one passes under it (tests sweep it): on a wide stage beside the rubble, by her
     }
   }
 
@@ -159,6 +160,7 @@
     statuses: STATUS,
     start: (o) => (o.compare && !o.vz ? 0.8 : 0),
     actAt: () => TRAP, // a tap where she is trapped sends the call
+    moment,
     actPos: 'br', // the Illustration mark moves to the top with it
     act: 'Call for help', // the stage's own button: the visitor's tap plays the event
     still: (vz, o) => (vz ? 3.4 : WIN[o.show] ? 2.6 : 4),

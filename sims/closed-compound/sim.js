@@ -294,7 +294,7 @@
       if (hasM && m.caught != null) { g.catchFx(mp.x, mp.y, T - m.caught); g.flash(mp, T - m.caught, { l: km.hl * 2, w: km.hw * 2 }); }
       if (hasB) g.chip(bp.x, bp.y, S.chips[0], { k: fade(b.caught, b.stopAt != null ? b.stopAt + 1.4 : null), side: s.win === 'All' && g.cam.h < 260 ? 'down' : 'left', gap: 40 }); // a short stage: behind the tug, clear of the phone view
       if (hasM) g.chip(mp.x, mp.y, S.chips[2], { k: fade(m.caught, m.stopAt != null ? m.stopAt + 2 : null), side: 'right', gap: 40 });
-      if (s.win === 'All' && b.caught != null) g.phone('tl', 'Tug driver’s phone', [S.chips[0], 'On foot'], { k: fade(b.caught, b.stopAt != null ? b.stopAt + 1.4 : null), note: true, map: true, margin: 8, beat: T - b.caught }); // the warning, as he gets it; last, over the chips
+      if (s.win === 'All' && b.caught != null) g.phone('tl', 'Tug driver’s phone', [S.chips[0], 'On foot'], { k: fade(b.caught, b.stopAt != null ? b.stopAt + 1.4 : null), note: true, map: true, margin: 8, moment: s.b.caught }); // the warning, as he gets it; last, over the chips
     } else {
       if (hasB && b.brakeAt != null) { g.flash(bp, T - b.brakeAt, { l: kb.hl * 2, w: kb.hw * 2, tone: 'alert' }); g.chip(bp.x, bp.y, 'Hard stop', { tone: 'alert', k: fade(b.brakeAt, b.stopAt != null ? b.stopAt + 2 : null), side: 'left', gap: 40 }); }
     }
@@ -312,6 +312,7 @@
     statuses: STATUS,
     start: (o) => { const w = win(o); return w === 'All' ? (o.compare && !o.vz ? 1 : 0) : WIN[w].start[o.vz ? 0 : 1]; },
     actAt: (o, s) => SITE[o.site].big.R.at(s.b.s), // a tap on the tug drives it
+    moment: (s, o) => (s.win === 'All' && o.vz ? s.b.caught : null), // the driver is warned: his phone's beat follows
     act: 'Drive the tug', // the stage's own button: the visitor's tap plays the event
     still: (vz, o) => WIN[win(o || last)].still[vz ? 0 : 1],
     lines: (o) => {

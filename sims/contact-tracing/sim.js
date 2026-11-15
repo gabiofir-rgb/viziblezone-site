@@ -230,9 +230,9 @@
     const [rx, ry] = g.toScreen(r0.x, r0.y), below = (p) => { const [x, y] = g.toScreen(p.x, p.y); return Math.abs(x - rx) < 110 && y > ry + 36 && y - ry < 90; }; // well below her: its chip goes under it, clear of "Positive"
     const first = s.note.findIndex((v, i) => i && v != null); // a second view (Today, 2020-21): a close contact's phone gets the notice
     if (o.vz) for (let i = 1; i < N; i++) if (s.note[i] != null) g.chip(s.pos[i].x, s.pos[i].y, 'Close contact', { k: fade(s.note[i], s.note[i] + 3.4), side: P || below(s.pos[i]) ? 'down' : 'up', gap: 18 });
-    if (o.vz && !o.micro && first > 0) { // its moment fills the stage; then, where the floor leaves the side of the stage free, it rests there
-      const B = T - s.note[first], room = g.cam.w - 1180 * g.cam.scale > 520;
-      g.phone('bl', 'A colleague’s phone', ['Close contact', 'Earlier today'], { k: fade(s.note[first], s.note[first] + 3.4) * (room ? 1 : 1 - clamp((B - 1.8) / 0.3)), note: true, map: true, margin: 8, beat: B });
+    if (o.vz && !o.micro && first > 0) { // its beat fills the stage; then, where the floor leaves the side of the stage free, it rests there
+      const room = g.cam.w - 1180 * g.cam.scale > 520;
+      g.phone('bl', 'A colleague’s phone', ['Close contact', 'Earlier today'], { k: room ? fade(s.note[first], s.note[first] + 3.4) : 0, note: true, map: true, margin: 8, moment: s.note[first] });
     }
   }
 
@@ -247,6 +247,7 @@
     choices: [{ name: 'daySpeed', label: 'Day speed', values: ['Normal', 'Fast'] }, { name: 'reportCase', label: 'Report a case', values: ['On', 'Off'] }],
     start: (o) => (o.compare && !o.vz ? 6.5 / (SPEED[o.daySpeed] || 1) : 0),
     actAt: (o, s) => s.pos[0], // the colleague who will report positive
+    moment: (s, o) => (o.vz && !o.micro ? s.note.find((v, i) => i && v != null) ?? null : null), // a close colleague is notified: that phone's beat follows
     actPos: 'br', // bottom left holds the kitchen's label
     act: 'Start the day', // the stage's own button: the visitor's tap plays the event
     still: (vz, o) => D_REP / SPEED[o.daySpeed] + 1.4, // the report, a moment after it reaches the floor, at the day speed in force

@@ -13,7 +13,7 @@
   };
   const RGB = { zone: '255,196,0', lane: '233,236,238', alert: '200,50,31', dark: '5,8,10' };
   const FONT = 'Overpass, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
-  const TAU = Math.PI * 2, STEP = 1 / 120, DWELL = 1.8, FADE = 0.45;
+  const TAU = Math.PI * 2, STEP = 1 / 120, DWELL = 1.8, FADE = 0.45, LAG = 0.5, BEAT = 2.1; // a phone view's beat (phone.js)
   const DIM = { car: [176, 74], bus: [480, 102], truck: [620, 100], tug: [120, 72], van: [250, 92], cart: [104, 62], straddle: [400, 196] };
 
   const rgba = (k, a) => 'rgba(' + RGB[k] + ',' + Math.max(0, a).toFixed(3) + ')';
@@ -137,7 +137,7 @@
     c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r);
     c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath();
   }
-  function Painter(ctx, cam) { this.ctx = ctx; this.cam = cam; this.emit = []; this.box = []; this.t = 0; this.reduced = false; } // box: what is on screen, for the tests
+  function Painter(ctx, cam) { this.ctx = ctx; this.cam = cam; this.emit = []; this.box = []; this.t = 0; this.reduced = false; this.hold = -1; } // box: what is on screen, for the tests
   const P = Painter.prototype;
   Object.defineProperty(P, 'px', { get() { return 1 / this.cam.scale; } }); // one screen pixel in world units
   // Label size follows the stage (14.5 to 20 px).
@@ -490,27 +490,6 @@
     c.strokeStyle = rgba('lane', 0.13); c.lineWidth = 1; c.beginPath(); rr(c, x + 0.5, y + 0.5, w - 1, h - 1, 6); c.stroke();
     this.box.push([x, y, x + w, y + h, o.name || 'inset', 'i']); return { x, y, w, h };
   };
-  // A phone, as a second view (README): in a corner or beside o.at; at o.beat it fills the stage.
-  P.phone = function (corner, title, lines, o = {}) {
-    const c = this.ctx, cam = this.cam, B = o.beat ?? -1, k = clamp(o.k ?? 1) * ((cam.h < 260 || cam.h < 300 && cam.w > 1.9 * cam.h) && B > 1.8 ? 1 - clamp((B - 1.8) / 0.3) : 1), h = Math.round(clamp(cam.h * 0.3, 104, 170)), p = (h - 24) >> 1, m = o.margin ?? (corner === 'br' ? 34 : 14), T = (s, x, y, w) => this.text(x, y, s, { size: 16, weight: w });
-    if (k <= 0) return; this.screen(); c.save(); c.font = '600 16px ' + FONT;
-    const W = p + 40 + Math.max(...[title, ...lines].map((t) => c.measureText(t).width)), [u, v] = o.at ? this.toScreen(o.at.x, o.at.y) : [];
-    let X = o.at ? clamp(o.side === 'r' ? u + 40 : u - 40 - W, 8, cam.w - W - 8) : corner[1] === 'r' ? cam.w - W - m : m, Y = o.at ? clamp(v - h / 2, 8, cam.h - h - 8) : corner[0] === 'b' ? cam.h - h - m : m;
-    const f = B < 0 ? 0 : clamp(B / 0.3) * (1 - clamp((B - 1.8) / 0.3)), e = this.reduced ? +(f > 0.5) : ease.smooth(f), Z = Math.max(1, Math.min(0.8 * cam.h / h, 0.9 * cam.w / W)), S = 1 + e * (Z - 1);
-    if (e) { c.fillStyle = `rgba(10,13,16,${0.55 * e * k})`; c.fillRect(0, 0, cam.w, cam.h); }
-    X = lerp(X, (cam.w - W * Z) / 2, e); Y = lerp(Y, (cam.h - h * Z) / 2, e); if (k > 0.5) this.box.push([X, Y, X + W * S, Y + h * S, title, e ? 'z' : 'p']);
-    c.globalAlpha = k; c.translate(X, Y); c.scale(S, S); c.shadowColor = 'rgba(0,0,0,.4)'; c.shadowBlur = 18 * cam.dpr; c.shadowOffsetY = 4 * cam.dpr;
-    c.fillStyle = 'rgba(14,18,21,.94)'; c.beginPath(); rr(c, 0, 0, W, h, 6); c.fill(); c.shadowColor = 'transparent';
-    const x = 16, y = 21, w = p - 8, H = h - 42, dot = (a, b, r) => { c.beginPath(); c.arc(x + w * a, y + H * b, r, 0, TAU); c.fill(); };
-    c.strokeStyle = rgba('lane', 0.55); c.lineWidth = 1.5; c.beginPath(); rr(c, x - 4, y - 9, p, h - 24, 7); c.stroke(); c.fillStyle = '#0A0D0F'; c.fillRect(x, y, w, H);
-    c.fillStyle = c.strokeStyle = C.zone; c.lineWidth = 1;
-    if (o.note) c.fillRect(x + 3, y + 4, w - 6, 10);
-    if (o.map) { dot(0.7, 0.36, 3); c.setLineDash([2, 3]); c.beginPath(); c.moveTo(x + w * 0.3, y + H * 0.62); c.lineTo(x + w * 0.7, y + H * 0.36); c.stroke(); c.setLineDash([]); c.fillStyle = '#fff'; dot(0.3, 0.62, 2.5); c.fillStyle = C.zone; }
-    if (o.talk) for (let i = 0; i < 4; i++) { const v = 4 + 10 * (this.reduced ? 0.6 : Math.abs(Math.sin(this.t * 7 + i))); c.fillRect(x + 4 + i * (w - 6) / 4, y + H - 5 - v, (w - 6) / 4 - 2, v); }
-    T(title, x + p + 10, 30, 600); lines.forEach((t, i) => T(t, x + p + 10, 54 + 22 * i, 400));
-    this.text(W - 10, h - 9, 'Illustration', { size: 11, alpha: 0.6, align: 'right' });
-    c.restore(); this.world();
-  };
   P.text = function (x, y, s, o = {}) {
     const c = this.ctx; c.font = (o.weight || 600) + ' ' + (o.size || 12) + 'px ' + FONT; c.fillStyle = o.color || rgba('lane', o.alpha ?? 0.92);
     c.textAlign = o.align || 'left'; c.textBaseline = 'alphabetic'; c.fillText(s, x, y); c.textAlign = 'left';
@@ -653,7 +632,7 @@
 
     function startRun(vz) {
       cur = Object.assign({}, opts, { vz }); fit(); canvas.setAttribute('aria-label', fn(cfg.label, cur) || ''); // focus and label may follow the options
-      s = cfg.init(cur, rng(cfg.seed || 1)); s.t = 0; acc = 0; capIdx = -1;
+      s = cfg.init(cur, rng(cfg.seed || 1)); s.t = 0; acc = 0; capIdx = -1; g.hold = -1; g.done = false;
       const t0 = cfg.start ? cfg.start(cur) : 0; while (s.t + STEP / 2 < t0) step(); // a repeat run may skip its set-up
       sync();
     }
@@ -695,24 +674,32 @@
       g.t = s.t; g.reduced = reducedMQ.matches; g.emit.length = 0; g.box = bgP.box.slice(); g.world();
       cfg.draw(g, s, cur);
       if (spot) { const p = cfg.actAt(cur, s), [x, y] = g.toScreen(p.x, p.y); spot.hidden = x < 0 || y < 0 || x > cam.w || y > cam.h; spot.style.left = clamp(x, 30, cam.w - 30) + 'px'; spot.style.top = clamp(y, 30, cam.h - 30) + 'px'; } // the act, in the scene; no ring once its target is off stage
-      const f = phase === 'out' ? phaseT / FADE : phase === 'in' ? 1 - phaseT / FADE : 0;
+      const f = phase === 'out' ? phaseT / FADE : phase === 'in' ? 1 - phaseT / FADE : phase === 'back' ? (phaseT - DWELL) / FADE : 0;
       if (f > 0) { g.screen(); ctx.fillStyle = 'rgba(27,32,36,' + ease.smooth(f).toFixed(3) + ')'; ctx.fillRect(0, 0, cam.w, cam.h); }
     }
     function frame(now) {
       raf = 0; if (!active()) return;
       const dt = last == null ? 0 : Math.min((now - last) / 1000, 0.1); last = now; clock += dt;
-      if (phase !== 'in' && phase !== 'rest') { acc += dt; while (acc >= STEP) { step(); acc -= STEP; } }
+      // A phone view's beat (cfg.moment: its event; phone.js draws it): LAG after the event the scene holds still for BEAT.
+      if (g.hold >= 0) { if ((g.hold += dt) >= BEAT) { g.hold = -1; g.done = true; } }
+      else if (phase === 'run' || phase === 'out') {
+        acc += dt;
+        while (acc >= STEP) { step(); acc -= STEP; const m = phase === 'run' && !g.done && cfg.moment && cfg.moment(s, cur); if (typeof m == 'number' && s.t >= m + LAG) { g.hold = acc = 0; break; } }
+      }
       if (phase === 'run' && s.over) { phase = once ? 'rest' : reducedMQ.matches ? 'swap' : 'out'; phaseT = 0; }
       else if (phase !== 'run') phaseT += dt;
       if ((phase === 'out' && phaseT >= FADE) || phase === 'swap') { startRun(opts.compare ? !cur.vz : cur.vz); phase = reducedMQ.matches ? 'run' : 'in'; phaseT = 0; }
       else if (phase === 'in' && phaseT >= FADE) phase = 'run';
       const told = caption(false); render();
-      if (phase === 'rest' && told) { ended = true; playing = false; sync(); return; } // once: played, every line read
+      if (phase === 'rest' && told) { if (!act) return rest(); phase = 'back'; phaseT = 0; } // once: played, every line read
+      if (phase === 'back' && phaseT >= DWELL + (reducedMQ.matches ? 0 : FADE)) return rest(); // the outcome, then the opening again
       raf = requestAnimationFrame(frame);
     }
     const active = () => playing && onScreen && !document.hidden;
     function schedule() { if (active() && !raf) { last = null; raf = requestAnimationFrame(frame); } }
     function halt() { if (raf) cancelAnimationFrame(raf); raf = 0; last = null; }
+    // The run is over: a scene with an act rests on its opening again (its button and ring ready); a plate on its end.
+    function rest() { playing = false; if (act) toStill(); else { ended = true; sync(); } }
     function sync() {
       playBtn.innerHTML = (playing ? ICON.pause : ICON.play) + `<span>${playing ? 'Pause' : 'Play'}</span>`;
       el.querySelectorAll('input[type=radio]').forEach((inp) => {
@@ -746,10 +733,11 @@
         }
         restart(once && !reducedMQ.matches); return true;
       },
-      // Testing helpers, not part of the embedding contract (scan: a run's boxes every 0.5 s, to its end).
+      // Testing helpers, not part of the embedding contract (scan: a run's boxes every 0.5 s, to its end; finish: to its end now).
       seek(t, vz = stillVz()) { seekTo(t, !!vz); },
+      finish() { halt(); for (let i = 0; !s.over && i < 99 / STEP; i++) step(); rest(); },
       scan(vz, fn) { startRun(vz); for (let t = 0; t < 99; t += 0.5) { while (s.t + STEP / 2 < t) step(); render(); fn(t, g.box, !!s.over); if (s.over) break; } },
-      info() { return Object.assign({ t: s.t, vz: cur.vz, compare: opts.compare, playing, phase, caption: capEl.textContent, boxes: g.box }, cfg.debug ? cfg.debug(s, cur) : {}); }
+      info() { return Object.assign({ t: s.t, vz: cur.vz, compare: opts.compare, playing, phase, caption: capEl.textContent, boxes: g.box, hold: g.hold, moment: cfg.moment ? cfg.moment(s, cur) : undefined }, cfg.debug ? cfg.debug(s, cur) : {}); }
     };
     playBtn.addEventListener('click', () => (playing ? api.pause() : api.play()));
     el.querySelector('[data-act=replay]').addEventListener('click', api.reset);
@@ -769,5 +757,5 @@
     return api;
   }
 
-  window.VZKit = { C, RGB, FONT, rgba, clamp, lerp, ease, rng, hash, corners, occluded, sees, sight, route, arcPts, zoneCrossed, zoneSince, bubbleR, bubbleGap, mount, Painter };
+  window.VZKit = { C, RGB, FONT, rgba, clamp, lerp, ease, rng, hash, corners, occluded, sees, sight, route, arcPts, zoneCrossed, zoneSince, bubbleR, bubbleGap, mount, Painter, rr, LAG, BEAT };
 })();

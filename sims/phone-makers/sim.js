@@ -212,6 +212,7 @@
   }
   return {
     at: () => B, // the child by the trees, who talks
+    moment: (s) => { const h = Object.keys(s.heard).filter((k) => k[1] === '0').map((k) => s.heard[k]); return h.length ? Math.min(...h) : null; }, // a listener hears her
     lines: ['A family is spread out on a ski slope where there is no network.', 'One of them says “I’m by the trees.” The others hear it, phone to phone.', '“We see you.” They keep talking as they come back together.',
       'Without VZ, there is no network. The call does not go through.', 'The family skis on, apart, each looking for the others.'],
     ground(g) {
@@ -252,7 +253,7 @@
         say(g, P.A, 'We see you', fade(T, SPK[1][0], SPK[1][1] + 0.6), g.portrait ? 'right' : 'up', 20);
         // A second view (Today): a listener's phone, the voice coming in. Above a row the scene is small: none there.
         const n = T > SPK[1][0] ? 1 : 0, f = fade(T, SPK[n][0], SPK[n][1] + 0.6);
-        if (!o.micro) g.phone('bl', n ? 'Her phone' : 'A listener’s phone', [n ? '“We see you”' : '“I’m by the trees”'], { k: f, talk: true, beat: T - SPK[0][0] - 0.1 });
+        if (!o.micro) g.phone('bl', n ? 'Her phone' : 'A listener’s phone', [n ? '“We see you”' : '“I’m by the trees”'], { k: f, talk: true, moment: SK.moment(s) });
       } else {
         g.flash(B, T - SPK[0][0], { l: 19, w: 19, tone: 'alert' });
         say(g, B, 'No network', fade(T, SPK[0][0], SPK[0][1] + 1.8), g.portrait ? 'left' : 'down', 20, 'alert');
@@ -282,6 +283,7 @@
     choices: [{ name: 'scene', label: 'Moment', values: NAMES }],
     start: (o) => (o.compare && !o.vz ? SCENE[o.scene].skip : 0),
     actAt: (o, s) => SCENE[o.scene].at(s), // the same act, a tap on the person
+    moment: (s, o) => (o.vz && !o.micro && SCENE[o.scene].moment ? SCENE[o.scene].moment(s) : null), // the ski slope: a listener's phone has its beat
     act: (o) => ({ 'Ski slope': 'Press to talk', Crossing: 'Walk to the crossing', Escalator: 'Walk to the escalator' })[o.scene], // the visitor's tap plays the moment
     still: (vz) => SCENE[scene].still(vz),
     lines(o) { const L = SCENE[o.scene].lines; return o.vz ? L.slice(0, 3) : [o.compare ? 'Now the same moment without VZ.' : L[0], L[3], L[4]]; },

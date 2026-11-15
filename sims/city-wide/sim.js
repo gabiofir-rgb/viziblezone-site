@@ -214,7 +214,7 @@
     [[ex - DIAG.dx * L, ey - DIAG.dy * L], [ex + DIAG.dx * L, ey + DIAG.dy * L], [-ex + DIAG.dx * L, -ey + DIAG.dy * L], [-ex - DIAG.dx * L, -ey - DIAG.dy * L]].forEach(([x, y], i) => (i ? c.lineTo : c.moveTo).call(c, DIAG.x + x, DIAG.y + y));
     c.clip('evenodd'); g.wash(b.x0, b.y0, b.x1 - b.x0, b.y1 - b.y0, k); c.restore();
   }
-  function grey(g, p, r) { const c = g.ctx; c.fillStyle = C.off; c.beginPath(); c.arc(p.x, p.y, (r || (g.portrait ? 2 : 2.7)) * g.px, 0, TAU); c.fill(); }
+  function grey(g, p, r) { const c = g.ctx, q = (r || (g.portrait ? 2 : 2.7)) * g.px; c.fillStyle = C.off; c.beginPath(); c.arc(p.x, p.y, q, 0, TAU); c.fill(); g.obj(p.x, p.y, q, q, 0, 'a phone', 'd'); } // a phone without VZ (the tests' boxes see it)
   // The points of a route from its start up to length d.
   function part(R, d) {
     const out = [], P = R.rt.pts, at = R.rt.at(d);
