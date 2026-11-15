@@ -5,21 +5,39 @@
   const K = VZKit, { C, FONT, rgba, clamp, lerp, ease, rr, LAG, BEAT } = K, TAU = Math.PI * 2, P = K.Painter.prototype;
   const shape = (c, x, y, w, h, r) => { c.beginPath(); rr(c, x, y, w, h, r); };
 
-  // Its screen at (x, y, w, h), top to bottom: o.note a notice (the first line, in words when ts > 0), o.map her dot,
-  // the other's and the line between, the other lines in words (ts > 0 only), o.talk a voice coming in. ts: the size
-  // of the words inside it; 0 for the small view, whose words sit beside it.
-  function screen(g, x, y, w, h, o, lines, ts) {
-    const c = g.ctx, pad = Math.max(3, w * 0.07), rest = lines.slice(), inner = w - 2 * pad;
-    let top = y + pad;
+  // Its screen at (x, y, w, h), top to bottom: o.note a notice (the first line, in words when big), o.map her dot, the
+  // other's and the line between, the other lines in words (when big), o.talk a voice coming in. big: the phone at its
+  // beat; its words are wrapped to the screen's width, as large as it allows and never under 10 px (round 5, Codex
+  // P2: no line is left out), each row recorded in big.words for the tests (with the notice's box for its rows). The
+  // small view's words sit beside it.
+  // A screen of words only (no notice, no map: a call) starts at 16 px, its words in the middle, o.who (who talks,
+  // muted) above them (Fable, sixth review).
+  function screen(g, x, y, w, h, o, lines, big) {
+    const c = g.ctx, pad = Math.max(3, w * 0.07), inner = w - 2 * pad;
+    const inset = Math.max(4, inner * 0.06), room = inner - 2 * inset, wide = (t, z, wt = 800) => { c.font = wt + ' ' + z + 'px ' + FONT; return c.measureText(t).width; };
+    let top = y + pad, ts = 0, rows = [], bh = 0, bars = 0;
+    if (big) { // the largest size at which every word fits the width and every row the height; 10 px at least
+      const t0 = clamp(w / 8, o.note || o.map ? 11 : 16, 22), most = (a) => Math.max(...a.map((t) => wide(t, t0)));
+      ts = Math.min(t0, (t0 * room) / most(lines)); // each line on one row, if that keeps it large; else rows of whole words
+      if (ts < Math.max(10, t0 * 0.75)) ts = Math.max(10, Math.min(t0, (t0 * room) / most(lines.join(' ').split(' '))));
+      for (; ; ts = Math.max(10, ts * 0.92)) {
+        rows = lines.map((t) => t.split(' ').reduce((r, v) => { const l = r.length - 1; if (l >= 0 && wide(r[l] + ' ' + v, ts) <= room) r[l] += ' ' + v; else r.push(v); return r; }, []));
+        bh = o.note ? ts * (0.85 + 1.25 * rows[0].length) : 0; bars = o.talk ? ts * 2.4 : 0;
+        const said = (o.note ? rows.slice(1) : rows).reduce((n, r) => n + r.length, 0);
+        if (bh + said * ts * 1.35 + bars + 3 * pad <= h || ts <= 10) break;
+      }
+    }
+    const say = (t, u, v, wt, col, a, box) => { big.words.push([u, v - ts * 0.8, u + wide(t, ts, wt), v + ts * 0.25, t, ts, box]); g.text(u, v, t, { size: ts, weight: wt, color: col, alpha: a }); };
     c.fillStyle = '#0A0D0F'; c.fillRect(x, y, w, h);
+    const rest = ts ? (o.note ? rows.slice(1) : rows).flatMap((r, i) => r.map((t) => [t, o.who && !o.note && !i])) : []; // [words, muted]
     if (o.note) {
-      const bh = ts ? ts * 2.1 : Math.max(8, h * 0.14);
+      if (!ts) bh = Math.max(8, h * 0.14);
       c.fillStyle = C.zone; shape(c, x + pad, top, inner, bh, Math.min(6, bh / 3)); c.fill();
-      if (ts) g.text(x + pad + ts * 0.6, top + bh * 0.66, rest.shift(), { size: ts, weight: 800, color: C.ink });
+      if (ts) rows[0].forEach((t, i) => say(t, x + pad + inset, top + ts * (1.3 + 1.25 * i), 800, C.ink, 1, [x + pad, top, x + pad + inner, top + bh]));
       top += bh + pad;
     }
-    const bars = o.talk ? (ts ? ts * 2.4 : h * 0.24) : 0, words = ts ? rest.length * ts * 1.5 + pad : 0;
-    const mh = y + h - pad - bars - words - top;
+    if (!ts) bars = o.talk ? h * 0.24 : 0;
+    const words = rest.length ? rest.length * ts * 1.35 + pad : 0, mh = y + h - pad - bars - words - top;
     if (o.map && mh > 10) {
       const mx = x + pad, r = Math.max(2.5, inner * 0.045), at = (u, v) => [mx + inner * u, top + mh * v];
       if (ts) { // a plan behind the dots: a few faint streets
@@ -35,9 +53,9 @@
       if (ts) { c.globalAlpha *= 0.5; c.beginPath(); c.arc(bx, by, r * 2.4, 0, TAU); c.stroke(); c.globalAlpha /= 0.5; }
       c.beginPath(); c.arc(bx, by, r, 0, TAU); c.fill();
       c.fillStyle = '#fff'; c.beginPath(); c.arc(ax, ay, r * 0.85, 0, TAU); c.fill();
-      top += mh + pad;
     }
-    if (ts) rest.forEach((t, i) => g.text(x + pad, top + ts * (1.05 + 1.45 * i), t, { size: ts, weight: 600 }));
+    if (mh > 0) top += o.map ? mh + pad : mh / 2; // under the map; without one, in the middle
+    rest.forEach(([t, m], i) => say(t, x + pad + inset, top + ts * (1.05 + 1.35 * i), 600, null, m ? 0.6 : undefined));
     if (o.talk) { // the voice: bars that move (still under reduced motion)
       const n = 4, bw = inner / n, base = y + h - pad, tt = g.t + Math.max(0, g.hold);
       c.fillStyle = C.zone;
@@ -49,7 +67,7 @@
   // point o.at (left of it, right with o.side 'r'). o.k fades it. o.moment: its event (s.t, null before it); LAG after it the kit holds
   // the scene still for its beat (BEAT s): the phone grows from its corner to a phone as high as the stage, its screen
   // in words, then goes back. Before the beat it is not drawn; on a short stage it ends with the beat. The tests' box:
-  // kind 'p', or 'z' during the beat.
+  // kind 'p', or 'z' during the beat; the phone's 'z' box carries { lines, screen, words } once its words are inside.
   P.phone = function (corner, title, lines, o = {}) {
     const c = this.ctx, cam = this.cam, short = cam.h < 260 || (cam.h < 300 && cam.w > 1.9 * cam.h);
     const B = this.hold >= 0 ? this.hold : this.done || o.moment === undefined ? 99 : o.moment === null ? -1 : this.t - o.moment - LAG;
@@ -79,21 +97,16 @@
     if (e) { this.text(BX + PW + gap, BY + PH / 2 - fs * 0.2, title, { size: fs, weight: 700, color: '#fff' }); }
     // The phone itself, from the panel's to the beat's: its body, then its screen.
     const px = lerp(X + 12, BX, e), py = lerp(Y + 12, BY, e), pw = lerp(p, PW, e), ph = lerp(h - 24, PH, e), b = Math.max(4, pw * 0.06);
-    if (k > 0.5) { // the tests' boxes: the panel, or at the beat the phone and its name beside it
-      if (e) this.box.push([px, py, px + pw, py + ph, title, 'z'], [BX + PW + gap, BY + PH / 2 - fs * 1.2, BX + GW, BY + PH / 2 + fs * 1.6, title, 'z']);
+    const said = o.who ? [o.who, ...lines] : lines, sx = px + b, sy = py + b * 1.8, sw = pw - 2 * b, sh = ph - b * 3.6;
+    const big = e > 0.75 ? { lines: said, screen: [sx, sy, sx + sw, sy + sh], words: [] } : null;
+    if (k > 0.5) { // the tests' boxes: the panel, or at the beat the phone (with its screen and words when big) and its name
+      if (e) this.box.push([px, py, px + pw, py + ph, title, 'z', big], [BX + PW + gap, BY + PH / 2 - fs * 1.2, BX + GW, BY + PH / 2 + fs * 1.6, title, 'z']);
       else this.box.push([X, Y, X + W, Y + h, title, 'p']);
     }
     c.globalAlpha = k;
     shape(c, px, py, pw, ph, Math.max(7, pw * 0.14)); c.fillStyle = e ? '#1B2024' : 'rgba(14,18,21,.94)'; c.fill();
     c.strokeStyle = rgba('lane', 0.55); c.lineWidth = 1.5; c.stroke();
-    let ts = 0;
-    if (e > 0.75) { // words inside the screen, as large as its width allows; none where they would not fit
-      ts = clamp((pw - 2 * b) / 8, 11, 22); c.font = '800 ' + ts + 'px ' + FONT;
-      const widest = Math.max(...lines.map((t) => c.measureText(t).width)), room = (pw - 2 * b) * 0.86 - ts * 0.6;
-      if (widest > room) ts = (ts * room) / widest;
-      if (ts < 10) ts = 0;
-    }
-    screen(this, px + b, py + b * 1.8, pw - 2 * b, ph - b * 3.6, o, lines, ts);
+    screen(this, sx, sy, sw, sh, o, said, big); // its words inside the screen when big (e > 0.75), beside it otherwise
     c.globalAlpha = k * e;
     if (e) this.text(BX + PW + gap, BY + PH / 2 + fs * 1.1, 'Illustration', { size: Math.max(11, fs * 0.5), alpha: 0.6 });
     c.restore(); this.world();

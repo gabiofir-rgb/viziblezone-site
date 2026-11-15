@@ -253,7 +253,7 @@
         say(g, P.A, 'We see you', fade(T, SPK[1][0], SPK[1][1] + 0.6), g.portrait ? 'right' : 'up', 20);
         // A second view (Today): a listener's phone, the voice coming in. Above a row the scene is small: none there.
         const n = T > SPK[1][0] ? 1 : 0, f = fade(T, SPK[n][0], SPK[n][1] + 0.6);
-        if (!o.micro) g.phone('bl', n ? 'Her phone' : 'A listener’s phone', [n ? '“We see you”' : '“I’m by the trees”'], { k: f, talk: true, moment: SK.moment(s) });
+        if (!o.micro) g.phone('bl', n ? 'Her phone' : 'A listener’s phone', [n ? '“We see you”' : '“I’m by the trees”'], { k: f, talk: true, who: 'Family, talking', moment: SK.moment(s) });
       } else {
         g.flash(B, T - SPK[0][0], { l: 19, w: 19, tone: 'alert' });
         say(g, B, 'No network', fade(T, SPK[0][0], SPK[0][1] + 1.8), g.portrait ? 'left' : 'down', 20, 'alert');

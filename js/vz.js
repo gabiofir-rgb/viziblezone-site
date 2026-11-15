@@ -148,12 +148,18 @@
       if (h > 0) frame.style.height = h + 'px';
       // A plate in a short window whose caption grew past what align measured (a long line in a narrow window): measure
       // again, once per growth, so the plate keeps fitting. It never grows back during the run.
-      if (st && innerHeight < SHORT && h - Math.ceil(st.getBoundingClientRect().height) > +(frame.dataset.rest || 1e9)) align(frame);
+      if (st && innerHeight < SHORT && under(frame, d, st) > +(frame.dataset.rest || 1e9)) align(frame);
     } catch (e) { /* another origin (for example file://): keep the CSS estimate */ }
   }
   // A demonstration plate (.demo) has a fixed inset, and its stage leaves room in the window for the plate's title line
   // and the switch under the stage (120 px), or, in a short window, for the title line and what is under its stage, so
   // the whole plate, its one note "Illustration. Not a recording." included, fits the window (Fable, fourth review).
+  // What must share a short window with the stage, under it: a plate's all (its one note at the end), a scene's down
+  // to its note's last line (city-wide's second note line too: Codex, round 5).
+  function under(frame, d, st) {
+    var n = !frame.parentNode.classList.contains('demo') && d.querySelector('.vzs-note'), r = st.getBoundingClientRect();
+    return Math.ceil(n ? n.getBoundingClientRect().bottom - r.bottom : d.body.getBoundingClientRect().height - r.height);
+  }
   function align(frame) {
     try {
       var demo = frame.parentNode.classList.contains('demo'), phone = innerWidth <= 640, short = innerHeight < SHORT;
@@ -163,8 +169,9 @@
         el.toggleAttribute('data-short', short); // the kit sets the caption beside the controls (a plate: the note under them)
       });
       var max = demo ? Math.min(stageMax(), innerHeight - head() - 120) : stageMax(), st = d.querySelector('.vzs-stage');
-      // A plate in a short window: its title line, the stage, then what the scene draws under it (measured), 2 px spare.
-      if (demo && short && st) { frame.dataset.rest = Math.ceil(d.body.getBoundingClientRect().height - st.getBoundingClientRect().height); max = innerHeight - TITLE - 2 - frame.dataset.rest; }
+      // In a short window that is measured, 2 px spare: a plate fits its title line, the stage and it; a scene's stage
+      // stays within the window less it.
+      if (short && st) { frame.dataset.rest = under(frame, d, st); max = demo ? innerHeight - TITLE - 2 - frame.dataset.rest : Math.min(max, innerHeight - 2 - frame.dataset.rest); }
       else delete frame.dataset.rest;
       all.forEach(function (el) { el.style.setProperty('--vzs-stage-max', max + 'px'); });
     } catch (e) { /* another origin: the scene keeps its own inset */ }

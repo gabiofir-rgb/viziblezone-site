@@ -300,7 +300,9 @@
   function places(g) {
     const m = YARDS['2,3'];
     g.label(CP.x, CP.y, 'Command post', { align: 'left', dx: 34 }); // to its right, clear of the ring a tap uses
-    if (g.cam.h >= 190) g.label(m.x, m.y, 'No cellular network', g.cam.w < 600 || g.cam.h < 300 ? { align: 'left', dx: 30 } : { dy: 52 }); // small: beside the mast, clear of the post's chip; none on a very short stage, where the caption says it
+    // Beside the mast on a phone, under it on a short wide stage (the post's label is level with it there), below it
+    // elsewhere; none on a very short stage, where the caption says it.
+    if (g.cam.h >= 190) g.label(m.x, m.y, 'No cellular network', g.cam.w < 600 ? { align: 'left', dx: 30 } : g.cam.h < 300 ? { align: 'left', dx: 30, dy: 34 } : { dy: 52 });
   }
 
   K.mount({

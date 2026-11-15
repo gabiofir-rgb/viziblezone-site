@@ -443,8 +443,10 @@
     c.fillStyle = C.zone; c.beginPath(); c.arc(hx, hy, 3.6 * px, 0, TAU); c.fill();
   };
   // Alert chip: upright, clamped inside the stage, with a pointer to the actor.
+  // How far a phone view's beat has taken the stage (0 to 1; a swap under reduced motion): the chips give way to it.
+  P.beat = function () { const B = this.hold, f = clamp(Math.min(B, BEAT - B) / 0.3); return B < 0 ? 0 : this.reduced ? +(f > 0.5) : f; };
   P.chip = function (x, y, text, o = {}) {
-    const k = clamp(o.k ?? 1); if (k <= 0) return;
+    const k = clamp(o.k ?? 1) * (1 - this.beat()); if (k <= 0) return; // none beside the phone at its beat (Fable, sixth review)
     const c = this.ctx, cam = this.cam, [sx, sy] = this.toScreen(x, y), side = o.side || 'up', gap = o.gap ?? 22;
     const fs = this.fs, pad = Math.round(fs * 0.62), ar = Math.round(fs * 0.36);
     this.screen(); c.save(); c.font = '800 ' + fs + 'px ' + FONT;
@@ -627,13 +629,13 @@
     const capEl = el.querySelector('.vzs-caption'), playBtn = el.querySelector('[data-act=play]'), actBtn = act && el.querySelector('.vzs-act'), spot = act && cfg.actAt && el.querySelector('.vzs-spot');
     const cam = { w: 0, h: 0, dpr: 1, scale: 1, rot: 0, cx: 0, cy: 0, view: null };
     const g = new Painter(ctx, cam), bg = document.createElement('canvas'), bgP = new Painter(bg.getContext('2d'), cam);
-    let cur, s, phase = 'run', phaseT = 0, acc = 0, last = null, raf = 0, clock = 0, bgKey = '', ended = false;
+    let cur, s, phase = 'run', phaseT = 0, acc = 0, last = null, raf = 0, clock = 0, bgKey = '', ended = false, begin = 0, snap = null;
     let playing = !reducedMQ.matches && !act, onScreen = true, capIdx = -1, capAt = -1e9;
 
     function startRun(vz) {
       cur = Object.assign({}, opts, { vz }); fit(); canvas.setAttribute('aria-label', fn(cfg.label, cur) || ''); // focus and label may follow the options
-      s = cfg.init(cur, rng(cfg.seed || 1)); s.t = 0; acc = 0; capIdx = -1; g.hold = -1; g.done = false;
-      const t0 = cfg.start ? cfg.start(cur) : 0; while (s.t + STEP / 2 < t0) step(); // a repeat run may skip its set-up
+      s = cfg.init(cur, rng(cfg.seed || 1)); s.t = 0; acc = 0; capIdx = -1; g.hold = -1; g.done = false; snap = null;
+      const t0 = cfg.start ? cfg.start(cur) : 0; while (s.t + STEP / 2 < t0) step(); begin = s.t; // a repeat run may skip its set-up
       sync();
     }
     const firstVz = () => (opts.compare ? true : opts.vz); // compare: With VZ first, then Without
@@ -674,8 +676,9 @@
       g.t = s.t; g.reduced = reducedMQ.matches; g.emit.length = 0; g.box = bgP.box.slice(); g.world();
       cfg.draw(g, s, cur);
       if (spot) { const p = cfg.actAt(cur, s), [x, y] = g.toScreen(p.x, p.y); spot.hidden = x < 0 || y < 0 || x > cam.w || y > cam.h; spot.style.left = clamp(x, 30, cam.w - 30) + 'px'; spot.style.top = clamp(y, 30, cam.h - 30) + 'px'; } // the act, in the scene; no ring once its target is off stage
-      const f = phase === 'out' ? phaseT / FADE : phase === 'in' ? 1 - phaseT / FADE : phase === 'back' ? (phaseT - DWELL) / FADE : 0;
+      const f = phase === 'out' ? phaseT / FADE : phase === 'in' ? 1 - phaseT / FADE : 0;
       if (f > 0) { g.screen(); ctx.fillStyle = 'rgba(27,32,36,' + ease.smooth(f).toFixed(3) + ')'; ctx.fillRect(0, 0, cam.w, cam.h); }
+      if (snap) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1 - ease.smooth(clamp((phaseT - DWELL) / FADE)); ctx.drawImage(snap, 0, 0); ctx.restore(); }
     }
     function frame(now) {
       raf = 0; if (!active()) return;
@@ -690,6 +693,8 @@
       else if (phase !== 'run') phaseT += dt;
       if ((phase === 'out' && phaseT >= FADE) || phase === 'swap') { startRun(opts.compare ? !cur.vz : cur.vz); phase = reducedMQ.matches ? 'run' : 'in'; phaseT = 0; }
       else if (phase === 'in' && phaseT >= FADE) phase = 'run';
+      // The outcome, then its last frame fades over the opening (Fable, sixth review: never a blank stage between).
+      if (phase === 'back' && phaseT >= DWELL && !snap && !reducedMQ.matches) { const p = shot(); startRun(stillVz()); snap = p; }
       const told = caption(false); render();
       if (phase === 'rest' && told) { if (!act) return rest(); phase = 'back'; phaseT = 0; } // once: played, every line read
       if (phase === 'back' && phaseT >= DWELL + (reducedMQ.matches ? 0 : FADE)) return rest(); // the outcome, then the opening again
@@ -700,6 +705,7 @@
     function halt() { if (raf) cancelAnimationFrame(raf); raf = 0; last = null; }
     // The run is over: a scene with an act rests on its opening again (its button and ring ready); a plate on its end.
     function rest() { playing = false; if (act) toStill(); else { ended = true; sync(); } }
+    function shot() { const c = document.createElement('canvas'); c.width = canvas.width; c.height = canvas.height; c.getContext('2d').drawImage(canvas, 0, 0); return c; }
     function sync() {
       playBtn.innerHTML = (playing ? ICON.pause : ICON.play) + `<span>${playing ? 'Pause' : 'Play'}</span>`;
       el.querySelectorAll('input[type=radio]').forEach((inp) => {
@@ -733,11 +739,10 @@
         }
         restart(once && !reducedMQ.matches); return true;
       },
-      // Testing helpers, not part of the embedding contract (scan: a run's boxes every 0.5 s, to its end; finish: to its end now).
+      // Testing helpers, not part of the embedding contract (scan: a run's boxes every 0.5 s, to its end).
       seek(t, vz = stillVz()) { seekTo(t, !!vz); },
-      finish() { halt(); for (let i = 0; !s.over && i < 99 / STEP; i++) step(); rest(); },
       scan(vz, fn) { startRun(vz); for (let t = 0; t < 99; t += 0.5) { while (s.t + STEP / 2 < t) step(); render(); fn(t, g.box, !!s.over); if (s.over) break; } },
-      info() { return Object.assign({ t: s.t, vz: cur.vz, compare: opts.compare, playing, phase, caption: capEl.textContent, boxes: g.box, hold: g.hold, moment: cfg.moment ? cfg.moment(s, cur) : undefined }, cfg.debug ? cfg.debug(s, cur) : {}); }
+      info() { return Object.assign({ t: s.t, vz: cur.vz, compare: opts.compare, playing, phase, caption: capEl.textContent, boxes: g.box, hold: g.hold, start: begin, moment: cfg.moment ? cfg.moment(s, cur) : undefined }, cfg.debug ? cfg.debug(s, cur) : {}); }
     };
     playBtn.addEventListener('click', () => (playing ? api.pause() : api.play()));
     el.querySelector('[data-act=replay]').addEventListener('click', api.reset);
