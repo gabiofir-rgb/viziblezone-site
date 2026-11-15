@@ -69,7 +69,7 @@
         const [a, b] = pair(T, o.vz), c = pass(T);
         person(g, a, o.vz); person(g, b, o.vz); person(g, c, o.vz);
         g.atmosphere('Clear', {});
-        g.label(190, 726, 'Coffee point'); // the place the caption names
+        g.label(190, 646, 'Coffee point', { dy: Math.max(80 * g.cam.scale, 62) }); // the place the caption names, clear of the lower chip
         if (!o.vz) return;
         const k = min(since(T, 0.1, 0.6), 1 - since(T, T_APART + 0.4, 0.6));
         enc(g, a, k, 0); enc(g, b, k, 1);
@@ -128,7 +128,7 @@
     { const was = {}; for (let t = 0; t <= 7.5; t += 0.05) { const at = PEOPLE.map((f) => f(t)); for (let i = 0; i < at.length; i++) for (let j = i + 1; j < at.length; j++) { const k = i + ',' + j, near = dist(at[i], at[j]) < CLOSE; if (near && was[k] === false) EVENTS.push([t, i, j]); was[k] = near; } } }
     const BARS = [0.35, 0.55, 0.8, 0.6, 0.9, 0.7, 0.45], REPORTS = [4.2, 4.8];
     function board(g, T) { // the organisation's console: activity as bars that grow, and a row of marks for reports
-      const c = g.ctx, w = insetW(g, 210), b = g.inset('br', w, 132), x = b.x + 14, n = BARS.length, bw = (w - 28) / n;
+      const c = g.ctx, w = insetW(g, 210), b = g.inset('br', w, 132, { margin: 34 }), x = b.x + 14, n = BARS.length, bw = (w - 28) / n;
       g.text(x, b.y + 22, 'The organisation’s console', { size: 13 });
       g.text(x, b.y + 42, 'Activity', { weight: 400, alpha: 0.7 });
       BARS.forEach((h, i) => { const k = ease.smooth((T - 0.3 - i * 0.7) / 0.9); if (k > 0) { c.fillStyle = rgba('zone', 0.8); c.fillRect(x + i * bw + 2, b.y + 92 - 40 * h * k, bw - 4, 40 * h * k); } });

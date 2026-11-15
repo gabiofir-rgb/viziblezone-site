@@ -279,7 +279,7 @@
           const q = K.ease.out(clamp((T - e.t - 0.3) / 0.7)), mx = K.lerp(e.x, up.x, q), my = K.lerp(e.y, up.y, q);
           if (q < 1 && T > e.t + 0.3) { c.save(); c.translate(mx, my); c.rotate(PI / 4); c.fillStyle = K.C.zone; c.fillRect(-4 * g.px, -4 * g.px, 8 * g.px, 8 * g.px); c.restore(); }
           if (q >= 1) kept.push(i);
-          g.chip(up.x, up.y, 'Worker ahead', { k: fade(T, e.t, e.t + 1.9), side: 'up', gap: 34 });
+          g.chip(up.x, up.y, 'Worker ahead', { k: fade(T, e.t, e.t + 1.9), side: g.cam.w < 700 ? 'down' : 'up', gap: 34 }); // a narrow stage: under, clear of the record
         });
         const box = g.inset('tr', 196, 62); g.text(box.x + 14, box.y + 24, 'The driver’s own record', { size: 12 });
         kept.forEach((i) => { c.save(); c.translate(box.x + 22 + i * 22, box.y + 42); c.rotate(PI / 4); c.fillStyle = K.C.zone; c.fillRect(-4.5, -4.5, 9, 9); c.restore(); });

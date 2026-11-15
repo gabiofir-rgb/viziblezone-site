@@ -156,6 +156,8 @@
     options: { weather: 'Clear' },
     choices: [{ name: 'weather', label: 'Weather', values: ['Clear', 'Night', 'Rain', 'Fog'] }],
     start: (o) => (o.compare && !o.vz ? 1.2 : 0), // the repeat run skips the set-up the viewer has just seen
+    actAt: (o, s) => ({ x: s.car.x, y: LANE }), // a tap on the car drives it
+    act: 'Drive down the street', // the stage's own button: the visitor's tap plays the event
     still: (vz) => (vz ? 1.9 : 4.6),
     // Compare mode keeps each run short so the contrast lands within ten seconds; single mode tells it in full.
     lines: (o) => (o.compare ? (o.vz ? [L.with[0], L.with[1], L.with[3]] : [L.again, L.without[2], L.without[3]]) : o.vz ? L.with : L.without),

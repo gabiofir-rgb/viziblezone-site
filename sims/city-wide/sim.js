@@ -246,7 +246,7 @@
       places(g);
       const who = n === 'Alert' ? CP : n === 'SOS' ? CALLER : SENDER, at = 0.5;
       g.flash(who, T - at, { l: 18 * g.px, w: 18 * g.px, tone: 'alert' });
-      g.chip(who.x, who.y, n === 'Message' ? 'Not sent' : 'No signal', { tone: 'alert', k: fade(T, at, null), side: n === 'Alert' ? 'down' : 'up', gap: 16 });
+      g.chip(who.x, who.y, n === 'Message' ? 'Not sent' : 'No signal', { tone: 'alert', k: fade(T, at, null), side: n === 'Alert' || n === 'Message' ? 'down' : 'up', gap: 16 }); // a message's chip under the sender, clear of the post's label
       return;
     }
     // Which phone has it, and when: the alert reaches block by block; the SOS its neighbours and the command post;
@@ -279,7 +279,7 @@
       g.flash(CP, T - 0.05, { l: 18 * g.px, w: 18 * g.px });
       g.label(3640, 1330, 'A whole city', { status: 'vision', k: clamp((T - 3.3) / 0.3) });
       g.chip(CP.x, CP.y, 'Alert sent', { k: fade(T, 0.1, 3.2), side: 'down', gap: 16 });
-      g.chip(FAR.x, FAR.y, 'Alert', { k: fade(T, Math.max(FAR.t + 0.2, 5.6), null), side: 'up', gap: 16 });
+      g.chip(FAR.x, FAR.y, 'Alert', { k: fade(T, Math.max(FAR.t + 0.2, 5.6), null), side: g.cam.h < 190 ? 'left' : 'up', gap: 16 }); // a very short stage: beside, clear of the vision label
     } else if (n === 'SOS') {
       const at = pathEnd('SOS'), nb = got(NEIGHBOUR);
       g.flash(CALLER, T - 0.4, { l: 18 * g.px, w: 18 * g.px });
@@ -299,8 +299,8 @@
   // Place labels, in both modes: the command post, and the north mast (the second mast is drawn without a label).
   function places(g) {
     const m = YARDS['2,3'];
-    g.label(CP.x, CP.y, 'Command post', { dy: -((g.portrait ? 110 : 65) * g.cam.scale + 22) });
-    g.label(m.x, m.y, 'No cellular network', { dy: 52 });
+    g.label(CP.x, CP.y, 'Command post', { align: 'left', dx: 34 }); // to its right, clear of the ring a tap uses
+    if (g.cam.h >= 190) g.label(m.x, m.y, 'No cellular network', g.cam.w < 600 || g.cam.h < 300 ? { align: 'left', dx: 30 } : { dy: 52 }); // small: beside the mast, clear of the post's chip; none on a very short stage, where the caption says it
   }
 
   K.mount({
@@ -314,6 +314,8 @@
     choices: [{ name: 'send', label: 'Send', values: ['Alert', 'SOS', 'Message'] }],
     statuses: STATUS,
     notes: ['Drawn after a computer simulation. Not measured in the field.'],
+    actAt: (o) => ({ Alert: CP, SOS: CALLER, Message: SENDER })[o.send], // a tap on who sends it
+    act: (o) => ({ Alert: 'Send the alert', SOS: 'Send an SOS', Message: 'Send the message' })[o.send], // the visitor's tap sends it
     still: (vz) => (vz ? 3.6 : 4),
     lines: (o) => (o.compare && !o.vz ? [L.again, L[o.send].without[2]] : !o.vz ? L[o.send].without
       : o.micro ? [L[o.send].with[0], MICRO[o.send], L[o.send].with[2]] : L[o.send].with),

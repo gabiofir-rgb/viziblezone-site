@@ -263,7 +263,7 @@
       for (const [k, l, w] of [['car', 176, 74], ['tug', 120, 72], ['r1', 22, 22], ['r2', 22, 22]]) if (s[k].lit != null) g.flash(P[k], T - s[k].lit, { l, w });
       chip('car', 'Pedestrian ahead', 'right', 'down', 50);
       chip('r1', 'Man down', 'down', 'right', 18); chip('r2', 'Man down', 'right', 'up', 18);
-      chip('tug', 'Worker ahead', 'left', 'down', 44);
+      chip('tug', 'Worker ahead', g.cam.w < 800 ? 'down' : 'left', 'down', 44); // narrow: clear of the people told about the fall
     } else {
       for (const [k, l, w] of [['car', 176, 74], ['tug', 120, 72]]) {
         const a = s[k]; if (a.brakeAt == null) continue;
@@ -281,6 +281,8 @@
     statuses: [['today', 'A driver warned about a child: Today'], ['today', 'The bubble around a tagged aircraft: Today'], ['vision', 'People nearby will be warned about a fall: Vision']],
     options: { receivers: 'Off' },
     choices: [{ name: 'receivers', label: 'Show who receives what', values: ['Off', 'On'] }],
+    actAt: (o, s) => pos(s.ex[5]), // the car standing at the crossing (Fable, fourth review)
+    act: 'Start the street', // the stage's own button: the visitor's tap plays the event
     still: (vz) => (vz ? 8.5 : 9.2),
     lines: (o) => (o.vz ? L.with : L.without),
     beat(s, o) {
