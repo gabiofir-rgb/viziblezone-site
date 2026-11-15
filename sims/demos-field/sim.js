@@ -34,7 +34,7 @@
     const c = g.ctx; c.save(); c.globalAlpha = k; c.strokeStyle = rgba('lane', 0.6); c.lineWidth = 5; c.lineCap = 'round';
     c.beginPath(); c.moveTo(x - 62, y + 62); c.lineTo(x - 62 + 124 * min(1, k * 1.4), y + 62 - 124 * min(1, k * 1.4)); c.stroke(); c.restore();
   }
-  const noSignal = (g, m, k) => g.label(m.x, m.y, 'No cellular network', { k, dy: 70 * g.cam.scale + 18 });
+  const noSignal = (g, m, k) => g.label(m.x, m.y, 'No cellular network', { k, dy: -70 * g.cam.scale - 18 }); // above the mast: clear of the chips, and of the people below it
   function trees(seed, n, box, keep) { // seeded trees, clear of roads, lines and people
     const r = K.rng(seed), out = [], [x0, y0, x1, y1] = box;
     for (let i = 0; i < n * 20 && out.length < n; i++) {

@@ -31,29 +31,30 @@
 .vzs-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 72px; }
 .vzs-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
-/* The simulation block */
+/* The simulation block: the stage, its switch and controls right under it (a tap and the picture it changes share
+   one screen), then the caption bar with the note and the status key. */
 .vzs { --vzs-inset: 0px; --vzs-stage-max: calc(100vh - 230px); background: var(--night); color: var(--on-dark); font-family: var(--vzs-font); } /* text aligns with the stage edge */
 /* The stage never grows taller than the window that shows it: the host page passes the height it has. */
-.vzs-stage { position: relative; height: min(56.25vw, max(320px, var(--vzs-stage-max))); background: var(--asphalt); overflow: hidden; }
+.vzs-stage { position: relative; height: min(56.25vw, max(200px, var(--vzs-stage-max))); background: var(--asphalt); overflow: hidden; }
 .vzs-stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .vzs-illus { position: absolute; right: 16px; bottom: 12px; font-size: 13px; line-height: 1; color: rgba(233,236,238,.72); letter-spacing: .01em; pointer-events: none; text-shadow: 0 1px 6px rgba(10,13,16,.9); }
-.vzs-bar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 40px; padding: 20px var(--vzs-inset) 6px; }
+.vzs-bar { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 40px; padding: 8px var(--vzs-inset) 24px; }
 .vzs-caption { flex: 1 1 32ch; max-width: 62ch; min-height: 2.9em; margin: 0; font-size: 19px; font-weight: 600; line-height: 1.4; color: #fff; text-wrap: pretty; }
-.vzs-note { margin: 0; color: var(--on-dark-muted); font-size: 14px; }
+.vzs-note { margin: 0; color: var(--on-dark-muted); font-size: 16px; }
 /* Status rows of a scene (Today / In development / Vision): part of the bar, so they survive ?embed=1 */
-.vzs-statuses { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 4px 28px; margin: 6px 0 0; padding: 0; list-style: none; color: var(--on-dark-muted); font-size: 15px; line-height: 1.5; }
+.vzs-statuses { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 4px 28px; margin: 6px 0 0; padding: 0; list-style: none; color: var(--on-dark-muted); font-size: 16px; line-height: 1.5; }
 .vzs-statuses li { display: inline-flex; align-items: flex-start; gap: 9px; }
 .vzs-statuses li i { margin-top: 0.3em; }
-.vzs-key { display: none; flex: 1 1 100%; flex-wrap: wrap; gap: 4px 20px; margin: 8px 0 0; font-size: 15px; font-weight: 800; color: #fff; }
+.vzs-key { display: none; flex: 1 1 100%; flex-wrap: wrap; gap: 4px 20px; margin: 8px 0 0; font-size: 16px; font-weight: 800; color: #fff; }
 .vzs-key span { display: inline-flex; align-items: center; gap: 8px; }
-.vzs-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 10px var(--vzs-inset) 26px; }
+.vzs-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding: 14px var(--vzs-inset) 4px; }
 .vzs-btn, .vzs-seg span { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; border-radius: 22px; font: 600 15px/1 var(--vzs-font); color: #fff; }
-.vzs-btn { padding: 0 18px 0 15px; border: 1px solid var(--edge); background: transparent; cursor: pointer; }
+.vzs-btn { position: relative; padding: 0 18px 0 15px; border: 1px solid var(--edge); background: transparent; cursor: pointer; }
 .vzs-btn, .vzs-seg label { -webkit-tap-highlight-color: transparent; }
 .vzs-pair { display: inline-flex; gap: 8px; }
 .vzs-btn svg { width: 15px; height: 15px; flex: none; }
 .vzs-group { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 12px; max-width: 100%; } /* a long choice folds on a phone instead of widening the page */
-.vzs-glabel { color: var(--on-dark-muted); font-size: 15px; }
+.vzs-glabel { color: var(--on-dark-muted); font-size: 16px; }
 .vzs-seg { display: inline-flex; flex-wrap: wrap; max-width: 100%; border: 1px solid var(--edge); border-radius: 23px; }
 .vzs-seg label { position: relative; display: inline-flex; }
 .vzs-seg input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
@@ -67,6 +68,28 @@
   .vzs-seg label:hover input:not(:checked) + span { background: rgba(233,236,238,.1); }
 }
 .vzs-btn:focus-visible, .vzs-seg input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
+/* The stage's own action (act in the scene's config, a page's main scene): it rests on its still frame until the visitor
+   presses it, and each press plays the run once from the start. White, not mustard: mustard means VZ. */
+.vzs-act {
+  position: absolute; left: var(--vzs-inset); bottom: 14px; display: inline-flex; align-items: center; gap: 10px; min-height: 48px;
+  padding: 2px 22px 0 18px; border: 0; border-radius: 24px; background: #fff; color: var(--ink); font: 800 16px/1 var(--vzs-font);
+  box-shadow: 0 6px 18px rgba(0,0,0,.45); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.vzs-act svg { width: 15px; height: 15px; flex: none; margin-top: -2px; }
+.vzs-act.tr { top: 14px; bottom: auto; } /* a corner the scene leaves free (actPos): tr, br; bottom left by default */
+.vzs-act.tr, .vzs-act.br { left: auto; right: var(--vzs-inset); }
+.vzs-stage:has(.vzs-act.br) .vzs-illus { bottom: auto; top: 12px; }
+/* The same act in the scene itself (actAt): a white ring on the person or vehicle it starts with. Not mustard: it is a
+   control, not a zone. Under reduced motion it does not pulse. */
+.vzs-spot {
+  position: absolute; width: 56px; height: 56px; margin: -28px 0 0 -28px; padding: 0; border: 2px solid #fff; border-radius: 50%;
+  background: rgba(255,255,255,.1); box-shadow: 0 0 0 5px rgba(255,255,255,.16), 0 4px 14px rgba(0,0,0,.45); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.vzs:not([data-state=rest]) :is(.vzs-act, .vzs-spot), .vzs-spot[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) { .vzs[data-state=rest] .vzs-spot { animation: vzs-spot 1.6s ease-out 3; } }
+@keyframes vzs-spot { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.5), 0 4px 14px rgba(0,0,0,.45); } 100% { box-shadow: 0 0 0 16px rgba(255,255,255,0), 0 4px 14px rgba(0,0,0,.45); } }
+.vzs-act:focus-visible, .vzs-spot:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) { .vzs-act:hover { background: var(--lane); } .vzs-spot:hover { background: rgba(255,255,255,.22); } }
 @media (forced-colors: active) { .vzs .vzs-seg label input:checked + span { background: Highlight; color: HighlightText; forced-color-adjust: none; } }
 
 /* ?embed=1: the host page owns the chrome */
@@ -79,9 +102,13 @@
   .vzs-page .vzs-brand { margin-bottom: 32px; }
   .vzs, .vzs-embed .vzs { --vzs-inset: 16px; }
   .vzs-wrap { padding: 0 0 48px; }
-  .vzs-stage { height: min(125vw, max(320px, var(--vzs-stage-max))); }
+  .vzs-stage { height: min(125vw, max(200px, var(--vzs-stage-max))); }
   .vzs-illus { right: 12px; bottom: 10px; }
+  .vzs-act { bottom: 12px; min-height: 44px; padding: 2px 18px 0 15px; }
+  .vzs-act.tr { top: 12px; }
   .vzs-caption { font-size: 17px; min-height: 4.2em; }
+  .vzs-btn { width: 44px; padding: 0; justify-content: center; } /* Play / Pause and Replay as icons, so the switch and both share a row */
+  .vzs-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .vzs-statuses { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } /* read out, not shown: the one-line key stands in */
   .vzs-key { display: flex; }
   .vzs-controls { gap: 10px 12px; }
@@ -96,5 +123,25 @@
    own choices, status rows and key are not rendered (simkit.js); the stage fits one screen with the caption and
    the controls. A host page may pass --vzs-stage-max (the room in its own window): inside a frame, vh is the
    frame's height, which the host sets from this content, so the kit never sizes the stage from it. */
-.vzs-micro .vzs-stage { height: min(56.25vw, 440px, max(240px, var(--vzs-stage-max))); }
-@media (max-width: 640px) { .vzs-micro .vzs-stage { height: min(100vw, max(240px, var(--vzs-stage-max))); } }
+.vzs-micro .vzs-stage { height: min(56.25vw, 440px, max(200px, var(--vzs-stage-max))); }
+.vzs-micro .vzs-bar { padding-bottom: 16px; }
+@media (max-width: 640px) { .vzs-micro .vzs-stage { height: min(100vw, max(200px, var(--vzs-stage-max))); } }
+
+/* A window under 420 px high (a phone held sideways; the host page sets data-short): the caption sits beside the
+   controls, under the stage, so the picture, the switch and the words share the window. The note and the key follow.
+   A Show me plate (?micro=1) puts its note under the controls instead, so the caption beside them can take three
+   lines without growing the plate, and its stage takes what is left of the window (the host measures it), down to
+   120 px. */
+.vzs[data-short] { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; align-items: start; }
+.vzs[data-short] .vzs-stage { grid-column: 1 / -1; }
+.vzs[data-short] .vzs-controls { max-width: 50vw; padding: 10px 0 8px var(--vzs-inset); gap: 8px 12px; }
+.vzs[data-short] .vzs-bar { padding: 10px var(--vzs-inset) 16px 0; }
+.vzs[data-short] .vzs-caption { flex-basis: 100%; max-width: none; min-height: 0; font-size: 16px; }
+.vzs-micro .vzs[data-short] { grid-template-rows: auto auto 1fr; } /* a long caption grows the note's row, not the controls' */
+.vzs-micro .vzs[data-short] .vzs-stage { height: min(56.25vw, 440px, max(120px, var(--vzs-stage-max))); }
+.vzs-micro .vzs[data-short] .vzs-controls { grid-area: 2 / 1; padding-bottom: 6px; }
+.vzs-micro .vzs[data-short] .vzs-bar { display: contents; }
+.vzs-micro .vzs[data-short] .vzs-caption { grid-area: 2 / 2 / 4; padding: 10px var(--vzs-inset) 8px 0; }
+.vzs-micro .vzs[data-short] .vzs-note { grid-area: 3 / 1; max-width: 50vw; padding: 0 0 10px var(--vzs-inset); }
+.vzs[data-short] .vzs-btn { width: 44px; padding: 0; justify-content: center; }
+.vzs[data-short] .vzs-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

@@ -15,8 +15,9 @@ scenes="$build/sims"; [ -d "$scenes" ] || scenes="$build/sims-src"
 rm -rf "$site/simkit" "$site/sims"
 mkdir -p "$site/simkit" "$site/sims"
 # The kit declares Overpass at ../fonts/, which is the site's own fonts/ once it sits in simkit/ here.
-# simkit.js and simkit.css are the kit; stills.js and poster.js draw the still plates on the pages.
-cp "$kit/simkit.js" "$kit/simkit.css" "$kit/stills.js" "$kit/poster.js" "$site/simkit/"
+# simkit.js and simkit.css are the kit; phone.js the phone view a scene may load after it; stills.js and poster.js
+# draw the still plates on the pages.
+cp "$kit/simkit.js" "$kit/simkit.css" "$kit/phone.js" "$kit/stills.js" "$kit/poster.js" "$site/simkit/"
 
 names=""
 for dir in "$scenes"/*/; do

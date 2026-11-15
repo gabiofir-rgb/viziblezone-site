@@ -116,6 +116,7 @@
   }
 
   /* --------------------------------------------------------------- picture */
+  const moment = (s, o) => (o.show === 'All' && o.vz ? s.r1.caught : null); // her call reaches the rescuer: his phone's beat follows (phone.js)
   function draw(g, s, o) {
     const T = s.t, r1 = s.r1, p1 = r1pos(s), w = o.show, ph = o.vz ? null : 'off';
     const cp = w !== 'Trapped'; // the command post is a place in the full scene, out of her phone's reach
@@ -123,10 +124,12 @@
     const look = r1.caught != null ? toHer : toHer + 0.42 * Math.sin(T * 1.25), k = g.cam.scale; // searching: the gaze sweeps the pile
     const fade = (a, z) => (a == null ? 0 : clamp((T - a) / 0.22) * (z == null ? 1 : 1 - clamp((T - z) / 0.3)));
     for (const p of cp ? [R2, CP, MATE] : [R2]) g.person(p, { r: R_P, phone: ph });
+    g.obj(TRAP.x, TRAP.y, R_P, R_P, 0, 'her'); // she is there, seen or not: the act's ring sits on her, and no view covers her
     g.person({ x: p1.x, y: p1.y, a: a1 }, { r: R_P, phone: ph });
     g.cone({ x: p1.x, y: p1.y }, look, 0.55, 620, OCC, { k: 1.1 });
-    if (w === 'All' || w === 'Trapped') g.label(TW.x, TW.y, 'No cellular network', { dy: 70 * k + 18 });
-    if (cp) g.label(1625, 535, 'Field command post', { dy: -(g.portrait ? 105 : 65) * k - 18 });
+    const [tx, ty] = g.toScreen(TW.x, TW.y), [qx, qy] = g.toScreen(1625, 535), up = cp && Math.abs(tx - qx) < 230 && Math.abs(ty - qy) < 110;
+    if (w === 'All' || w === 'Trapped') g.label(TW.x, TW.y, 'No cellular network', { dy: (up ? -1 : 1) * (70 * k + 18) }); // up: a small stage, where it would meet the post's label
+    if (cp) g.label(1750, 535, 'Field command post', { align: 'right', dy: -(g.portrait ? 105 : 65) * k - 18 }); // ends clear of the van
     if (o.vz) {
       const on = T > SOS;
       if (on) g.zone(TRAP.x, TRAP.y, { rmax: ZONE.rmax, period: ZONE.period, rings: 3, phase: SOS, start: SOS });
@@ -137,8 +140,10 @@
       if (r1.caught != null) { g.catchFx(p1.x, p1.y, T - r1.caught); g.flash({ x: p1.x, y: p1.y }, T - r1.caught, { l: R_P * 2, w: R_P * 2 }); }
       if (s.r2c != null) g.catchFx(R2.x, R2.y, T - s.r2c);
       if (s.tc != null) { g.catchFx(TRAP.x, TRAP.y, T - s.tc); g.flash(TRAP, T - s.tc, { l: R_P * 2, w: R_P * 2 }); }
-      g.chip(p1.x, p1.y, 'Person trapped', { k: fade(r1.caught, r1.arrived), side: 'down', gap: 20 });
+      g.chip(p1.x, p1.y, 'Person trapped', { k: fade(r1.caught, r1.arrived), side: 'up', gap: 20 }); // above him: the phone view takes the bottom
       g.chip(TRAP.x, TRAP.y, 'Help is coming', { k: fade(s.tc, null), side: 'up', gap: 22 });
+      // A second view (Today, what the caption says): the phone of the rescuer her call reaches, with where she is and her voice.
+      if (w === 'All' && r1.caught != null) g.phone('br', 'Rescuer’s phone', ['Where she is', 'Hears her'], { k: s.tc == null ? 1 : 1 - clamp((T - s.tc) / 0.3), map: true, talk: true, margin: 8, moment: moment(s, o), at: g.cam.w > 900 ? { x: RUB[0], y: TRAP.y } : null }); // until help is coming; where no one passes under it (tests sweep it): on a wide stage beside the rubble, by her
     }
   }
 
@@ -154,6 +159,10 @@
     choices: [{ name: 'show', label: 'Show', values: SHOW, hidden: true }],
     statuses: STATUS,
     start: (o) => (o.compare && !o.vz ? 0.8 : 0),
+    actAt: () => TRAP, // a tap where she is trapped sends the call
+    moment,
+    actPos: 'br', // the Illustration mark moves to the top with it
+    act: 'Call for help', // the stage's own button: the visitor's tap plays the event
     still: (vz, o) => (vz ? 3.4 : WIN[o.show] ? 2.6 : 4),
     lines: (o) => (WIN[o.show] ? WIN[o.show][o.vz ? 'with' : 'without'] : o.compare && !o.vz ? [L.again, L.without[2]] : o.vz ? L.with : L.without),
     beat(s, o) {

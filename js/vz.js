@@ -130,27 +130,50 @@
     var w = plate.clientWidth, gutter = innerWidth >= GUTTER_BREAK ? 24 : 16;
     return Math.max(gutter, Math.round((w - MAX) / 2));
   }
-  function stageMax() { // room for the caption and the controls under the stage, inside one window below the sticky header
-    var head = parseFloat(getComputedStyle(root).getPropertyValue('--head')) || 0;
-    return innerWidth <= 640 ? Math.round(innerHeight * 0.6) : Math.max(360, innerHeight - 212 - head);
+  // The stage's height, so that it, the switch and the caption share one window: on a phone 45% of the window; on a
+  // window under 420 px high (a phone held sideways, where the header scrolls away and the caption sits beside the
+  // controls and the note under them) the window less 110 px for that row; elsewhere room for the controls and the
+  // caption under the header. A Show me plate in a short window measures that row instead (align).
+  var SHORT = 420, ROW = 110, TITLE = 48;
+  function head() { return parseFloat(getComputedStyle(root).getPropertyValue('--head')) || 0; }
+  function stageMax() {
+    if (innerHeight < SHORT) return innerHeight - ROW;
+    return innerWidth <= 640 ? Math.round(innerHeight * 0.45) : Math.max(360, innerHeight - 212 - head());
   }
   function fit(frame) {
     try {
-      var body = frame.contentDocument && frame.contentDocument.body;
+      var d = frame.contentDocument, body = d && d.body;
       if (!body) return;
-      var h = Math.ceil(body.getBoundingClientRect().height);
+      var h = Math.ceil(body.getBoundingClientRect().height), st = d.querySelector('.vzs-stage');
       if (h > 0) frame.style.height = h + 'px';
+      // A plate in a short window whose caption grew past what align measured (a long line in a narrow window): measure
+      // again, once per growth, so the plate keeps fitting. It never grows back during the run.
+      if (st && innerHeight < SHORT && under(frame, d, st) > +(frame.dataset.rest || 1e9)) align(frame);
     } catch (e) { /* another origin (for example file://): keep the CSS estimate */ }
   }
-  // A demonstration plate under a row (.demo) has a fixed inset, and its stage keeps to 56% of a phone's window.
+  // A demonstration plate (.demo) has a fixed inset, and its stage leaves room in the window for the plate's title line
+  // and the switch under the stage (120 px), or, in a short window, for the title line and what is under its stage, so
+  // the whole plate, its one note "Illustration. Not a recording." included, fits the window (Fable, fourth review).
+  // What must share a short window with the stage, under it: a plate's all (its one note at the end), a scene's down
+  // to its note's last line (city-wide's second note line too: Codex, round 5).
+  function under(frame, d, st) {
+    var n = !frame.parentNode.classList.contains('demo') && d.querySelector('.vzs-note'), r = st.getBoundingClientRect();
+    return Math.ceil(n ? n.getBoundingClientRect().bottom - r.bottom : d.body.getBoundingClientRect().height - r.height);
+  }
   function align(frame) {
     try {
-      var demo = frame.parentNode.classList.contains('demo'), phone = innerWidth <= 640;
-      var px = (demo ? (phone ? 16 : 20) : inset(frame.parentNode)) + 'px';
-      var max = (demo && phone ? Math.round(innerHeight * 0.56) : stageMax()) + 'px';
-      frame.contentDocument.querySelectorAll('.vzs').forEach(function (el) {
-        el.style.setProperty('--vzs-inset', px); el.style.setProperty('--vzs-stage-max', max);
+      var demo = frame.parentNode.classList.contains('demo'), phone = innerWidth <= 640, short = innerHeight < SHORT;
+      var px = (demo ? (phone ? 16 : 20) : inset(frame.parentNode)) + 'px', d = frame.contentDocument, all = d.querySelectorAll('.vzs');
+      all.forEach(function (el) {
+        el.style.setProperty('--vzs-inset', px);
+        el.toggleAttribute('data-short', short); // the kit sets the caption beside the controls (a plate: the note under them)
       });
+      var max = demo ? Math.min(stageMax(), innerHeight - head() - 120) : stageMax(), st = d.querySelector('.vzs-stage');
+      // In a short window that is measured, 2 px spare: a plate fits its title line, the stage and it; a scene's stage
+      // stays within the window less it.
+      if (short && st) { frame.dataset.rest = under(frame, d, st); max = demo ? innerHeight - TITLE - 2 - frame.dataset.rest : Math.min(max, innerHeight - 2 - frame.dataset.rest); }
+      else delete frame.dataset.rest;
+      all.forEach(function (el) { el.style.setProperty('--vzs-stage-max', max + 'px'); });
     } catch (e) { /* another origin: the scene keeps its own inset */ }
     fit(frame);
   }
@@ -164,11 +187,16 @@
     });
   }
 
+  // A plate gets its frame the first time it is displayed: at load, or after a resize shows it (the home page's one
+  // street is hidden below 768 px, so a window widened past it mounts the scene then).
   var frames = [];
-  doc.querySelectorAll('[data-sim]').forEach(function (plate) {
+  function mountPlates() {
+    doc.querySelectorAll('[data-sim]').forEach(mountPlate);
+  }
+  function mountPlate(plate) {
     var name = plate.getAttribute('data-sim');
     if (available.indexOf(name) === -1) { plate.classList.add('is-waiting'); return; }
-    if (plate.offsetParent === null) return; // not displayed at this width (the home page's one street on phones)
+    if (plate.offsetParent === null || plate.querySelector('iframe')) return; // not displayed at this width, or running
     var frame = doc.createElement('iframe');
     frame.src = 'sims/' + name + '/index.html?embed=1';
     frame.title = plate.getAttribute('data-title') || 'Simulation';
@@ -178,17 +206,45 @@
     plate.appendChild(frame);
     wire(frame);
     frames.push(frame);
-  });
+  }
+  mountPlates();
   // Words that point at a scene appear only when the scene is there.
   doc.querySelectorAll('[data-needs]').forEach(function (el) {
     if (available.indexOf(el.getAttribute('data-needs')) === -1) el.hidden = true;
   });
   var resizeTimer = 0, lastW = innerWidth;
   addEventListener('resize', function () {
-    if (innerWidth === lastW && innerWidth <= 640) return; // a phone's address bar sliding away is not a resize
+    if (openBtn && openBtn.classList.contains('hero-try') && innerWidth >= 768) closeDemo(openBtn); // the hero's demo is a phone's
+    if (innerWidth === lastW && innerWidth <= 640 && innerHeight >= SHORT) return; // a phone's address bar sliding away is not a resize
     lastW = innerWidth;
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () { frames.forEach(align); doc.querySelectorAll('.demo iframe').forEach(align); }, 120);
+    resizeTimer = setTimeout(function () { mountPlates(); frames.forEach(align); doc.querySelectorAll('.demo iframe').forEach(align); }, 120);
+  });
+
+  /* ---------- Long capability lists on a phone: the lead rows (data-lead), then one button for the rest ----------
+     Only below 768 px (vz.css): the rows stay in the page for every reader and for search, and desktop shows them all.
+     Without script nothing is folded. */
+  function fold(list, on) {
+    var more = list.nextElementSibling;
+    list.classList.toggle('folded', on);
+    more.setAttribute('aria-expanded', String(!on));
+    more.querySelector('span').textContent = on ? 'All ' + list.children.length + ' capabilities' : 'Fewer capabilities';
+  }
+  doc.querySelectorAll('.caps.has-demos').forEach(function (list, i) {
+    var lead = list.querySelectorAll(':scope > .cap[data-lead]').length;
+    if (!lead || list.children.length - lead < 3) return;
+    var more = doc.createElement('button');
+    more.type = 'button'; more.className = 'more';
+    list.id = list.id || 'caps-' + (i + 1);
+    more.setAttribute('aria-controls', list.id);
+    more.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6l5 5 5-5"/></svg><span></span>';
+    list.parentNode.insertBefore(more, list.nextSibling);
+    fold(list, true);
+    more.addEventListener('click', function () {
+      var on = !list.classList.contains('folded');
+      fold(list, on);
+      if (on) more.scrollIntoView({ block: 'nearest' }); // the rows above it are gone: keep the button where the finger is
+    });
   });
 
   /* ---------- Show me: one demonstration per capability row ----------
@@ -197,24 +253,37 @@
      without the scene, the row reads as before. One plate is open per page; closing removes the frame, which stops
      the scene. A #demo-... address opens that plate on load and scrolls to its row. */
   var openBtn = null;
-  function demoName(btn) {
+  function demoName(btn) { // the row's name, or the button's own screen-reader name
     var cap = btn.closest('.cap'), n = cap && cap.querySelector('.cap-name'), sr = btn.querySelector('.sr-only');
     return (n ? n.textContent : sr ? sr.textContent.replace(/^:\s*/, '') : '').trim();
   }
-  // A press brings the plate's bottom into the window if it is below it; a #demo- address puts the row at the top.
+  // A press brings the whole plate into the window: when it fits under the header, its foot to the window's foot (or its
+  // top to the header, if it was above); when it is taller, its top (the title line and the close button) under the
+  // header. A #demo- address puts the plate's top under the header.
   function reveal(el, jump) {
-    if (jump || el.getBoundingClientRect().bottom > innerHeight) el.scrollIntoView({ block: jump ? 'start' : 'nearest', behavior: jump || calm ? 'auto' : 'smooth' });
+    var r = el.getBoundingClientRect(), h = doc.querySelector('.site-header'), top = h && getComputedStyle(h).position === 'sticky' ? h.getBoundingClientRect().bottom : 0;
+    if (!jump && r.top >= top && r.bottom <= innerHeight) return;
+    var by = !jump && r.height <= innerHeight - top && r.top >= top ? r.bottom - innerHeight : r.top - top;
+    scrollBy({ top: by, behavior: jump || calm ? 'auto' : 'smooth' });
   }
   function closeDemo(btn) {
-    var plate = doc.getElementById(btn.getAttribute('aria-controls')), f = plate && plate.querySelector('iframe');
-    if (f) plate.removeChild(f);
-    if (plate) plate.hidden = true;
+    var plate = doc.getElementById(btn.getAttribute('aria-controls'));
+    if (plate) { plate.textContent = ''; plate.hidden = true; } // removing the frame stops the scene
     btn.setAttribute('aria-expanded', 'false');
     if (openBtn === btn) openBtn = null;
   }
   function openDemo(btn, jump) {
     if (openBtn) closeDemo(openBtn);
     var plate = doc.getElementById(btn.getAttribute('aria-controls')), name = demoName(btn), frame = doc.createElement('iframe');
+    var row = btn.closest('.cap'), list = row && row.parentNode;
+    if (list && list.classList.contains('folded') && !row.hasAttribute('data-lead')) fold(list, false);
+    // The plate's first line: the capability's name and a close button, so both stay in view with the scene.
+    var title = doc.createElement('div'), label = doc.createElement('p'), close = doc.createElement('button');
+    title.className = 'demo-head'; label.className = 'demo-name'; label.textContent = name;
+    close.type = 'button'; close.className = 'demo-close'; close.setAttribute('aria-label', 'Close: ' + name);
+    close.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>';
+    close.addEventListener('click', function () { closeDemo(btn); btn.focus({ preventScroll: true }); btn.scrollIntoView({ block: 'nearest' }); });
+    title.appendChild(label); title.appendChild(close);
     var opt = (btn.getAttribute('data-demo-opt') || '').split('&').filter(Boolean).map(function (p) {
       var i = p.indexOf('='); return encodeURIComponent(p.slice(0, i)) + '=' + encodeURIComponent(p.slice(i + 1));
     });
@@ -222,16 +291,16 @@
     frame.title = 'Demonstration: ' + name;
     frame.setAttribute('loading', 'eager');
     plate.setAttribute('aria-label', 'Demonstration: ' + name);
+    plate.appendChild(title);
     plate.appendChild(frame);
     plate.hidden = false;
     btn.setAttribute('aria-expanded', 'true');
     openBtn = btn;
     wire(frame);
-    var row = jump ? btn.closest('.cap') || plate : plate;
-    reveal(row, jump);
-    frame.addEventListener('load', function () { reveal(row, jump); }, { once: true }); // again once the frame has its height
+    reveal(plate, jump);
+    frame.addEventListener('load', function () { reveal(plate, jump); }, { once: true }); // again once the frame has its height
   }
-  doc.querySelectorAll('button.show[data-demo]').forEach(function (btn) {
+  doc.querySelectorAll('button[data-demo]').forEach(function (btn) {
     if (available.indexOf(btn.getAttribute('data-demo')) === -1 || !doc.getElementById(btn.getAttribute('aria-controls'))) return;
     btn.hidden = false;
     btn.addEventListener('click', function () {
@@ -241,7 +310,7 @@
   function fromHash() {
     var id = location.hash.slice(1), btn = null; // the ids are plain ASCII (plan section 2)
     if (id.indexOf('demo-') !== 0) return;
-    doc.querySelectorAll('button.show[data-demo]').forEach(function (b) { if (b.getAttribute('aria-controls') === id && !b.hidden) btn = b; });
+    doc.querySelectorAll('button[data-demo]').forEach(function (b) { if (b.getAttribute('aria-controls') === id && !b.hidden) btn = b; });
     if (btn && btn !== openBtn) openDemo(btn, true);
   }
   fromHash();

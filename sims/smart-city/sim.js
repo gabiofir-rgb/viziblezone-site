@@ -18,7 +18,7 @@
   const EARLY = [[1462, 568, 1, -3], [300, 470, 0.7, -8], [1150, 362, 0.6, -11], [760, 664, 0.6, -5], [1490, 820, 0.5, -13]]; // city view: earlier spots, fading
   const WALK = [[260, 252, 1, 52, 0], [1250, 664, -1, 50, 0], [-80, 248, 1, 58, 1], [590, 246, 1, 46, 1], [960, 652, -1, 55, 1], [1330, 648, -1, 47, 1], [1180, 256, 1, 60, 1]];
   const KIDS = [[736, 694, 0], [784, 704, 0], [712, 712, 1], [812, 700, 1], [760, 720, 1]];
-  const YARD = [[330, 790, 50, 22, 0.9, 0], [520, 812, 40, 30, 1.3, 2], [960, 790, 70, 20, 0.8, 4], [1150, 830, 30, 40, 1.1, 1], [700, 800, 50, 18, 1.2, 3]]; // kids at play: centre, radii, pace, phase
+  const YARD = [[330, 790, 50, 22, 0.9, 0], [520, 812, 40, 30, 1.3, 2], [960, 790, 70, 20, 0.8, 4], [600, 830, 40, 16, 1.1, 1], [700, 800, 50, 18, 1.2, 3]]; // kids at play: centre, radii, pace, phase
   const LAMPS = [[140, 276, PI / 2], [980, 276, PI / 2], [1560, 276, PI / 2], [420, 624, -PI / 2], [1240, 624, -PI / 2], [1760, 624, -PI / 2]];
   const STATUS = [['today', 'The driver is warned on a screen in the car: Today'], ['vision', 'The person outside will be warned on the phone: Vision'], ['vision', 'A crossing light that will give more time: Vision'], ['vision', 'The city view of anonymous near misses: Vision']];
   const L = {
@@ -67,7 +67,7 @@
     return m;
   }
 
-  function ground(g) {
+  function ground(g, o) {
     const c = g.ctx, r = 46, B = 1500, T0 = -500;
     const sw = [[X0, SK], [SIDE[0] - r, SK], ...K.arcPts(SIDE[0] - r, SK + r, r, -PI / 2, 0), [SIDE[0], B], [X0, B]];
     const se = [[SIDE[1], B], [SIDE[1], SK + r], ...K.arcPts(SIDE[1] + r, SK + r, r, PI, PI * 1.5), [X1, SK], [X1, B]];
@@ -92,7 +92,7 @@
     g.zebra(ZEB[0], NK + 3, ZEB[1], SK - 3);
     g.tactile(ZEB[0], NK - 34, ZEB[1] - ZEB[0], 30); g.tactile(ZEB[0], SK + 4, ZEB[1] - ZEB[0], 30);
     for (const [x, y, a] of LAMPS) g.lamp(x, y, a);
-    g.label(1090, 872, 'School');
+    if (o.show[0] != 'C' && g.cam.h > 260) g.label(1210, 872, 'School'); // off the paths
   }
 
   // Signal head on an arm: red only while it tells cars to stop.
@@ -124,7 +124,7 @@
   }
   function diamond(c, x, y, d, k, px) { c.beginPath(); c.moveTo(x, y - d); c.lineTo(x + d, y); c.lineTo(x, y + d); c.lineTo(x - d, y); c.closePath(); c.fillStyle = rgba('zone', k); c.fill(); c.strokeStyle = rgba('dark', 0.6 * k); c.lineWidth = px; c.stroke(); }
   const spotK = (age) => (age < 0 ? 0 : K.ease.out(age / 0.5) * clamp(1 - (age - 5) / 16));
-  // City view: the plan steps back, the spots come forward, and a small key says what they are.
+  // City view: the plan steps back, the spots come forward, a small key says what they are.
   function cityView(g, s, o) {
     const c = g.ctx, T = s.t; g.screen(); c.fillStyle = 'rgba(10,13,16,.34)'; c.fillRect(0, 0, g.cam.w, g.cam.h); g.world();
     if (o.vz) {
@@ -132,7 +132,7 @@
       if (s.hold != null) spot(g, CX, 392, spotK(T - s.hold));
       if (s.warnC != null) spot(g, 1462, 568, spotK(T - s.warnC));
     }
-    const b = g.inset('tl', 196, 54);
+    const b = g.inset('tl', 196, 54, { margin: 8 });
     g.text(b.x + 14, b.y + 22, 'City view', { size: 13 });
     if (o.vz) diamond(c, b.x + 19, b.y + 37, 5, 1, 1);
     g.text(b.x + (o.vz ? 31 : 14), b.y + 41, o.vz ? 'Anonymous near misses' : 'Nothing reaches it', { weight: 400, alpha: 0.72 });
@@ -167,7 +167,7 @@
     const t0 = s.t, T = t0 + dt, { A, B, W } = s, sp = SENIOR.at(s.sr.u);
     s.sr.u = Math.min(SENIOR.total, s.sr.u + (s.sr.u < S_KERB ? 35 : 46) * dt);
     if (s.kerb == null && s.sr.u >= S_KERB) s.kerb = T;
-    // The light. Its usual walk time ends at STD. With VZ, her phone tells it she is still crossing, and it holds until she is across.
+    // The light: its walk time ends at STD. With VZ, her phone tells it she is still crossing; it holds till she is across.
     if (s.go == null) {
       if (o.vz) {
         if (s.hold == null && s.kerb == null && T >= STD - 0.8 && K.zoneCrossed(t0, T, dist(SIG[0], sp), ZS)) s.hold = T;
@@ -253,7 +253,7 @@
     g.atmosphere('Clear', {});
     if (city(o)) cityView(g, s, o);
     if (o.vz) {
-      // Zones only for the people in the current event: first the senior, then the driver and the rider.
+      // Zones only for the people in the current event: the senior, then the driver and the rider.
       const e1 = 1 - clamp((T - (s.kerb ?? 1e9) - 0.6) / 0.6), e2 = red ? 0 : clamp((T - s.go - 0.3) / 0.5) * (1 - clamp((T - (A.resume ?? 1e9) - 0.9) / 0.6));
       if (e1 > 0) { g.zone(sp.x, sp.y, Object.assign({}, ZS, { strength: e1 })); g.trail(SENIOR, s.sr.u + 12, Math.min(240, S_KERB + 24 - s.sr.u), { alpha: e1 }); }
       if (e2 > 0) {
@@ -264,8 +264,8 @@
       g.device(sp.x, sp.y); g.device(dA.x, dA.y); g.device(bp.x, bp.y);
       if (s.hold != null) for (const h of SIG) { g.catchFx(h.x, h.y, T - s.hold); g.flash({ x: h.x, y: h.y, a: PI / 2 }, T - s.hold, { l: 34, w: 16 }); }
       if (s.warnC != null) { g.catchFx(dA.x, dA.y, T - s.warnC); g.flash(ap, T - s.warnC, { l: 176, w: 74 }); }
-      g.label(sp.x, sp.y, 'More time to cross: Vision', { status: 'vision', k: fade(s.hold, (s.kerb ?? 1e9) + 0.8), align: 'right', dx: -22 });
-      g.chip(ap.x, ap.y, 'Scooter on the right', { k: fade(s.warnC, A.resume != null ? A.resume + 0.6 : null), side: P ? 'left' : 'up', gap: 50 });
+      g.label(CX, 120, 'More time to cross: Vision', { status: 'vision', k: fade(s.hold, (s.kerb ?? 1e9) + 0.8) }); // off its path
+      g.chip(ap.x, ap.y, 'Scooter on the right', { k: fade(s.warnC, A.resume != null ? A.resume + 0.6 : null), side: P ? 'left' : 'up', gap: 36 });
     } else {
       if (W.brakeAt != null && (o.show === 'All' || o.show === 'Crossing')) { g.flash(wp, T - W.brakeAt, { l: 176, w: 74, tone: 'alert' }); g.chip(wp.x, wp.y, 'Hard stop', { tone: 'alert', k: fade(W.brakeAt, W.stopAt != null ? W.stopAt + 1.8 : null), side: P ? 'left' : 'up', gap: 50 }); }
       if (A.brakeAt != null) g.flash(ap, T - A.brakeAt, { l: 176, w: 74, tone: 'alert' });
@@ -273,8 +273,8 @@
     }
   }
 
-  // The scene opens on what works today: the first run starts as the light turns green, at the turning car and the
-  // rider. Every later run plays the whole block, the Vision light included.
+  // The scene opens on what works today: until it has been played, a run starts as the light turns green, at the turning
+  // car and the rider (the rest frame shows it, a press plays it). Every later run plays the whole block.
   let first = true, skipped = false;
   const OPEN = ['The light is green. A car is about to turn right across the bike lane, and a scooter rider is coming up beside it.', L.with[3], L.with[4]];
   const FOCUS = { x: 200, y: 40, w: 1640, h: 860 };
@@ -292,7 +292,9 @@
     options: { rushHour: 'Off', cityView: 'Off', show: 'All' },
     choices: [{ name: 'rushHour', label: 'Rush hour', values: ['On', 'Off'] }, { name: 'cityView', label: 'City view', values: ['On', 'Off'], live: true },
       { name: 'show', label: 'Show', values: ['All'].concat(Object.keys(WIN)), hidden: true }],
-    start: (o) => { if (WIN[o.show]) return 0; skipped = o.vz && first; first = false; return skipped ? 6.4 : o.compare && !o.vz ? 0.6 : 0; },
+    start: (o) => { if (WIN[o.show]) return 0; skipped = o.vz && first; return skipped ? 6.4 : o.compare && !o.vz ? 0.6 : 0; },
+    actAt: (o, s) => (skipped ? TURN.at(s.A.u) : SENIOR.at(s.sr.u)), // the turning car, or the walker at the crossing
+    act: 'Start the traffic', // the visitor's tap plays the run
     still: (vz, o) => { const w = o && WIN[o.show]; return w ? w.still[+vz] : vz ? 9.6 : 3.6; },
     lines(o) {
       if (WIN[o.show]) return WIN[o.show][o.vz ? 'with' : 'without'];
@@ -316,7 +318,7 @@
     debug: (s) => ({ go: s.go, hold: s.hold, warnC: s.warnC, end: s.end }),
     ground,
     init(o) { const s = init(o), w = WIN[o.show]; s.t = 0; while (w && s.t + 1e-3 < w.start[+o.vz]) { update(s, 1 / 120, o); s.t += 1 / 120; } s.off = s.t; return s; },
-    update(s, dt, o) { s.t += s.off; update(s, dt, o); s.t -= s.off; },
+    update(s, dt, o) { s.t += s.off; update(s, dt, o); s.t -= s.off; if (s.over) first = false; }, // the opening run, once played
     draw(g, s, o) { s.t = g.t += s.off; draw(g, s, o); s.t -= s.off; }
   });
 })();

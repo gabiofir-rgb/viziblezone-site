@@ -56,8 +56,8 @@
     if (k > 0) { c.fillStyle = rgba('zone', k); c.fillRect(x + 172, y + 5, 7, 24); g.text(x, b.y + 86, 'Cyclist on the right', { weight: 400, alpha: 0.9 * k }); }
     g.world();
   }
-  function cityApp(g) {
-    const c = g.ctx, b = g.inset('tl', 150, 112), x = b.x + 14, cx = b.x + 75, cy = b.y + 66;
+  function cityApp(g) { // top left; bottom left on a short stage (a phone), where the car's chip would pass under it
+    const c = g.ctx, b = g.inset(g.cam.h < 360 ? 'bl' : 'tl', 150, 112, { margin: 8 }), x = b.x + 14, cx = b.x + 75, cy = b.y + 66;
     g.text(x, b.y + 22, 'The city’s app', { size: 13 });
     c.strokeStyle = rgba('lane', 0.5); c.lineWidth = 1.5; c.strokeRect(cx - 17, b.y + 34, 34, 64);
     c.strokeStyle = rgba('zone', 0.85); c.lineWidth = 1.25; c.beginPath(); c.arc(cx, cy, 11, 0, PI * 2); c.stroke();
@@ -136,7 +136,7 @@
       if (o.vz) {
         g.zone(dev.x, dev.y, ZV); g.zone(rp.x, rp.y, ZP);
         for (const p of people.concat([rp, dev])) g.device(p.x, p.y);
-        told(g, ep, T, s.warn, 176, 74, 'Pedestrian ahead', g.portrait ? 'left' : 'up', s.clear != null ? s.clear + 0.6 : null, dev);
+        told(g, ep, T, s.warn, 176, 74, 'Pedestrian ahead', g.portrait ? 'left' : g.cam.w < 700 && g.cam.h < 360 && (g.cam.h > 260 || g.cam.w > 1.6 * g.cam.h) ? 'right' : 'up', s.clear != null ? s.clear + 0.6 : null, dev); // beside it when the app sits bottom left of a small stage
         cityApp(g);
       } else late(g, ep, T, e, 176, 74, g.portrait ? 'left' : 'up');
     }
@@ -241,7 +241,7 @@
         g.zone(db.x, db.y, ZV); g.zone(pp.x, pp.y, ZP);
         g.device(db.x, db.y); g.device(dv.x, dv.y); g.device(pp.x, pp.y);
         const until = s.clear != null ? s.clear + 0.6 : null, side = g.portrait ? 'left' : 'up';
-        told(g, bp, T, s.warn, 480, 102, 'Pedestrian ahead', side, until, db); told(g, vp, T, s.warn, 250, 92, 'Pedestrian ahead', side, until, dv);
+        told(g, bp, T, s.warn, 480, 102, 'Pedestrian ahead', side, until, db); told(g, vp, T, s.warn, 250, 92, 'Pedestrian ahead', side === 'up' && (g.cam.w < 600 || g.cam.h < 260) ? 'down' : side, until, dv); // a narrow or short stage: the two chips one above, one below
       } else late(g, bp, T, b, 480, 102, g.portrait ? 'left' : 'up');
     }
   };

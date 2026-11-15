@@ -31,6 +31,7 @@
         <li><a href="contact-tracing.html">Contact tracing</a></li>
       </ul>
       <ul class="nav-more">
+        <li><a href="demos.html" aria-current="page">Demos</a></li>
         <li><a href="trust.html">Trust</a></li>
         <li><a href="company.html">Company</a></li>
         <li class="nav-contact"><a href="contact.html">Contact</a></li>
@@ -53,26 +54,13 @@
     </div>
   </section>
 
-  <section class="section" id="labels" aria-labelledby="h-labels">
-    <div class="wrap grid">
-      <h2 class="side" id="h-labels">The labels</h2>
-      <div class="content wide">
-        <ul class="key">
-          <li><span class="status" data-status="today">Today</span><p>Works now, and we can show it to you.</p></li>
-          <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
-          <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
-        </ul>
-        <a class="text-link" href="trust.html">How we label what we claim</a>
-      </div>
-    </div>
-  </section>
 
   <section class="section" id="public-safety" aria-labelledby="h-public-safety">
     <div class="wrap grid">
       <h2 class="side" id="h-public-safety"><a href="public-safety.html">Public safety</a></h2>
       <div class="content wide">
         <ul class="caps has-demos">
-          <li class="cap" id="cap-ps-ptt">
+          <li class="cap" id="cap-ps-ptt" data-lead>
             <span class="cap-name">Group push-to-talk</span>
             <span class="cap-text">One person talks, and the whole group hears, in about a second (<a href="trust.html#m-voice">measured on our test phones, October 2026</a>).</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
@@ -86,7 +74,7 @@
             <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-crews" data-demo="demos-field" data-demo-opt="demo=crews"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Utilities and field crews</span></button>
             <div class="demo" id="demo-ps-crews" role="group" aria-label="Demonstration: Utilities and field crews" hidden></div>
           </li>
-          <li class="cap" id="cap-ps-sos">
+          <li class="cap" id="cap-ps-sos" data-lead>
             <span class="cap-name">SOS with position</span>
             <span class="cap-text">One press sends a call for help, with your available position, to teammates on supported phones in coverage. In our tests it arrived within seconds, even indoors (<a href="trust.html#m-sos">measured on our test phones, November 2026</a>).</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
@@ -128,7 +116,7 @@
             <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-ps-app" data-demo="demos-field" data-demo-opt="demo=app"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Inside the apps people already have</span></button>
             <div class="demo" id="demo-ps-app" role="group" aria-label="Demonstration: Inside the apps people already have" hidden></div>
           </li>
-          <li class="cap" id="cap-ps-trapped">
+          <li class="cap" id="cap-ps-trapped" data-lead>
             <span class="cap-name">Automatic trapped mode</span>
             <span class="cap-text">A trapped person’s phone opens a voice and data channel. Rescuers can hear and answer them.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
@@ -174,27 +162,40 @@
       </div>
     </div>
   </section>
+  <section class="section" id="labels" aria-labelledby="h-labels">
+    <div class="wrap grid">
+      <h2 class="side" id="h-labels">The labels</h2>
+      <div class="content wide">
+        <ul class="key">
+          <li><span class="status" data-status="today">Today</span><p>Works now, and we can show it to you.</p></li>
+          <li><span class="status" data-status="dev">In development</span><p>Being built, or shown so far in the lab or in field trials. Not a product yet.</p></li>
+          <li><span class="status" data-status="vision">Vision</span><p>Where we are going. Not built yet.</p></li>
+        </ul>
+        <a class="text-link" href="trust.html">How we label what we claim</a>
+      </div>
+    </div>
+  </section>
 
   <section class="section" id="closed-compounds" aria-labelledby="h-closed-compounds">
     <div class="wrap grid">
       <h2 class="side" id="h-closed-compounds"><a href="closed-compounds.html">Closed compounds</a></h2>
       <div class="content wide">
         <ul class="caps has-demos">
-          <li class="cap" id="cap-cc-worker">
+          <li class="cap" id="cap-cc-worker" data-lead>
             <span class="cap-name">Drivers warned about workers on foot</span>
             <span class="cap-text">Even out of sight, with an aircraft between them.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
             <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-worker" data-demo="closed-compound" data-demo-opt="show=Worker"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Drivers warned about workers on foot</span></button>
             <div class="demo" id="demo-cc-worker" role="group" aria-label="Demonstration: Drivers warned about workers on foot" hidden></div>
           </li>
-          <li class="cap" id="cap-cc-aircraft">
+          <li class="cap" id="cap-cc-aircraft" data-lead>
             <span class="cap-name">Around a parked aircraft</span>
             <span class="cap-text">The aircraft carries small tags and gets its own bubble.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
             <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-cc-aircraft" data-demo="closed-compound" data-demo-opt="show=Aircraft"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Around a parked aircraft</span></button>
             <div class="demo" id="demo-cc-aircraft" role="group" aria-label="Demonstration: Around a parked aircraft" hidden></div>
           </li>
-          <li class="cap" id="cap-cc-pit">
+          <li class="cap" id="cap-cc-pit" data-lead>
             <span class="cap-name">Around a danger area</span>
             <span class="cap-text">A driver nearing a tagged danger area, such as an open pit, is warned.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
@@ -305,21 +306,21 @@
       <h3 class="side side-step" id="h-on-the-road">On the road</h3>
       <div class="content wide">
         <ul class="caps has-demos">
-          <li class="cap" id="cap-sc-sees">
+          <li class="cap" id="cap-sc-sees" data-lead>
             <span class="cap-name">Sees what eyes cannot</span>
             <span class="cap-text">Behind a bus, a wall or a corner, and in the dark. It does not rely on seeing; rain and fog are still to be measured.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
             <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-sees" data-demo="hidden-pedestrian" data-demo-opt="weather=Night"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Sees what eyes cannot</span></button>
             <div class="demo" id="demo-sc-sees" role="group" aria-label="Demonstration: Sees what eyes cannot" hidden></div>
           </li>
-          <li class="cap" id="cap-sc-scooter">
+          <li class="cap" id="cap-sc-scooter" data-lead>
             <span class="cap-name">Warnings about people the driver cannot see</span>
             <span class="cap-text">The driver is told about a person on foot, on a bike or a scooter, with the side they come from and how urgent it is. Shown in field demonstrations with cars since 2019.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
             <button class="show" type="button" hidden aria-expanded="false" aria-controls="demo-sc-scooter" data-demo="smart-city" data-demo-opt="show=Scooter"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="show-on">Show me</span><span class="show-off">Hide</span><span class="sr-only">: Warnings about people the driver cannot see</span></button>
             <div class="demo" id="demo-sc-scooter" role="group" aria-label="Demonstration: Warnings about people the driver cannot see" hidden></div>
           </li>
-          <li class="cap" id="cap-sc-screen">
+          <li class="cap" id="cap-sc-screen" data-lead>
             <span class="cap-name">On the car’s own screen</span>
             <span class="cap-text">The warning appears on the car’s own screen, as in our in-car demonstrations, among them one for Mitsubishi Corporation and Yazaki in 2023–⁠24.</span>
             <span class="status" data-status="today"><span class="sr-only">Status: </span>Today</span>
@@ -472,6 +473,7 @@
         <li><a href="contact-tracing.html">Contact tracing</a></li>
       </ul>
       <ul>
+        <li><a href="demos.html" aria-current="page">Demos</a></li>
         <li><a href="trust.html">Trust</a></li>
         <li><a href="company.html">Company</a></li>
         <li><a href="contact.html">Contact</a></li>
